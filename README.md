@@ -4,7 +4,7 @@ This app lets you search The Movie Database for movies.
 
 ## Features
 
-- Search and display movies (TBD)
+- SearchForm and display movies (TBD)
     - search by: movie name (TBD)
     - search by: genre (TBD)
     - search by: actors (TBD)
