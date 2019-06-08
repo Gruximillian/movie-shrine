@@ -1,6 +1,29 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Movie Shrine
+
+This app lets you search The Movie Database for movies.
+
+## Features
+
+- Search and display movies (TBD)
+    - search by: movie name (TBD)
+    - search by: genre (TBD)
+    - search by: actors (TBD)
+    - search by: director (TBD)
+    - search by: year (TBD)
+    - search by: rating (TBD)
+- Display posters and movie trailers (TBD)
+- Select favourite movies (TBD)
+- Add movies to "Watch later" list (TBD)
+
+
+## TESTS (TBD)
+
+A reminder to do tests
+
 
 ## Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
