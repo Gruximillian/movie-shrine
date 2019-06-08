@@ -1,4 +1,4 @@
-# Movie Shrine
+# Movie Shrine - Source code
 
 This app lets you search The Movie Database for movies.
 
