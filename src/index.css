@@ -5,3 +5,15 @@ body {
     -moz-osx-font-smoothing: grayscale;
     padding: 50px 20px;
 }
+
+@media (min-width: 400px) {
+    body {
+        padding: 70px 40px;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        padding: 90px 60px;
+    }
+}
