@@ -9,9 +9,10 @@ export default {
         type: actionTypes.SET_QUERY_TERM,
         term
     }),
-    initiateSearch: queryString => ({
+    initiateSearch: (queryString, page) => ({
         type: actionTypes.INITIATE_SEARCH,
-        queryString
+        queryString,
+        page
     }),
     setSearchResults: results => ({
         type: actionTypes.SET_SEARCH_RESULTS,

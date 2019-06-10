@@ -1,0 +1,36 @@
+.SearchResult {
+    min-height: 300px;
+    flex-basis: 100%;
+}
+
+.ResultTitle {
+    margin-top: 0;
+}
+
+.OverviewContainer {
+    height: 200px;
+    overflow: hidden;
+    transition: height 0.2s 0s ease-in-out;
+}
+
+.ReadMoreToggle {
+    margin-top: 10px;
+    color: var(--body-text-color);
+    cursor: pointer;
+}
+
+@media (min-width: 500px) {
+    .SearchResult {
+        flex-basis: 48%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}
+
+@media (min-width: 960px) {
+    .SearchResult {
+        flex-basis: 31.33%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}

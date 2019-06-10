@@ -1,0 +1,12 @@
+.SearchResults {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 1080px) {
+    .Main {
+        width: 960px;
+        margin: auto;
+    }
+}
