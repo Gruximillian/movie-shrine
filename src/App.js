@@ -6,9 +6,11 @@ import actions from './store/actions';
 import { getTmdbConfig } from './utils/fetch';
 
 const App = props => {
+    const setTmdbConfiguration = props.setTmdbConfiguration;
+
     useEffect(() => {
-        getTmdbConfig(props.setTmdbConfiguration);
-    }, []);
+        getTmdbConfig(setTmdbConfiguration);
+    }, [setTmdbConfiguration]);
 
     // TEMPORARY LOADING THE FIRST SEARCH RESULT POSTER FOR TESTING
     const imageBaseUrl = props.tmdbConfiguration.images && `${props.tmdbConfiguration.images.secure_base_url}original/`;
