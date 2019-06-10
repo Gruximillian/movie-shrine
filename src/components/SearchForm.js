@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import M from "materialize-css";
 
 import classes from './SearchForm.module.css';
+import actions from "../store/actions";
 
-const SearchForm = () => {
+const SearchForm = props => {
+    const [ searchTerm, setSearchTerm ] = useState('');
+
     useEffect(() => {
         M.AutoInit();
-    });
-
-    const [ searchTerm, setSearchTerm ] = useState('');
+    }, []);
 
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
@@ -16,6 +18,9 @@ const SearchForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const query = encodeURIComponent(searchTerm.trim());
+        props.setQueryTerm(query); // DO I NEED TO SAVE THINS IN THE MAIN STATE? RECONSIDER LATER
+        props.initiateSearch(query);
     };
 
     return (
@@ -29,4 +34,18 @@ const SearchForm = () => {
     );
 };
 
-export default SearchForm;
+const mapStateToProps = state => {
+    return {
+        tmdbConfiguration: state.tmdbConfiguration,
+        queryTerm: state.queryTerm
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setQueryTerm: term => dispatch(actions.setQueryTerm(term)),
+        initiateSearch: queryString => dispatch(actions.initiateSearch(queryString))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);
