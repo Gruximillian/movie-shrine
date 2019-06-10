@@ -19,7 +19,7 @@ const SearchForm = props => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const query = encodeURIComponent(searchTerm.trim());
-        props.setQueryTerm(query); // DO I NEED TO SAVE THINS IN THE MAIN STATE? RECONSIDER LATER
+        props.setQueryTerm(query);
         props.initiateSearch(query, 1);
     };
 
@@ -43,7 +43,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setQueryTerm: term => dispatch(actions.setQueryTerm(term)), // DO I NEED TO SAVE THINS IN THE MAIN STATE? RECONSIDER LATER
+        setQueryTerm: term => dispatch(actions.setQueryTerm(term)),
         initiateSearch: (queryString, page) => dispatch(actions.initiateSearch(queryString, page))
     }
 };

@@ -1,5 +1,7 @@
 export default {
     queryTerm: '',
     tmdbConfiguration: {},
-    searchResults: {}
+    searchResults: {
+        results: []
+    }
 };

@@ -14,8 +14,9 @@ export default {
         queryString,
         page
     }),
-    setSearchResults: results => ({
+    setSearchResults: (results, page) => ({
         type: actionTypes.SET_SEARCH_RESULTS,
-        results
+        results,
+        page
     })
 };

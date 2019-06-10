@@ -25,19 +25,17 @@ const SearchResult = props => {
     };
 
     return (
-        <div className={`${classes.SearchResult} ${readMore && classes.ReadMore} card `}>
+        <div className={`${classes.SearchResult} ${readMore && classes.ReadMore} card`}>
             <div className="card-image">
                 <img src={imageUrl} alt="Poster" />
             </div>
-            <div className="card-stacked">
-                <div className="card-content">
-                    <h3 className={`${classes.ResultTitle} card-title`}>{title}</h3>
-                    <div ref={overviewContainer} className={classes.OverviewContainer}>
-                        <p ref={overviewContent}>{result.overview}</p>
-                    </div>
-                    <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
-                        {readMore ? 'Read Less' : 'Read More'}
-                    </div>
+            <div className="card-content">
+                <h3 className={`${classes.ResultTitle} card-title`}>{title}</h3>
+                <div ref={overviewContainer} className={classes.OverviewContainer}>
+                    <p ref={overviewContent}>{result.overview}</p>
+                </div>
+                <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
+                    {readMore ? 'Read Less' : 'Read More'}
                 </div>
             </div>
         </div>
