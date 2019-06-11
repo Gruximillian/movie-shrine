@@ -10,3 +10,7 @@ export const getTitle = resultJSON => {
     return resultJSON.name || resultJSON.original_name || resultJSON.title || resultJSON.original_title;
 };
 
+export const getYear = resultJSON => {
+    const date = new Date(resultJSON.first_air_date || resultJSON.release_date);
+    return date.getFullYear();
+};

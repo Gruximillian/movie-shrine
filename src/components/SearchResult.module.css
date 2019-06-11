@@ -25,6 +25,10 @@
     bottom: 10px;
 }
 
+.DetailsLabel {
+    font-weight: bold;
+}
+
 @media (min-width: 500px) {
     .SearchResult {
         flex-basis: 48%;

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './SearchResult.module.css';
-import { getImageBaseUrl, getImageUrl, getTitle } from '../utils/functions';
+import { getImageBaseUrl, getImageUrl, getTitle, getYear } from '../utils/functions';
 
 const SearchResult = props => {
     const overviewContainer = useRef(null);
@@ -13,6 +13,7 @@ const SearchResult = props => {
     const imageBaseUrl = getImageBaseUrl(props.tmdbConfiguration.images, 3);
     const imageUrl = getImageUrl(result, imageBaseUrl);
     const title = getTitle(result);
+    const year = getYear(result);
 
     const toggleReadMore = () => {
         setReadMoreActive(!readMoreActive);
@@ -35,6 +36,12 @@ const SearchResult = props => {
             </div>
             <div className={`${classes.CardContent} card-content`}>
                 <h3 className={`${classes.ResultTitle} card-title`}>{title}</h3>
+                <ul>
+                    <li><strong className={classes.DetailsLabel}>Original name:</strong> {result.original_name || result.original_title}</li>
+                    <li><strong className={classes.DetailsLabel}>Type:</strong> {result.media_type}</li>
+                    <li><strong className={classes.DetailsLabel}>Year:</strong> {year}</li>
+                    <li><strong className={classes.DetailsLabel}>Rating:</strong> {result.vote_average}</li>
+                </ul>
                 <div ref={overviewContainer} className={classes.OverviewContainer}>
                     <p ref={overviewContent}>{result.overview}</p>
                 </div>
