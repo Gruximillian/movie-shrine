@@ -4,6 +4,17 @@
     flex-wrap: wrap;
 }
 
+.NoResultsMessage {
+    margin: 40px 0;
+    text-align: center;
+    font-size: 35px;
+}
+
+.NoResultsMessage .SearchTerm {
+    font-style: italic;
+    color: var(--body-text-color);
+}
+
 @media (min-width: 1080px) {
     .Main {
         width: 960px;

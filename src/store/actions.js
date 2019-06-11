@@ -5,7 +5,7 @@ export default {
         type: actionTypes.SET_TMDB_CONFIGURATION,
         config
     }),
-    setQueryTerm: term => ({ // Might not ne needed
+    setQueryTerm: term => ({
         type: actionTypes.SET_QUERY_TERM,
         term
     }),
@@ -18,5 +18,9 @@ export default {
         type: actionTypes.SET_SEARCH_RESULTS,
         results,
         page
+    }),
+    setSearchHasResults: hasResults => ({
+        type: actionTypes.SET_SEARCH_HAS_RESULTS,
+        hasResults
     })
 };

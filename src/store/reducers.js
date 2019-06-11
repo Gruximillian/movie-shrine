@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
     if (action.type === actionTypes.SET_SEARCH_RESULTS) {
         const currentResults = (action.page === 1) ? initialState.searchResults : {...state.searchResults};
         const allResults = [...currentResults.results, ...action.results.results];
-        // there are duplicate ids in the TMDB, so we need to filter the results of duplicates
+        // there are duplicate ids in TMDB, so we need to filter the results of duplicates
         const uniqueIds = allResults.map(result => result.id).filter((ID, idx, array) => {
             return array.indexOf(ID) === array.lastIndexOf(ID);
         });
@@ -32,6 +32,13 @@ const reducer = (state = initialState, action) => {
                 ...action.results,
                 results: updatedResults
             }
+        }
+    }
+
+    if (action.type === actionTypes.SET_SEARCH_HAS_RESULTS) {
+        return {
+            ...state,
+            searchHasResults: action.hasResults
         }
     }
 

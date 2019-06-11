@@ -39,10 +39,11 @@ const SearchResult = props => {
                     <p ref={overviewContent}>{result.overview}</p>
                 </div>
             </div>
-            {showReadMore &&
-                <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
-                    {readMoreActive ? 'Read Less' : 'Read More'}
-                </div>
+            {
+                showReadMore &&
+                    <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
+                        {readMoreActive ? 'Read Less' : 'Read More'}
+                    </div>
             }
         </div>
     );

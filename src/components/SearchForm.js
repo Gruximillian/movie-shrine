@@ -18,6 +18,7 @@ const SearchForm = props => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        props.setSearchHasResults(true);
         const query = encodeURIComponent(searchTerm.trim());
         props.setQueryTerm(query);
         props.initiateSearch(query, 1);
@@ -44,7 +45,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setQueryTerm: term => dispatch(actions.setQueryTerm(term)),
-        initiateSearch: (queryString, page) => dispatch(actions.initiateSearch(queryString, page))
+        initiateSearch: (queryString, page) => dispatch(actions.initiateSearch(queryString, page)),
+        setSearchHasResults: hasResults => dispatch(actions.setSearchHasResults(hasResults))
     }
 };
 

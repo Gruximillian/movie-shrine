@@ -27,18 +27,24 @@ const App = props => {
             <main className={classes.Main}>
                 <p>Welcome to The Movie Shrine!</p>
                 <SearchForm/>
+
                 {
-                    props.searchResults.results &&
-                    <section className={classes.SearchResults}>
-                        {props.searchResults.results.map(result => (
-                            <SearchResult key={`${props.searchResults.page}-${result.id}`} result={result} />
-                        ))}
-                    </section>
+                    props.searchResults.results.length ?
+                        <section className={classes.SearchResults}>
+                            {props.searchResults.results.map(result => (
+                                <SearchResult key={`${props.searchResults.page}-${result.id}`} result={result} />
+                            ))}
+                        </section>
+                    : !props.searchHasResults ?
+                        <div className={classes.NoResultsMessage}>No results for <span className={classes.SearchTerm}>"{decodeURIComponent(props.queryTerm)}"</span></div>
+                    : null
                 }
-                {props.searchResults.page < props.searchResults.total_pages &&
-                    <div className="center-align">
-                        <button className="btn" onClick={loadMore}>Load more</button>
-                    </div>
+
+                {
+                    props.searchResults.page < props.searchResults.total_pages &&
+                        <div className="center-align">
+                            <button className="btn" onClick={loadMore}>Load more</button>
+                        </div>
                 }
             </main>
         </Fragment>
@@ -48,7 +54,8 @@ const App = props => {
 const mapStateToProps = state => {
     return {
         searchResults: state.searchResults,
-        queryTerm: state.queryTerm
+        queryTerm: state.queryTerm,
+        searchHasResults: state.searchHasResults
     }
 };
 
