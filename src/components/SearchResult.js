@@ -29,14 +29,14 @@ const SearchResult = props => {
             <div className="card-image">
                 <img src={imageUrl} alt="Poster" />
             </div>
-            <div className="card-content">
+            <div className={`${classes.CardContent} card-content`}>
                 <h3 className={`${classes.ResultTitle} card-title`}>{title}</h3>
                 <div ref={overviewContainer} className={classes.OverviewContainer}>
                     <p ref={overviewContent}>{result.overview}</p>
                 </div>
-                <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
-                    {readMore ? 'Read Less' : 'Read More'}
-                </div>
+            </div>
+            <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
+                {readMore ? 'Read Less' : 'Read More'}
             </div>
         </div>
     );

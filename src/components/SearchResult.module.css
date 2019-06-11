@@ -7,6 +7,10 @@
     margin-top: 0;
 }
 
+.CardContent.CardContent {
+    padding-bottom: 40px;
+}
+
 .OverviewContainer {
     height: 200px;
     overflow: hidden;
@@ -14,9 +18,11 @@
 }
 
 .ReadMoreToggle {
-    margin-top: 10px;
     color: var(--body-text-color);
     cursor: pointer;
+    position: absolute;
+    padding-left: 24px;
+    bottom: 10px;
 }
 
 @media (min-width: 500px) {
