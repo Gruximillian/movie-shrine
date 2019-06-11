@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import SearchResultKnownFor from './searchResultTemplateKnownFor';
 import classes from './searchResultTemplatePerson.module.css';
-import { getTitle } from '../utils/functions';
+import { getImageBaseUrl, getImageUrl, getTitle } from '../utils/functions';
 
 const SearchResultTemplatePerson = props => {
     const overviewContainer = useRef(null);
@@ -11,6 +12,8 @@ const SearchResultTemplatePerson = props => {
     const [ readMoreActive, setReadMoreActive ] = useState(false);
     const { result } = props;
     const title = getTitle(result);
+    const imageBaseUrl = getImageBaseUrl(props.tmdbConfiguration.images, 3);
+    const imageUrl = getImageUrl(result.profile_path, imageBaseUrl);
 
     const toggleReadMore = () => {
         setReadMoreActive(!readMoreActive);
@@ -28,11 +31,23 @@ const SearchResultTemplatePerson = props => {
 
     return (
         <div className={`${classes.SearchResult} ${readMoreActive && classes.ReadMore} card`}>
+            {console.log(result)}
+            <div className="card-image">
+                <img src={imageUrl} alt="Profile" />
+            </div>
             <div className={`${classes.CardContent} card-content`}>
                 <h3 className={`${classes.ResultTitle} card-title`}>{title}</h3>
                 <p>Known for:</p>
                 <div ref={overviewContainer} className={classes.OverviewContainer}>
-                    <p ref={overviewContent}>{result.overview}</p>
+                    <ul ref={overviewContent}>
+                        {
+                            result.known_for.map(entry => (
+                                <li key={entry.id}>
+                                    <SearchResultKnownFor result={entry} />
+                                </li>
+                            ))
+                        }
+                    </ul>
                 </div>
             </div>
             {

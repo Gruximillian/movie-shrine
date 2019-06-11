@@ -11,7 +11,7 @@ const SearchResultTemplateTvOrMovie = props => {
     const [ readMoreActive, setReadMoreActive ] = useState(false);
     const { result } = props;
     const imageBaseUrl = getImageBaseUrl(props.tmdbConfiguration.images, 3);
-    const imageUrl = getImageUrl(result, imageBaseUrl);
+    const imageUrl = getImageUrl(result.poster_path, imageBaseUrl);
     const title = getTitle(result);
     const year = getYear(result);
     const language = getLanguage(result, props.tmdbConfiguration.languages);
