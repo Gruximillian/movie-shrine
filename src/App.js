@@ -46,7 +46,7 @@ const App = props => {
 
                 {
                     props.searchResults.page < props.searchResults.total_pages &&
-                        <div className="center-align">
+                        <div className={`${classes.LoadMore} center-align`}>
                             <button className="btn" onClick={loadMore}>Load more</button>
                         </div>
                 }

@@ -7,30 +7,35 @@ import { getImageUrl, getTitle, getYear, getLanguage } from '../utils/functions'
 const SearchResultTemplateTvOrMovie = props => {
     const overviewContainer = useRef(null);
     const overviewContent = useRef(null);
-    const [ showReadMore, setShowReadMore ] = useState(false);
-    const [ readMoreActive, setReadMoreActive ] = useState(false);
+    const [ showMoreContentText, setShowMoreContentText ] = useState(false);
+    const [ showMoreContentActive, setShowMoreContentActive ] = useState(false);
     const { result } = props;
     const imageUrl = getImageUrl(props.tmdbConfiguration.images, result.poster_path, 3);
     const title = getTitle(result);
     const year = getYear(result);
     const language = getLanguage(result, props.tmdbConfiguration.languages);
 
-    const toggleReadMore = () => {
-        setReadMoreActive(!readMoreActive);
+    const toggleShowMore = () => {
+        setShowMoreContentActive(!showMoreContentActive);
 
-        if (!readMoreActive && showReadMore) {
-            overviewContainer.current.style.height = `${overviewContent.current.offsetHeight}px`;
+        if (!showMoreContentActive && showMoreContentText) {
+            overviewContainer.current.style.height = `${overviewContent.current.offsetHeight + 20}px`;
         } else {
             overviewContainer.current.style.height = '200px';
         }
     };
 
+    const showDetails = event => {
+        if (event.target.classList.contains(classes.ShowMoreToggle)) return;
+        console.log(result);
+    };
+
     useEffect(() => {
-        setShowReadMore(overviewContent.current.offsetHeight > overviewContainer.current.offsetHeight);
+        setShowMoreContentText(overviewContent.current.offsetHeight > overviewContainer.current.offsetHeight);
     }, []);
 
     return (
-        <div className={`${classes.SearchResult} ${readMoreActive && classes.ReadMore} card`}>
+        <div className={`${classes.SearchResult} card hoverable`} onClick={showDetails}>
             <div className="card-image">
                 <img src={imageUrl} alt="Poster" />
             </div>
@@ -48,9 +53,9 @@ const SearchResultTemplateTvOrMovie = props => {
                 </div>
             </div>
             {
-                showReadMore &&
-                    <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
-                        {readMoreActive ? 'Read Less' : 'Read More'}
+                showMoreContentText &&
+                    <div className={classes.ShowMoreToggle} onClick={toggleShowMore}>
+                        {showMoreContentActive ? 'Less Content' : 'More Content'}
                     </div>
             }
         </div>

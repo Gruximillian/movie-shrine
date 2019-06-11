@@ -1,6 +1,7 @@
 .SearchResult {
     min-height: 300px;
     flex-basis: 100%;
+    cursor: pointer;
 }
 
 .ResultTitle {
@@ -17,7 +18,7 @@
     transition: height 0.2s 0s ease-in-out;
 }
 
-.ReadMoreToggle {
+.ShowMoreToggle {
     color: var(--body-text-color);
     cursor: pointer;
     position: absolute;

@@ -1,0 +1,16 @@
+.KnownForEntry {
+    cursor: pointer;
+}
+
+.DetailsLabel {
+    font-weight: bold;
+}
+
+.Content.Content {
+    padding: 10px 24px;
+}
+
+p.Title.Title {
+    margin: 5px 0 0 0;
+    font-size: 20px;
+}
