@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import classes from './SearchResult.module.css';
-import { getImageBaseUrl, getImageUrl, getTitle, getYear } from '../utils/functions';
+import classes from './searchResultTemplateTvOrMovie.module.css';
+import { getImageBaseUrl, getImageUrl, getTitle, getYear, getLanguage } from '../utils/functions';
 
-const SearchResult = props => {
+const SearchResultTemplateTvOrMovie = props => {
     const overviewContainer = useRef(null);
     const overviewContent = useRef(null);
     const [ showReadMore, setShowReadMore ] = useState(false);
@@ -14,6 +14,7 @@ const SearchResult = props => {
     const imageUrl = getImageUrl(result, imageBaseUrl);
     const title = getTitle(result);
     const year = getYear(result);
+    const language = getLanguage(result, props.tmdbConfiguration.languages);
 
     const toggleReadMore = () => {
         setReadMoreActive(!readMoreActive);
@@ -40,6 +41,7 @@ const SearchResult = props => {
                     <li><strong className={classes.DetailsLabel}>Original name:</strong> {result.original_name || result.original_title}</li>
                     <li><strong className={classes.DetailsLabel}>Type:</strong> {result.media_type}</li>
                     <li><strong className={classes.DetailsLabel}>Year:</strong> {year}</li>
+                    <li><strong className={classes.DetailsLabel}>Language:</strong> {language}</li>
                     <li><strong className={classes.DetailsLabel}>Rating:</strong> {result.vote_average}</li>
                 </ul>
                 <div ref={overviewContainer} className={classes.OverviewContainer}>
@@ -62,4 +64,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(SearchResult);
+export default connect(mapStateToProps)(SearchResultTemplateTvOrMovie);

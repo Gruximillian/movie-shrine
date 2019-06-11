@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import Header from './components/Header';
 import SearchForm from './components/SearchForm';
-import SearchResult from './components/SearchResult';
+import SearchResultTvOrMovie from './components/searchResultTemplateTvOrMovie';
+import SearchResultPerson from './components/searchResultTemplatePerson';
 
 import actions from './store/actions';
 import { getTmdbConfig } from './utils/fetch';
@@ -31,9 +32,12 @@ const App = props => {
                 {
                     props.searchResults.results.length ?
                         <section className={classes.SearchResults}>
-                            {props.searchResults.results.map(result => (
-                                <SearchResult key={`${props.searchResults.page}-${result.id}`} result={result} />
-                            ))}
+                            {
+                                props.searchResults.results.map(result => {
+                                    if (result.media_type === 'person') return <SearchResultPerson key={result.id} result={result}/>;
+                                    return <SearchResultTvOrMovie key={result.id} result={result}/>;
+                                })
+                            }
                         </section>
                     : !props.searchHasResults ?
                         <div className={classes.NoResultsMessage}>No results for <span className={classes.SearchTerm}>"{decodeURIComponent(props.queryTerm)}"</span></div>

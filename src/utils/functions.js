@@ -14,3 +14,7 @@ export const getYear = resultJSON => {
     const date = new Date(resultJSON.first_air_date || resultJSON.release_date);
     return date.getFullYear();
 };
+
+export const getLanguage = (resultJSON, languages) => {
+    return languages.find(language => language.iso_639_1 === resultJSON.original_language).english_name;
+};
