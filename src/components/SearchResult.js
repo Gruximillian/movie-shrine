@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './SearchResult.module.css';
@@ -6,6 +6,7 @@ import classes from './SearchResult.module.css';
 const SearchResult = props => {
     const overviewContainer = useRef(null);
     const overviewContent = useRef(null);
+    const [ showReadMore, setShowReadMore ] = useState(false);
     const [ readMore, setReadMore ] = useState(false);
     const { result } = props;
     const imageBaseUrl = props.tmdbConfiguration.images && `${props.tmdbConfiguration.images.secure_base_url}${props.tmdbConfiguration.images.poster_sizes[3]}/`;
@@ -24,6 +25,12 @@ const SearchResult = props => {
         }
     };
 
+    useEffect(() => {
+        const overviewHeight = overviewContent.current.offsetHeight;
+        const overviewContainerHeight = overviewContainer.current.offsetHeight;
+        setShowReadMore(overviewHeight > overviewContainerHeight);
+    }, []);
+
     return (
         <div className={`${classes.SearchResult} ${readMore && classes.ReadMore} card`}>
             <div className="card-image">
@@ -35,9 +42,11 @@ const SearchResult = props => {
                     <p ref={overviewContent}>{result.overview}</p>
                 </div>
             </div>
-            <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
-                {readMore ? 'Read Less' : 'Read More'}
-            </div>
+            {showReadMore &&
+                <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
+                    {readMore ? 'Read Less' : 'Read More'}
+                </div>
+            }
         </div>
     );
 };
