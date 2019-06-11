@@ -12,7 +12,7 @@
 
 .NoResultsMessage .SearchTerm {
     font-style: italic;
-    color: var(--body-text-color);
+    color: var(--highlight-color);
 }
 
 .LoadMore {

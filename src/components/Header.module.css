@@ -7,11 +7,11 @@
     height: 40px;
     background-color: #fff;
     box-shadow: 0 -1px 5px 1px #777;
-    color: var(--body-text-color);
+    color: var(--highlight-color);
 }
 
 .Header [class="logo"] {
-    fill: var(--body-text-color);
+    fill: var(--highlight-color);
     height: 100%;
     width: 10%;
     min-width: 80px;

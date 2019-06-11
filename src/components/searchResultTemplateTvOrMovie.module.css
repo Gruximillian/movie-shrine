@@ -19,7 +19,7 @@
 }
 
 .ShowMoreToggle {
-    color: var(--body-text-color);
+    color: var(--highlight-color);
     cursor: pointer;
     position: absolute;
     padding-left: 24px;
