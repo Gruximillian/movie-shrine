@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './searchResultTemplateTvOrMovie.module.css';
-import { getImageBaseUrl, getImageUrl, getTitle, getYear, getLanguage } from '../utils/functions';
+import { getImageUrl, getTitle, getYear, getLanguage } from '../utils/functions';
 
 const SearchResultTemplateTvOrMovie = props => {
     const overviewContainer = useRef(null);
@@ -10,8 +10,7 @@ const SearchResultTemplateTvOrMovie = props => {
     const [ showReadMore, setShowReadMore ] = useState(false);
     const [ readMoreActive, setReadMoreActive ] = useState(false);
     const { result } = props;
-    const imageBaseUrl = getImageBaseUrl(props.tmdbConfiguration.images, 3);
-    const imageUrl = getImageUrl(result.poster_path, imageBaseUrl);
+    const imageUrl = getImageUrl(props.tmdbConfiguration.images, result.poster_path, 3);
     const title = getTitle(result);
     const year = getYear(result);
     const language = getLanguage(result, props.tmdbConfiguration.languages);

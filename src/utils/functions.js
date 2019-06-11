@@ -1,9 +1,8 @@
-export const getImageBaseUrl = (imgConfigJSON, imgSizeIndex) => {
-    return imgConfigJSON && `${imgConfigJSON.secure_base_url}${imgConfigJSON.poster_sizes[imgSizeIndex]}/`
-};
+export const getImageUrl = (imgConfigJSON, imagePath, imgSizeIndex) => {
+    const baseUrl = `${imgConfigJSON.secure_base_url}${imgConfigJSON.poster_sizes[imgSizeIndex]}/`;
+    const imageWidth = imgConfigJSON.poster_sizes[imgSizeIndex].substring(1);
 
-export const getImageUrl = (imagePath, baseImgUrl) => {
-    return imagePath ? `${baseImgUrl}${imagePath}` : 'https://via.placeholder.com/154x231.jpg';
+    return imagePath ? `${baseUrl}${imagePath}` : `https://via.placeholder.com/${imageWidth}.jpg`;
 };
 
 export const getTitle = resultJSON => {

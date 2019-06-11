@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import SearchResultKnownFor from './searchResultTemplateKnownFor';
 import classes from './searchResultTemplatePerson.module.css';
-import { getImageBaseUrl, getImageUrl, getTitle } from '../utils/functions';
+import { getImageUrl, getTitle } from '../utils/functions';
 
 const SearchResultTemplatePerson = props => {
     const overviewContainer = useRef(null);
@@ -12,8 +12,7 @@ const SearchResultTemplatePerson = props => {
     const [ readMoreActive, setReadMoreActive ] = useState(false);
     const { result } = props;
     const title = getTitle(result);
-    const imageBaseUrl = getImageBaseUrl(props.tmdbConfiguration.images, 3);
-    const imageUrl = getImageUrl(result.profile_path, imageBaseUrl);
+    const imageUrl = getImageUrl(props.tmdbConfiguration.images, result.profile_path, 3);
 
     const toggleReadMore = () => {
         setReadMoreActive(!readMoreActive);

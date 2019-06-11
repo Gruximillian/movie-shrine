@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getImageBaseUrl, getImageUrl, getTitle } from '../utils/functions';
+import { getImageUrl, getTitle } from '../utils/functions';
 
 const SearchResultKnownFor = props => {
     const { result } = props;
+    const imageUrl = getImageUrl(props.tmdbConfiguration.images, result.poster_path, 0);
 
     return (
         <div className="card horizontal">
             <div className="card-image">
-                <img src={getImageUrl(result.poster_path, getImageBaseUrl(props.tmdbConfiguration.images, 0))} alt="Poster" />
+                <img src={imageUrl} alt="Poster" />
             </div>
             <div className="card-stacked">
                 <div className="card-content">
