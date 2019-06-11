@@ -2,37 +2,34 @@ import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './SearchResult.module.css';
+import { getImageBaseUrl, getImageUrl, getTitle } from '../utils/functions';
 
 const SearchResult = props => {
     const overviewContainer = useRef(null);
     const overviewContent = useRef(null);
     const [ showReadMore, setShowReadMore ] = useState(false);
-    const [ readMore, setReadMore ] = useState(false);
+    const [ readMoreActive, setReadMoreActive ] = useState(false);
     const { result } = props;
-    const imageBaseUrl = props.tmdbConfiguration.images && `${props.tmdbConfiguration.images.secure_base_url}${props.tmdbConfiguration.images.poster_sizes[3]}/`;
-    const imageUrl = result.poster_path ? `${imageBaseUrl}${result.poster_path}` : 'https://via.placeholder.com/154x231.jpg';
-    const title = result.name || result.original_name || result.title || result.original_title;
+    const imageBaseUrl = getImageBaseUrl(props.tmdbConfiguration.images, 3);
+    const imageUrl = getImageUrl(result, imageBaseUrl);
+    const title = getTitle(result);
 
     const toggleReadMore = () => {
-        setReadMore(!readMore);
-        const overviewHeight = overviewContent.current.offsetHeight;
-        const overviewContainerHeight = overviewContainer.current.offsetHeight;
+        setReadMoreActive(!readMoreActive);
 
-        if (!readMore && overviewHeight > overviewContainerHeight) {
-            overviewContainer.current.style.height = `${overviewHeight}px`;
+        if (!readMoreActive && showReadMore) {
+            overviewContainer.current.style.height = `${overviewContent.current.offsetHeight}px`;
         } else {
             overviewContainer.current.style.height = '200px';
         }
     };
 
     useEffect(() => {
-        const overviewHeight = overviewContent.current.offsetHeight;
-        const overviewContainerHeight = overviewContainer.current.offsetHeight;
-        setShowReadMore(overviewHeight > overviewContainerHeight);
+        setShowReadMore(overviewContent.current.offsetHeight > overviewContainer.current.offsetHeight);
     }, []);
 
     return (
-        <div className={`${classes.SearchResult} ${readMore && classes.ReadMore} card`}>
+        <div className={`${classes.SearchResult} ${readMoreActive && classes.ReadMore} card`}>
             <div className="card-image">
                 <img src={imageUrl} alt="Poster" />
             </div>
@@ -44,7 +41,7 @@ const SearchResult = props => {
             </div>
             {showReadMore &&
                 <div className={classes.ReadMoreToggle} onClick={toggleReadMore}>
-                    {readMore ? 'Read Less' : 'Read More'}
+                    {readMoreActive ? 'Read Less' : 'Read More'}
                 </div>
             }
         </div>
