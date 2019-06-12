@@ -19,9 +19,9 @@
     margin-top: 30px;
 }
 
-@media (min-width: 1080px) {
+@media (min-width: 1200px) {
     .Main {
-        width: 960px;
+        max-width: 1400px;
         margin: auto;
     }
 }
