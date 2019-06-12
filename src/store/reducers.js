@@ -2,6 +2,15 @@ import actionTypes from './actionTypes';
 import initialState from './initialState';
 
 const reducer = (state = initialState, action) => {
+    if (action.type === actionTypes.RESET_STATE) {
+        return {
+            ...state,
+            queryTerm: '',
+            searchResults: initialState.searchResults,
+            searchHasResults: true
+        };
+    }
+
     if (action.type === actionTypes.SET_TMDB_CONFIGURATION) {
         return {
             ...state,

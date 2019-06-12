@@ -1,6 +1,9 @@
 import actionTypes from './actionTypes';
 
 export default {
+    resetState: () => ({
+        type: actionTypes.RESET_STATE
+    }),
     setTmdbConfiguration: config => ({
         type: actionTypes.SET_TMDB_CONFIGURATION,
         config
