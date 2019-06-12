@@ -85,6 +85,8 @@
     .Tagline {
         margin-top: 100px;
         padding-left: 60px;
+        color: var(--light-text-color);
+        font-weight: 300;
     }
 
     .DetailsSection {
@@ -100,7 +102,7 @@
     }
 
     .DetailsSection > div {
-        flex-basis: 48%;
+        flex-basis: 45%;
     }
 }
 

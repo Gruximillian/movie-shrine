@@ -5,6 +5,7 @@ import classes from './Movie.module.css';
 import { getImageUrl, getLanguage, getTitle, getYear, getHoursAndMinutes } from '../utils/functions';
 
 const Movie = props => {
+    const mediaType = 'Movie';
     const {
         poster_path,
         original_title,
@@ -38,13 +39,15 @@ const Movie = props => {
                 <h2 className={`${classes.Title} hide-on-med-and-up`}>{title}</h2>
 
                 <div className={classes.PosterAndDetails}>
-                    <img className={classes.Poster} src={imageUrl} alt={`Poster for movie ${title}`} />
+                    <img className={classes.Poster} src={imageUrl} alt={`Poster for ${mediaType.toLowerCase()} ${title}`} />
 
                     <div className={`${classes.PosterSectionDetails} hide-on-small-only`}>
                         <h2 className={classes.Title}>{title}</h2>
                         <div className={classes.ReleaseYear}>{year}</div>
                         <div className={classes.MediaType}>Movie</div>
-                        <div className={classes.Tagline}>{tagline}</div>
+                        <div className={classes.Tagline}>
+                            <q>{tagline}</q>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -58,6 +61,10 @@ const Movie = props => {
                     <div className={classes.DetailsEntry}>
                         <strong className={classes.DetailsLabel}>Original title:</strong>
                         <i className={classes.DetailsValue}> {original_title}</i>
+                    </div>
+                    <div className={classes.DetailsEntry}>
+                        <strong className={classes.DetailsLabel}>Type:</strong>
+                        <i className={classes.DetailsValue}> {mediaType}</i>
                     </div>
                     <div className={classes.DetailsEntry}>
                         <strong className={classes.DetailsLabel}>Language:</strong>
