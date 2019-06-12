@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { getMediaDetails } from '../utils/fetch';
 
 const TV = props => {
+    const id = props.match.params.id;
+
+    useEffect(() => {
+        getMediaDetails(id, 'tv', null);
+    }, [id]);
+
     return (
-        <h1>TV Show</h1>
+        <h1>TV Show: {id}</h1>
     );
 };
 

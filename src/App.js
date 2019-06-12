@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -8,14 +8,12 @@ import TV from './components/TV';
 
 const App = () => {
     return (
-        <Fragment>
-            <BrowserRouter>
-                <Header/>
-                <Route exact path="/" component={Home} />
-                <Route path="/movie/:id" component={Movie} />
-                <Route path="/tv/:id" component={TV} />
-            </BrowserRouter>
-        </Fragment>
+        <BrowserRouter>
+            <Header/>
+            <Route exact path="/" component={Home} />
+            <Route path="/movie/:id" component={Movie} />
+            <Route path="/tv/:id" component={TV} />
+        </BrowserRouter>
     );
 };
 

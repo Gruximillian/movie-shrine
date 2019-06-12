@@ -18,8 +18,11 @@ const SearchForm = props => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.setSearchHasResults(true);
         const query = encodeURIComponent(searchTerm.trim());
+
+        if (query === '') return; // Add message for the user to type something
+
+        props.setSearchHasResults(true);
         props.setQueryTerm(query);
         props.initiateSearch(query, 1);
     };

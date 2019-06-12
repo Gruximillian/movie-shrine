@@ -8,3 +8,13 @@ export const getTmdbConfig = action => {
         })
         .catch((err) => console.log(err));
 };
+
+export const getMediaDetails = (id, mediaType, action) => {
+    fetch(`${config.api_url_v3}/${mediaType}/${id}?api_key=${config.api_key}&append_to_response=videos,images`)
+        .then(response => response.json())
+        .then(response => {
+            // action(response);
+            console.log(response);
+        })
+        .catch((err) => console.log(err));
+};
