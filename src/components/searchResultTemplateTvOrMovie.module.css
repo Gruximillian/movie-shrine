@@ -30,7 +30,7 @@
     font-weight: bold;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
     .SearchResult {
         flex-basis: 48%;
         margin-left: 1%;
@@ -38,7 +38,7 @@
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 960px) {
     .SearchResult {
         flex-basis: 31.33%;
         margin-left: 1%;

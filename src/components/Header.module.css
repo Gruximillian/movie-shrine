@@ -7,7 +7,6 @@
     height: 40px;
     background-color: #fff;
     box-shadow: 0 -1px 5px 1px #777;
-    color: var(--highlight-color);
 }
 
 .Header [class="logo"] {
@@ -24,6 +23,7 @@
     font-size: 20px;
     vertical-align: middle;
     margin: 0 0 0 10px;
+    color: var(--highlight-color);
 }
 
 @media (min-width: 400px) {
