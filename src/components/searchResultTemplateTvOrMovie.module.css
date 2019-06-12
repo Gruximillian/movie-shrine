@@ -1,6 +1,8 @@
 .SearchResult {
     min-height: 300px;
     flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .ResultTitle {
@@ -9,12 +11,23 @@
 
 .CardContent.CardContent {
     padding-bottom: 40px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .Overview {
     overflow: hidden;
     line-height: var(--line-height);
     height: calc(var(--line-height) * 6);
+}
+
+.KnownForList {
+    margin-top: 10px;
+    padding: 5px 0;
+    height: 200px;
+    overflow-y: auto;
+    flex-grow: 1;
 }
 
 .ShowMoreToggle {

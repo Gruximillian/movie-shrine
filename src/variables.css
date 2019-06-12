@@ -1,6 +1,7 @@
 /* color values from https://materializecss.com/color.html */
 
 :root {
+    --body-text-color: rgba(0, 0, 0, 0.87); /* teal lighten-1 */
     --highlight-color: #26a69a; /* teal lighten-1 */
     --line-height: 21px;
 }
