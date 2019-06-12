@@ -1,7 +1,6 @@
 .SearchResult {
     min-height: 300px;
     flex-basis: 100%;
-    cursor: pointer;
 }
 
 .ResultTitle {
@@ -12,15 +11,14 @@
     padding-bottom: 40px;
 }
 
-.OverviewContainer {
-    height: 200px;
+.Overview {
     overflow: hidden;
-    transition: height 0.2s 0s ease-in-out;
+    line-height: var(--line-height);
+    height: calc(var(--line-height) * 6);
 }
 
 .ShowMoreToggle {
     color: var(--highlight-color);
-    cursor: pointer;
     position: absolute;
     padding-left: 24px;
     bottom: 10px;
