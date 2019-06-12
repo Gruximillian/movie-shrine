@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-
-import { getMediaDetails } from '../utils/fetch';
+import React from 'react';
+import { connect } from 'react-redux';
 
 const Movie = props => {
-    const id = props.match.params.id;
-
-    useEffect(() => {
-        getMediaDetails(id, 'movie', null);
-    }, [id]);
-
+    console.log(props.data);
     return (
-        <h1>The Movie: {id}</h1>
+        <p>Movie</p>
     );
 };
 
-export default Movie;
+const mapStateToProps = state => {
+    return {
+        tmdbConfiguration: state.tmdbConfiguration
+    }
+};
+
+export default connect(mapStateToProps)(Movie);

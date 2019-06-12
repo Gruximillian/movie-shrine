@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-
-import { getMediaDetails } from '../utils/fetch';
+import React from 'react';
+import { connect } from 'react-redux';
 
 const TV = props => {
-    const id = props.match.params.id;
-
-    useEffect(() => {
-        getMediaDetails(id, 'tv', null);
-    }, [id]);
-
+    console.log(props.data);
     return (
-        <h1>TV Show: {id}</h1>
+        <p>TV Show</p>
     );
 };
 
-export default TV;
+const mapStateToProps = state => {
+    return {
+        tmdbConfiguration: state.tmdbConfiguration
+    }
+};
+
+export default connect(mapStateToProps)(TV);

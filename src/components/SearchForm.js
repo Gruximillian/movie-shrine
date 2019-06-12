@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import M from "materialize-css";
 
 import classes from './SearchForm.module.css';
-import actions from "../store/actions";
+import actions from '../store/actions';
 
 const SearchForm = props => {
     const [ searchTerm, setSearchTerm ] = useState('');
@@ -31,7 +31,7 @@ const SearchForm = props => {
         <form onSubmit={handleSubmit}>
             <div className={`${classes.Search} input-field`}>
                 <input id="search-term" type="text" value={searchTerm} onChange={handleChange} />
-                <label htmlFor="search-term">Search for the movies</label>
+                <label htmlFor="search-term">Search for the movies, TV shows or people</label>
             </div>
             <button className={`btn`}>Search</button>
         </form>
