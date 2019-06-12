@@ -1,3 +1,7 @@
+.Main {
+    padding: 0 20px;
+}
+
 .SearchResults {
     margin-top: 50px;
     display: flex;
@@ -17,6 +21,18 @@
 
 .LoadMore {
     margin-top: 30px;
+}
+
+@media (min-width: 400px) {
+    .Main {
+        padding: 0 40px;
+    }
+}
+
+@media (min-width: 768px) {
+    .Main {
+        padding: 20px 60px;
+    }
 }
 
 @media (min-width: 1200px) {

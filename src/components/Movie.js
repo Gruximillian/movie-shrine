@@ -2,9 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const Movie = props => {
+    console.log(props.tmdbConfiguration.images);
     console.log(props.data);
     return (
-        <p>Movie</p>
+        <main>
+
+        </main>
     );
 };
 
