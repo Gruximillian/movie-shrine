@@ -51,7 +51,7 @@ const Home = props => {
 
     return (
         <main className={classes.Main}>
-            <p>Welcome to The Movie Shrine!</p>
+            <p className={classes.WelcomeMessage}>Welcome to The Movie Shrine!</p>
             <SearchForm/>
 
             { props.searchResults.results.length > 0 && showSearchResults() }

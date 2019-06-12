@@ -1,7 +1,12 @@
 /* color values from https://materializecss.com/color.html */
 
 :root {
-    --body-text-color: rgba(0, 0, 0, 0.87); /* teal lighten-1 */
+    --body-text-color: rgba(0, 0, 0, 0.87);
+    --border-color: rgba(0, 0, 0, 0.25);
+    --light-text-color: #fff;
     --highlight-color: #26a69a; /* teal lighten-1 */
+    --light-blue-grey: #455a64; /* blue-grey darken-2 */
+    --dark-blue-grey: #263238; /* blue-grey darken-4 */
+    --box-shadow-color: #777;
     --line-height: 21px;
 }

@@ -1,8 +1,8 @@
 .Header {
     padding: 5px 0;
     height: 40px;
-    background-color: #fff;
-    box-shadow: 0 -1px 5px 1px #777;
+    background-color: var(--dark-blue-grey);
+    box-shadow: 0 -1px 5px 1px var(--box-shadow-color);
 }
 
 .Header [class="logo"] {

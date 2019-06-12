@@ -23,16 +23,31 @@
     margin-top: 30px;
 }
 
+.WelcomeMessage {
+    font-size: 4vw;
+}
+
 @media (min-width: 400px) {
     .Main {
         padding: 0 40px;
     }
+
+
+    .WelcomeMessage {
+        font-size: 3vw;
+    }
+
 }
 
 @media (min-width: 768px) {
     .Main {
         padding: 20px 60px;
     }
+
+    .WelcomeMessage {
+        font-size: 24px;
+    }
+
 }
 
 @media (min-width: 1200px) {
