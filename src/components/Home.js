@@ -35,6 +35,12 @@ const Home = props => {
         </section>
     );
 
+    const noResultsMessage = () => (
+        <div className={classes.NoResultsMessage}>
+            No results for <span className={classes.SearchTerm}>"{decodeURIComponent(props.queryTerm)}"</span>
+        </div>
+    );
+
     const loadMoreButton = () => {
         if (props.searchResults.page < props.searchResults.total_pages) return (
             <div className={`${classes.LoadMore} center-align`}>
@@ -48,15 +54,9 @@ const Home = props => {
             <p>Welcome to The Movie Shrine!</p>
             <SearchForm/>
 
-            {
-                props.searchResults.results.length ?
-                    showSearchResults()
-                : !props.searchHasResults ?
-                    <div className={classes.NoResultsMessage}>
-                        No results for <span className={classes.SearchTerm}>"{decodeURIComponent(props.queryTerm)}"</span>
-                    </div>
-                : null
-            }
+            { props.searchResults.results.length > 0 && showSearchResults() }
+
+            { !props.searchHasResults && noResultsMessage() }
 
             { loadMoreButton() }
         </main>
