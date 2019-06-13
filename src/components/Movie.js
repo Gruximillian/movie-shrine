@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Movie.module.css';
+
+import actions from '../store/actions';
 import { getImageUrl, getLanguage, getTitle, getYear, getHoursAndMinutes } from '../utils/functions';
+import { getTmdbConfig } from '../utils/fetch';
 
 const Movie = props => {
+    const tmdbConfig = props.tmdbConfiguration;
+    const configPresent = Object.keys(tmdbConfig).length > 0;
+
+    useEffect(() => {
+        // make sure the tmdb configuration is set if the page gets reloaded
+        const config = JSON.parse(localStorage.getItem('movieShrineTmdbConfig'));
+
+        if (configPresent) return;
+
+        if (config && Object.keys(config).length > 0) {
+            props.setTmdbConfiguration(config);
+        } else {
+            getTmdbConfig(props.setTmdbConfiguration);
+        }
+    });
+
+    // not rendering anything until we get the tmdbConfig info
+    if (!configPresent) return null;
+
     const mediaType = 'Movie';
     const {
         poster_path,
@@ -18,10 +40,10 @@ const Movie = props => {
         images,
         videos
     } = props.data;
-    const imageUrl = getImageUrl(props.tmdbConfiguration.images, poster_path, 4);
+    const imageUrl = getImageUrl(tmdbConfig.images, poster_path, 4);
     const title = getTitle(props.data);
     const year = getYear(props.data);
-    const language = getLanguage(props.data, props.tmdbConfiguration.languages);
+    const language = getLanguage(props.data, tmdbConfig.languages);
     const duration = getHoursAndMinutes(runtime);
     const dateReleased = (new Date(release_date)).toLocaleDateString();
     const genresArray = genres && genres.map(genre => genre.name);
@@ -45,9 +67,12 @@ const Movie = props => {
                         <h2 className={classes.Title}>{title}</h2>
                         <div className={classes.ReleaseYear}>{year}</div>
                         <div className={classes.MediaType}>Movie</div>
-                        <div className={classes.Tagline}>
-                            <q>{tagline}</q>
-                        </div>
+                        {
+                            tagline &&
+                            <div className={classes.Tagline}>
+                                <q>{tagline}</q>
+                            </div>
+                        }
                     </div>
                 </div>
             </section>
@@ -103,4 +128,10 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(Movie);
+const mapDispatchToProps = dispatch => {
+    return {
+        setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Movie);

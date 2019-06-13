@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import connect from 'react-redux/es/connect/connect';
 
 import classes from './Home.module.css';
@@ -8,16 +8,9 @@ import SearchResultPerson from './searchResultTemplatePerson';
 import SearchResultTvOrMovie from './searchResultTemplateTvOrMovie';
 
 import actions from '../store/actions';
-import { getTmdbConfig } from '../utils/fetch';
 
 
 const Home = props => {
-    const setTmdbConfiguration = props.setTmdbConfiguration;
-
-    useEffect(() => {
-        getTmdbConfig(setTmdbConfiguration);
-    }, [setTmdbConfiguration]);
-
     const loadMore = () => {
         props.initiateSearch(props.queryTerm, props.searchResults.page + 1);
     };
@@ -73,7 +66,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
         initiateSearch: (query, page) => dispatch(actions.initiateSearch(query, page))
     }
 };
