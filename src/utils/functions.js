@@ -25,7 +25,7 @@ export const getHoursAndMinutes = minutes => {
     const hours = Math.floor(minutes / 60);
     const min = minutes % 60;
 
-    return `${hours} h ${min} min`;
+    return `${hours}h ${min}min`;
 };
 
 export const getVideoUrl = videoData => {
