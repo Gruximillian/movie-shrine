@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import classes from './searchResultTemplateTvOrMovie.module.css';
-import { getImageUrl, getTitle, getYear, getLanguage } from '../utils/functions';
+import { getImageUrl, getTitle, getPeriod, getLanguage } from '../utils/functions';
 
 const SearchResultTemplateTvOrMovie = props => {
     const { result } = props;
     const imageUrl = getImageUrl(props.tmdbConfiguration.images, result.poster_path, 3);
     const title = getTitle(result);
-    const year = getYear(result);
+    const year = getPeriod(result);
     const language = getLanguage(result, props.tmdbConfiguration.languages);
 
     const detailsUrl = `/${result.media_type}/${result.id}`;

@@ -9,10 +9,17 @@ export const getTitle = resultJSON => {
     return resultJSON.name || resultJSON.original_name || resultJSON.title || resultJSON.original_title;
 };
 
-export const getYear = resultJSON => {
-    const date = new Date(resultJSON.first_air_date || resultJSON.release_date);
+export const getPeriod = resultJSON => {
+    if (resultJSON.release_date) {
+        const date = new Date(resultJSON.release_date);
+        return date.getFullYear() || null;
+    }
 
-    return date.getFullYear() || null;
+    const firstAirDate = new Date(resultJSON.first_air_date );
+    const lastAirDate = new Date(resultJSON.last_air_date );
+    const period = !isNaN(lastAirDate.getFullYear()) ? `${firstAirDate.getFullYear()} - ${lastAirDate.getFullYear()}` : firstAirDate.getFullYear();
+
+    return period || null;
 };
 
 export const getLanguage = (resultJSON, languages) => {

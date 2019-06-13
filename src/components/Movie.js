@@ -5,7 +5,7 @@ import classes from './Movie.module.css';
 import icons from '../assets/icons';
 
 import actions from '../store/actions';
-import { getImageUrl, getLanguage, getTitle, getYear, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
+import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
 import { getTmdbConfig } from '../utils/fetch';
 
 const Movie = props => {
@@ -45,7 +45,7 @@ const Movie = props => {
     } = props.data;
     const imageUrl = getImageUrl(tmdbConfig.images, poster_path, 4);
     const title = getTitle(props.data);
-    const year = getYear(props.data);
+    const year = getPeriod(props.data);
     const language = getLanguage(props.data, tmdbConfig.languages);
     const duration = getHoursAndMinutes(runtime);
     const dateReleased = (new Date(release_date)).toLocaleDateString();
@@ -95,7 +95,7 @@ const Movie = props => {
             return (
                 <img
                     className={`${classes.ImageContainer} hoverable`}
-                    key={image.file_path}
+                    key={`${image.file_path}-${idx}`}
                     src={getImageUrl(tmdbConfig.images, image.file_path, 4)}
                     onClick={() => showImage(idx)}
                     alt={`From the movie ${title}`}/>
@@ -116,7 +116,7 @@ const Movie = props => {
                     <div className={`${classes.PosterSectionDetails} hide-on-small-only`}>
                         <h2 className={classes.Title}>{title}</h2>
                         <div className={classes.ReleaseYear}>{year}</div>
-                        <div className={classes.MediaType}>Movie</div>
+                        <div className={classes.MediaType}>${mediaType}</div>
                         {
                             tagline &&
                             <div className={classes.Tagline}>
@@ -186,7 +186,7 @@ const Movie = props => {
             <div ref={imagePreviewContainer} className={`${classes.ImagePreviewContainer} hide`}>
                 <div className={classes.CloseImagePreviewButton} onClick={closePreview}>{icons.close}</div>
                 <div className={classes.ImagePreview}>
-                    <img src={url} alt="Preview" />
+                    <img src={url ? url : ''} alt="Preview" />
                     {
                         imagePreviewIndex !== null && imagePreviewIndex !== 0 &&
                         <button
