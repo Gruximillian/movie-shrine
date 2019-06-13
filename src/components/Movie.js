@@ -57,7 +57,7 @@ const Movie = props => {
     const videoList = () => {
         if (!movieVideos) return null;
         if (movieVideos.length === 0) return (
-            <p className={classes.NoVideosMessage}>There are no available videos for {title}!</p>
+            <p className={classes.NoMediaMessage}>There are no available videos for {title}!</p>
         );
 
         return movieVideos && movieVideos.map(video => {
