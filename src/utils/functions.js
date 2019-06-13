@@ -27,3 +27,14 @@ export const getHoursAndMinutes = minutes => {
 
     return `${hours} h ${min} min`;
 };
+
+export const getVideoUrl = (videoData) => {
+    switch (videoData.site.toLowerCase()) {
+        case 'youtube':
+            return `https://www.youtube.com/embed/${videoData.key}?controls=1`;
+        case 'vimeo':
+            return `https://player.vimeo.com/video/${videoData.key}`;
+        default:
+            return null;
+    }
+};

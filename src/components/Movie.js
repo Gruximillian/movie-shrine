@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classes from './Movie.module.css';
 
 import actions from '../store/actions';
-import { getImageUrl, getLanguage, getTitle, getYear, getHoursAndMinutes } from '../utils/functions';
+import { getImageUrl, getLanguage, getTitle, getYear, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
 import { getTmdbConfig } from '../utils/fetch';
 
 const Movie = props => {
@@ -53,26 +53,21 @@ const Movie = props => {
     // console.log(props.tmdbConfiguration.images.poster_sizes);
     // console.log(props.data);
     // console.log(movieImages);
-    console.log(movieVideos);
     // ${movieVideos[0].key}
 
     const videoList = () => {
         if (!movieVideos) return null;
         if (movieVideos.length === 0) return (
-        // if (true) return ( // FOR TESTING; TO BE REMOVED
             <p className={classes.NoVideosMessage}>There are no available videos for {title}!</p>
         );
 
         return movieVideos && movieVideos.map(video => {
-            // must investigate which sites are supported for videos and make appropriate templates
-            const url = video.site.toLowerCase() === 'youtube' ? `https://www.youtube.com/embed/${video.key}?controls=1` : '';
-
             return (
                 <iframe
                     className={classes.VideoContainer}
                     key={video.id}
                     title={video.name}
-                    src={url}
+                    src={getVideoUrl(video)}
                     frameBorder="0"
                     allowFullScreen> </iframe>
             )
