@@ -107,11 +107,17 @@
     border-radius: 0;
     color: rgba(255, 255, 255, 0.1);
     font-size: 60px;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
 .ImagePreviewNavButton:hover {
     background-color: rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.2);
+}
+
+.ImagePreviewNavButton:focus {
+    box-shadow: none;
+    background-color: transparent;
 }
 
 .PrevImage {

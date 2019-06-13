@@ -10,7 +10,7 @@ import { getTmdbConfig } from '../utils/fetch';
 
 const Movie = props => {
     const imagePreviewContainer = useRef(null);
-    const [ imagePreviewUrl, setImagePreviewUrl ] = useState('');
+    const [ imagePreviewIndex, setImagePreviewIndex ] = useState(null);
     const tmdbConfig = props.tmdbConfiguration;
     const configPresent = Object.keys(tmdbConfig).length > 0;
 
@@ -53,10 +53,6 @@ const Movie = props => {
     const movieGenres = genresArray && genresArray.join(', ');
     const movieImages = images && images.backdrops;
     const movieVideos = videos && videos.results;
-    // console.log(props.tmdbConfiguration.images.poster_sizes);
-    // console.log(props.data);
-    // console.log(movieImages);
-    // ${movieVideos[0].key}
 
     const videoList = () => {
         if (!movieVideos) return null;
@@ -80,14 +76,13 @@ const Movie = props => {
     const showImage = imageIndex => {
         imagePreviewContainer.current.classList.remove('hide');
         document.body.classList.add('scroll-lock');
-        const url = getImageUrl(tmdbConfig.images, movieImages[imageIndex].file_path, 6);
-        setImagePreviewUrl(url);
+        setImagePreviewIndex(imageIndex);
     };
 
     const closePreview = () => {
-        document.body.classList.remove('scroll-lock');
         imagePreviewContainer.current.classList.add('hide');
-        setImagePreviewUrl('');
+        document.body.classList.remove('scroll-lock');
+        setImagePreviewIndex(null)
     };
 
     const imageList = () => {
@@ -107,6 +102,8 @@ const Movie = props => {
             )
          });
     };
+
+    const url = imagePreviewIndex !== null && getImageUrl(tmdbConfig.images, movieImages[imagePreviewIndex].file_path, 6);
 
     return (
         <main className={classes.Main}>
@@ -189,9 +186,23 @@ const Movie = props => {
             <div ref={imagePreviewContainer} className={`${classes.ImagePreviewContainer} hide`}>
                 <div className={classes.CloseImagePreviewButton} onClick={closePreview}>{icons.close}</div>
                 <div className={classes.ImagePreview}>
-                    <img src={imagePreviewUrl} alt="Preview" />
-                    <button onClick={() => showImage()} className={`btn ${classes.ImagePreviewNavButton} ${classes.PrevImage}`}>&laquo;</button>
-                    <button onClick={() => showImage()} className={`btn ${classes.ImagePreviewNavButton} ${classes.NextImage}`}>&raquo;</button>
+                    <img src={url} alt="Preview" />
+                    {
+                        imagePreviewIndex !== null && imagePreviewIndex !== 0 &&
+                        <button
+                            onClick={() => showImage(imagePreviewIndex - 1)}
+                            className={`btn ${classes.ImagePreviewNavButton} ${classes.PrevImage}`}>
+                            &laquo;
+                        </button>
+                    }
+                    {
+                        imagePreviewIndex !== null && imagePreviewIndex !== movieImages.length - 1 &&
+                        <button
+                            onClick={() => showImage(imagePreviewIndex + 1)}
+                            className={`btn ${classes.ImagePreviewNavButton} ${classes.NextImage}`}>
+                            &raquo;
+                        </button>
+                    }
                 </div>
             </div>
         </main>
