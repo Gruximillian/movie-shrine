@@ -11,6 +11,8 @@
 .Title {
     text-align: center;
     margin: 20px 0;
+    font-size: 2rem;
+    padding: 0 30px;
 }
 
 .Poster {
@@ -22,12 +24,9 @@
     font-size: 0;
 }
 
-.PosterSectionDetails {
-
-}
-
-.DetailsSection {
-    padding: 20px 0;
+.DetailsSection,
+.VideosSection {
+    padding-top: 20px;
     width: 85%;
     margin: auto;
 }
@@ -37,16 +36,51 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.DetailsEntry:first-child {
+    padding-top: 0;
+}
+
 .DetailsSection > div {
     margin-bottom: 20px;
 }
 
+.DetailsSection > div:last-child {
+    margin-bottom: 0;
+}
+
 .DetailsLabel {
     font-weight: bold;
+    font-size: 16px;
 }
 
 .DetailsValue {
     font-style: italic;
+}
+
+.VideoContainer {
+    width: 100%;
+    height: 50vw;
+}
+
+.NoVideosMessage {
+    font-size: 20px;
+    color: var(--info-text-color);
+    font-style: italic;
+    margin-top: 0;
+}
+
+@media (min-width: 450px) {
+    .Videos {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .VideoContainer {
+        width: 48%;
+        height: 30vw;
+        margin-bottom: 20px;
+    }
 }
 
 @media (min-width: 600px) {
@@ -71,6 +105,8 @@
     .Title {
         margin-top: 0;
         text-align: right;
+        font-size: 3rem;
+        padding: 0 0 0 60px;
     }
 
     .ReleaseYear,
@@ -89,13 +125,23 @@
         font-weight: 300;
     }
 
-    .DetailsSection {
+    .DetailsSection,
+    .VideosSection  {
         width: 75%;
+        max-width: 1200px;
     }
 
+    .VideoContainer {
+        width: 48%;
+        height: 25vw;
+    }
 }
 
 @media (min-width: 1000px) {
+    .PosterSection {
+        margin-bottom: 30px;
+    }
+
     .DetailsSection {
         display: flex;
         justify-content: space-between;
@@ -117,5 +163,15 @@
 
     .Title {
         font-size: 4rem;
+    }
+
+    .Videos {
+        justify-content: space-around;
+    }
+
+    .VideoContainer {
+        width: 31.33%;
+        height: 15vw;
+        max-height: 250px;
     }
 }

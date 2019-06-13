@@ -53,7 +53,31 @@ const Movie = props => {
     // console.log(props.tmdbConfiguration.images.poster_sizes);
     // console.log(props.data);
     // console.log(movieImages);
-    // console.log(movieVideos);
+    console.log(movieVideos);
+    // ${movieVideos[0].key}
+
+    const videoList = () => {
+        if (!movieVideos) return null;
+        if (movieVideos.length === 0) return (
+        // if (true) return ( // FOR TESTING; TO BE REMOVED
+            <p className={classes.NoVideosMessage}>There are no available videos for {title}!</p>
+        );
+
+        return movieVideos && movieVideos.map(video => {
+            // must investigate which sites are supported for videos and make appropriate templates
+            const url = video.site.toLowerCase() === 'youtube' ? `https://www.youtube.com/embed/${video.key}?controls=1` : '';
+
+            return (
+                <iframe
+                    className={classes.VideoContainer}
+                    key={video.id}
+                    title={video.name}
+                    src={url}
+                    frameBorder="0"
+                    allowFullScreen> </iframe>
+            )
+        });
+    };
 
     return (
         <main className={classes.Main}>
@@ -116,6 +140,13 @@ const Movie = props => {
                 <div>
                     <strong className={classes.DetailsLabel}>Overview:</strong><br />
                     {overview}
+                </div>
+            </section>
+
+            <section className={classes.VideosSection}>
+                <p className={classes.DetailsLabel}>Videos</p>
+                <div className={classes.Videos}>
+                    { videoList() }
                 </div>
             </section>
         </main>
