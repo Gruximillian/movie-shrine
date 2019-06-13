@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
-import classes from './Movie.module.css';
+import classes from './MovieAndTV.module.css';
 import icons from '../assets/icons';
 
 import actions from '../store/actions';
