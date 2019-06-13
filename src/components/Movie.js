@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Movie.module.css';
+import icons from '../assets/icons';
 
 import actions from '../store/actions';
 import { getImageUrl, getLanguage, getTitle, getYear, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
 import { getTmdbConfig } from '../utils/fetch';
 
 const Movie = props => {
+    const imagePreviewContainer = useRef(null);
+    const [ imagePreviewUrl, setImagePreviewUrl ] = useState('');
     const tmdbConfig = props.tmdbConfiguration;
     const configPresent = Object.keys(tmdbConfig).length > 0;
 
@@ -74,6 +77,37 @@ const Movie = props => {
         });
     };
 
+    const showImage = imageIndex => {
+        imagePreviewContainer.current.classList.remove('hide');
+        document.body.classList.add('scroll-lock');
+        const url = getImageUrl(tmdbConfig.images, movieImages[imageIndex].file_path, 6);
+        setImagePreviewUrl(url);
+    };
+
+    const closePreview = () => {
+        document.body.classList.remove('scroll-lock');
+        imagePreviewContainer.current.classList.add('hide');
+        setImagePreviewUrl('');
+    };
+
+    const imageList = () => {
+        if (!movieImages) return null;
+        if (movieImages.length === 0) return (
+            <p className={classes.NoMediaMessage}>There are no available images for {title}!</p>
+        );
+
+        return movieImages && movieImages.map((image, idx) => {
+            return (
+                <img
+                    className={`${classes.ImageContainer} hoverable`}
+                    key={image.file_path}
+                    src={getImageUrl(tmdbConfig.images, image.file_path, 4)}
+                    onClick={() => showImage(idx)}
+                    alt={`From the movie ${title}`}/>
+            )
+         });
+    };
+
     return (
         <main className={classes.Main}>
             <section className={classes.PosterSection}>
@@ -138,12 +172,28 @@ const Movie = props => {
                 </div>
             </section>
 
-            <section className={classes.VideosSection}>
-                <p className={classes.DetailsLabel}>Videos</p>
+            <section className={classes.MediaSection}>
+                <p className={classes.DetailsLabel}>Videos:</p>
                 <div className={classes.Videos}>
                     { videoList() }
                 </div>
             </section>
+
+            <section className={classes.MediaSection}>
+                <p className={classes.DetailsLabel}>Images:</p>
+                <div className={classes.Images}>
+                    { imageList() }
+                </div>
+            </section>
+
+            <div ref={imagePreviewContainer} className={`${classes.ImagePreviewContainer} hide`}>
+                <div className={classes.CloseImagePreviewButton} onClick={closePreview}>{icons.close}</div>
+                <div className={classes.ImagePreview}>
+                    <img src={imagePreviewUrl} alt="Preview" />
+                    <button onClick={() => showImage()} className={`btn ${classes.ImagePreviewNavButton} ${classes.PrevImage}`}>&laquo;</button>
+                    <button onClick={() => showImage()} className={`btn ${classes.ImagePreviewNavButton} ${classes.NextImage}`}>&raquo;</button>
+                </div>
+            </div>
         </main>
     );
 };

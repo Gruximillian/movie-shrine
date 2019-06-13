@@ -25,7 +25,7 @@
 }
 
 .DetailsSection,
-.VideosSection {
+.MediaSection {
     padding-top: 20px;
     width: 85%;
     margin: auto;
@@ -61,17 +61,90 @@
     width: 100%;
     height: 50vw;
     background-color: var(--video-background-color);
+    margin-bottom: 10px;
 }
 
-.NoVideosMessage {
+.ImageContainer {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.NoMediaMessage {
     font-size: 20px;
     color: var(--info-text-color);
     font-style: italic;
     margin-top: 0;
 }
 
+.ImagePreviewContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--image-preview-backdrop-color);
+    overflow-y: auto;
+}
+
+.ImagePreview {
+    max-width: 80%;
+    margin: 50px auto;
+    position: relative;
+    font-size: 0;
+}
+
+.ImagePreview img {
+    width: 100%;
+}
+
+.ImagePreviewNavButton {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.1);
+    font-size: 60px;
+}
+
+.ImagePreviewNavButton:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.PrevImage {
+    left: 0;
+    text-align: left;
+}
+
+.NextImage {
+    right: 0;
+    text-align: right;
+}
+
+.CloseImagePreviewButton {
+    position: absolute;
+    top: 20px;
+    right: 10%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.CloseImagePreviewButton:hover svg {
+    fill: #fff;
+}
+
+.CloseImagePreviewButton svg {
+    width: 100%;
+    height: 100%;
+}
+
 @media (min-width: 450px) {
-    .Videos {
+    .Videos,
+    .Images {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -80,6 +153,11 @@
     .VideoContainer {
         width: 48%;
         height: 30vw;
+        margin-bottom: 20px;
+    }
+
+    .ImageContainer {
+        width: 48%;
         margin-bottom: 20px;
     }
 }
@@ -127,7 +205,7 @@
     }
 
     .DetailsSection,
-    .VideosSection  {
+    .MediaSection  {
         width: 75%;
         max-width: 1200px;
     }
@@ -166,7 +244,8 @@
         font-size: 4rem;
     }
 
-    .Videos {
+    .Videos,
+    .Images {
         justify-content: space-around;
     }
 
@@ -174,5 +253,9 @@
         width: 31.33%;
         height: 15vw;
         max-height: 250px;
+    }
+
+    .ImageContainer {
+        width: 31.33%;
     }
 }
