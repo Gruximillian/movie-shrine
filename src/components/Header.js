@@ -9,7 +9,7 @@ import actions from '../store/actions';
 const Header = props => {
     return (
         <header className={classes.Header}>
-            <Link to="/" onClick={props.resetState}>
+            <Link to="/" className={classes.HeaderLink} onClick={props.resetState}>
                 {icons.logo}
                 <h1 className={classes.Title}>The Movie Shrine</h1>
             </Link>

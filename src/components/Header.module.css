@@ -1,8 +1,13 @@
 .Header {
+    height: 50px;
     padding: 5px 0;
-    height: 40px;
     background-color: var(--dark-blue-grey);
     box-shadow: 0 -1px 5px 1px var(--box-shadow-color);
+}
+
+.HeaderLink {
+    display: inline-block;
+    height: 100%;
 }
 
 .Header [class="logo"] {
@@ -18,26 +23,28 @@
     display: inline-block;
     font-size: 20px;
     vertical-align: middle;
-    margin: 0 0 0 10px;
+    margin: 0;
     color: var(--highlight-color);
 }
 
 @media (min-width: 400px) {
     .Header {
         height: 60px;
+        padding-left: 20px;
     }
     .Title {
         font-size: 24px;
+        margin-left: 20px;
     }
 }
 
 @media (min-width: 768px) {
     .Header {
         height: 80px;
-        padding-left: 30px;
+        padding-left: 50px;
     }
     .Title {
         font-size: 35px;
-        margin-left: 30px;
+        margin-left: 40px;
     }
 }
