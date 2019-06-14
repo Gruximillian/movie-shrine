@@ -11,9 +11,9 @@ const MediaDetails = props => {
     const mediaType = props.mediaType;
 
     useEffect(() => {
-        getMediaDetails(id, mediaType).then(data => {
-            setMediaDetails(data);
-        });
+        getMediaDetails(id, mediaType)
+            .then(data => setMediaDetails(data))
+            .catch(error => console.log(error));
     }, [id, mediaType]);
 
     return mediaType === 'tv' ? <TV data={mediaDetails}/> : <Movie data={mediaDetails}/>;

@@ -27,14 +27,42 @@
     color: var(--highlight-color);
 }
 
+.LoginSection {
+    height: 100%;
+    margin-right: 15px;
+    float: right;
+}
+
+.LoginIcon {
+    height: 100%;
+    fill: var(--light-text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.LoginIcon:hover {
+    fill: var(--highlight-color);
+}
+
+.LoginIcon svg {
+    height: 60%;
+    max-height: 30px;
+}
+
 @media (min-width: 400px) {
     .Header {
         height: 60px;
         padding-left: 20px;
     }
+
     .Title {
         font-size: 24px;
         margin-left: 20px;
+    }
+
+    .LoginSection {
+        margin-right: 30px;
     }
 }
 
@@ -43,6 +71,7 @@
         height: 80px;
         padding-left: 50px;
     }
+
     .Title {
         font-size: 35px;
         margin-left: 40px;
