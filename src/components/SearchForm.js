@@ -31,7 +31,7 @@ const SearchForm = props => {
         <form onSubmit={handleSubmit}>
             <div className={`${classes.Search} input-field`}>
                 <input id="search-term" type="text" value={searchTerm} onChange={handleChange} />
-                <label htmlFor="search-term">Search for the movies, TV shows or people</label>
+                <label htmlFor="search-term">Search for movies, TV shows or people</label>
             </div>
             <button className={`btn`}>Search</button>
         </form>

@@ -116,7 +116,7 @@ const Movie = props => {
                     <div className={`${classes.PosterSectionDetails} hide-on-small-only`}>
                         <h2 className={classes.Title}>{title}</h2>
                         <div className={classes.ReleaseYear}>{year}</div>
-                        <div className={classes.MediaType}>${mediaType}</div>
+                        <div className={classes.MediaType}>{mediaType}</div>
                         {
                             tagline &&
                             <div className={classes.Tagline}>

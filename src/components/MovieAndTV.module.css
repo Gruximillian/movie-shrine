@@ -67,6 +67,8 @@
 .ImageContainer {
     width: 100%;
     margin-bottom: 10px;
+    cursor: pointer;
+    box-shadow: 1px 1px 4px -1px var(--box-shadow-color);
 }
 
 .NoMediaMessage {
@@ -176,6 +178,7 @@
     .PosterAndDetails {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     .Poster {
@@ -185,6 +188,7 @@
 
     .PosterSectionDetails {
         width: 60%;
+        align-self: flex-start;
     }
 
     .Title {
