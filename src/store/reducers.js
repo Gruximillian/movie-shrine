@@ -72,6 +72,13 @@ const reducer = (state = initialState, action) => {
         }
     }
 
+    if (action.type === actionTypes.SET_SHOW_IMAGE_MODAL) {
+        return {
+            ...state,
+            showImageModal: action.show
+        }
+    }
+
     return state;
 };
 

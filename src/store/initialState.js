@@ -7,5 +7,6 @@ export default {
     searchHasResults: true,
     initModalClose: false,
     showBackdrop: false,
-    showLoginModal: false
+    showLoginModal: false,
+    showImageModal: false,
 };

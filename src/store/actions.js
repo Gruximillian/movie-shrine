@@ -37,5 +37,9 @@ export default {
     setShowLoginModal: show => ({
         type: actionTypes.SET_SHOW_LOGIN_MODAL,
         show
+    }),
+    setShowImageModal: show => ({
+        type: actionTypes.SET_SHOW_IMAGE_MODAL,
+        show
     })
 };
