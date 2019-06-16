@@ -107,7 +107,7 @@ const Media = props => {
                     onClick={() => initShowModal(idx)}
                     alt={`From the ${mediaTypeFull} ${title}`}/>
             )
-         });
+        });
     };
 
     const initShowModal = imageIndex => {
