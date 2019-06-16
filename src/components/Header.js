@@ -6,11 +6,10 @@ import classes from './Header.module.css';
 import icons from '../assets/icons';
 import actions from '../store/actions';
 
-import { getAuthToken } from '../utils/fetch';
-
 const Header = props => {
     const initiateLogin = () => {
-        getAuthToken();
+        props.setShowBackdrop(true);
+        props.setShowLoginModal(true);
     };
 
     return (
@@ -28,7 +27,9 @@ const Header = props => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        resetState: () => dispatch(actions.resetState())
+        resetState: () => dispatch(actions.resetState()),
+        setShowBackdrop: show => dispatch(actions.setShowBackdrop(show)),
+        setShowLoginModal: show => dispatch(actions.setShowLoginModal(show))
     }
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect, useCallback }  from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -66,6 +66,15 @@ const App = props => {
         }
     }, []);
 
+    const handleKeyDown = useCallback(event => {
+        if (event.key !== 'Escape') return;
+        props.setInitModalClose(true);
+    }, [props]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+    }, [handleKeyDown]);
+
     useEffect(() => {
         getTmdbConfig(setTmdbConfiguration);
     }, [setTmdbConfiguration]);
@@ -83,7 +92,7 @@ const App = props => {
     return (
         <BrowserRouter>
             <div className={appClass}>
-                <LoginModal/>
+                {props.showLoginModal && <LoginModal/>}
                 <Header/>
                 <Route exact path="/" component={Home} />
                 <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
@@ -96,13 +105,15 @@ const App = props => {
 const mapStateToProps = state => {
     return {
         tmdbConfiguration: state.tmdbConfiguration,
-        showBackdrop: state.showBackdrop
+        showBackdrop: state.showBackdrop,
+        showLoginModal: state.showLoginModal
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config))
+        setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
+        setInitModalClose: initModalClose => dispatch(actions.setInitModalClose(initModalClose))
     }
 };
 

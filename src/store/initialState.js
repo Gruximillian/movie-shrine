@@ -5,5 +5,7 @@ export default {
         results: []
     },
     searchHasResults: true,
-    showBackdrop: false
+    initModalClose: false,
+    showBackdrop: false,
+    showLoginModal: false
 };

@@ -26,8 +26,16 @@ export default {
         type: actionTypes.SET_SEARCH_HAS_RESULTS,
         hasResults
     }),
+    setInitModalClose: initModalClose => ({
+        type: actionTypes.SET_INIT_MODAL_CLOSE,
+        initModalClose
+    }),
     setShowBackdrop: show => ({
         type: actionTypes.SET_SHOW_BACKDROP,
+        show
+    }),
+    setShowLoginModal: show => ({
+        type: actionTypes.SET_SHOW_LOGIN_MODAL,
         show
     })
 };

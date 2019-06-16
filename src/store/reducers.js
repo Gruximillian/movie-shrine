@@ -51,10 +51,24 @@ const reducer = (state = initialState, action) => {
         }
     }
 
+    if (action.type === actionTypes.SET_INIT_MODAL_CLOSE) {
+        return {
+            ...state,
+            initModalClose: action.initModalClose
+        }
+    }
+
     if (action.type === actionTypes.SET_SHOW_BACKDROP) {
         return {
             ...state,
             showBackdrop: action.show
+        }
+    }
+
+    if (action.type === actionTypes.SET_SHOW_LOGIN_MODAL) {
+        return {
+            ...state,
+            showLoginModal: action.show
         }
     }
 
