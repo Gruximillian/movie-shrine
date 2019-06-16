@@ -69,6 +69,7 @@
     margin-bottom: 10px;
     cursor: pointer;
     box-shadow: 1px 1px 4px -1px var(--box-shadow-color);
+    align-self: flex-start;
 }
 
 .NoMediaMessage {

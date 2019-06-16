@@ -17,7 +17,7 @@ const App = props => {
     const setTmdbConfiguration = props.setTmdbConfiguration;
     const tmdbConfig = props.tmdbConfiguration;
 
-    const startSession = token => {
+    const startSession = useCallback(token => {
         const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=38535774dcac925adbeee9476d08b67d`;
         const body = JSON.stringify({
             "request_token": token
@@ -36,7 +36,7 @@ const App = props => {
                 console.log(response);
             })
             .catch(error => console.log(error));
-    };
+    }, []);
 
     const getDetails = sessionId => {
         const url = `https://api.themoviedb.org/3/account?api_key=38535774dcac925adbeee9476d08b67d&session_id=${sessionId}`;
@@ -64,7 +64,7 @@ const App = props => {
         } else if (searchObject.denied === "true") {
             window.location = startingUrl;
         }
-    }, []);
+    }, [startSession]);
 
     const handleKeyDown = useCallback(event => {
         if (event.key !== 'Escape') return;
