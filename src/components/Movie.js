@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './MovieAndTV.module.css';
@@ -9,10 +9,10 @@ import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getV
 import { getTmdbConfig } from '../utils/fetch';
 
 const Movie = props => {
-    const imagePreviewContainer = useRef(null);
     const [ imagePreviewIndex, setImagePreviewIndex ] = useState(null);
     const tmdbConfig = props.tmdbConfiguration;
     const configPresent = Object.keys(tmdbConfig).length > 0;
+    const setShowBackdrop = props.setShowBackdrop;
 
     useEffect(() => {
         // make sure the tmdb configuration is set if the page gets reloaded
@@ -26,6 +26,10 @@ const Movie = props => {
             getTmdbConfig(props.setTmdbConfiguration);
         }
     });
+
+    useEffect(() => {
+        setShowBackdrop(imagePreviewIndex !== null);
+    }, [imagePreviewIndex, setShowBackdrop]);
 
     // not rendering anything until we get the tmdbConfig info
     if (!configPresent) return null;
@@ -74,15 +78,11 @@ const Movie = props => {
     };
 
     const showImage = imageIndex => {
-        imagePreviewContainer.current.classList.remove('hide');
-        document.body.classList.add('scroll-lock');
         setImagePreviewIndex(imageIndex);
     };
 
     const closePreview = () => {
-        imagePreviewContainer.current.classList.add('hide');
-        document.body.classList.remove('scroll-lock');
-        setImagePreviewIndex(null)
+        setImagePreviewIndex(null);
     };
 
     const imageList = () => {
@@ -183,28 +183,32 @@ const Movie = props => {
                 </div>
             </section>
 
-            <div ref={imagePreviewContainer} className={`${classes.ImagePreviewContainer} hide`}>
-                <div className={classes.CloseImagePreviewButton} onClick={closePreview}>{icons.close}</div>
-                <div className={classes.ImagePreview}>
-                    <img src={url ? url : ''} alt="Preview" />
-                    {
-                        imagePreviewIndex !== null && imagePreviewIndex !== 0 &&
-                        <button
-                            onClick={() => showImage(imagePreviewIndex - 1)}
-                            className={`btn ${classes.ImagePreviewNavButton} ${classes.PrevImage}`}>
-                            &laquo;
-                        </button>
-                    }
-                    {
-                        imagePreviewIndex !== null && imagePreviewIndex !== movieImages.length - 1 &&
-                        <button
-                            onClick={() => showImage(imagePreviewIndex + 1)}
-                            className={`btn ${classes.ImagePreviewNavButton} ${classes.NextImage}`}>
-                            &raquo;
-                        </button>
-                    }
+            {
+                imagePreviewIndex !== null &&
+
+                <div className={classes.ImagePreviewContainer}>
+                    <div className={classes.CloseImagePreviewButton} onClick={closePreview}>{icons.close}</div>
+                    <div className={classes.ImagePreview}>
+                        <img src={url ? url : ''} alt="Preview"/>
+                        {
+                            imagePreviewIndex !== 0 &&
+                            <button
+                                onClick={() => showImage(imagePreviewIndex - 1)}
+                                className={`btn ${classes.ImagePreviewNavButton} ${classes.PrevImage}`}>
+                                &laquo;
+                            </button>
+                        }
+                        {
+                            imagePreviewIndex !== movieImages.length - 1 &&
+                            <button
+                                onClick={() => showImage(imagePreviewIndex + 1)}
+                                className={`btn ${classes.ImagePreviewNavButton} ${classes.NextImage}`}>
+                                &raquo;
+                            </button>
+                        }
+                    </div>
                 </div>
-            </div>
+            }
         </main>
     );
 };
@@ -217,7 +221,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config))
+        setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
+        setShowBackdrop: show => dispatch(actions.setShowBackdrop(show))
     }
 };
 

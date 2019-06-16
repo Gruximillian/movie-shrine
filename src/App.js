@@ -4,10 +4,14 @@ import { connect } from 'react-redux';
 
 import Header from './components/Header';
 import Home from './components/Home';
+import LoginModal from './components/LoginModal';
 import MediaDetails from './containers/MediaDetails';
+
+import classes from './App.module.css';
 
 import actions from './store/actions';
 import { getTmdbConfig } from './utils/fetch';
+import { toggleBodyScroll } from './utils/functions';
 
 const App = props => {
     const setTmdbConfiguration = props.setTmdbConfiguration;
@@ -70,19 +74,29 @@ const App = props => {
         localStorage.setItem('movieShrineTmdbConfig', JSON.stringify(tmdbConfig));
     }, [tmdbConfig]);
 
+    useEffect(() => {
+        toggleBodyScroll(props.showBackdrop);
+    }, [props.showBackdrop]);
+
+    const appClass = props.showBackdrop ? `${classes.Backdrop} ${classes.MovieShrineApp}` : classes.MovieShrineApp;
+
     return (
         <BrowserRouter>
-            <Header/>
-            <Route exact path="/" component={Home} />
-            <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
-            <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />
+            <div className={appClass}>
+                <LoginModal/>
+                <Header/>
+                <Route exact path="/" component={Home} />
+                <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
+                <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />
+            </div>
         </BrowserRouter>
     );
 };
 
 const mapStateToProps = state => {
     return {
-        tmdbConfiguration: state.tmdbConfiguration
+        tmdbConfiguration: state.tmdbConfiguration,
+        showBackdrop: state.showBackdrop
     }
 };
 

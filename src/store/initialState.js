@@ -4,5 +4,6 @@ export default {
     searchResults: {
         results: []
     },
-    searchHasResults: true
+    searchHasResults: true,
+    showBackdrop: false
 };

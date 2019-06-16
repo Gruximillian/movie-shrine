@@ -41,3 +41,11 @@ export const getVideoUrl = videoData => {
 
     return null;
 };
+
+export const toggleBodyScroll = lock => {
+    if (lock) {
+        document.body.classList.add('scroll-lock');
+    } else {
+        document.body.classList.remove('scroll-lock');
+    }
+};

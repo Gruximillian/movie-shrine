@@ -25,5 +25,9 @@ export default {
     setSearchHasResults: hasResults => ({
         type: actionTypes.SET_SEARCH_HAS_RESULTS,
         hasResults
+    }),
+    setShowBackdrop: show => ({
+        type: actionTypes.SET_SHOW_BACKDROP,
+        show
     })
 };

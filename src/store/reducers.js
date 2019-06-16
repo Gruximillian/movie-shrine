@@ -51,6 +51,13 @@ const reducer = (state = initialState, action) => {
         }
     }
 
+    if (action.type === actionTypes.SET_SHOW_BACKDROP) {
+        return {
+            ...state,
+            showBackdrop: action.show
+        }
+    }
+
     return state;
 };
 
