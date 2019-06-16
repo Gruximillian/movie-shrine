@@ -25,6 +25,7 @@
     vertical-align: middle;
     margin: 0;
     color: var(--highlight-color);
+    font-family: 'Chow Fun', cursive;
 }
 
 .LoginSection {
