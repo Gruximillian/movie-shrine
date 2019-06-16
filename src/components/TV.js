@@ -2,17 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './MovieAndTV.module.css';
-import icons from '../assets/icons';
+
+import ImageViewModal from './ImageViewModal';
 
 import actions from '../store/actions';
 import { getImageUrl, getLanguage, getTitle, getPeriod, getVideoUrl } from '../utils/functions';
 import { getTmdbConfig } from '../utils/fetch';
 
 const TV = props => {
-    const [ imagePreviewIndex, setImagePreviewIndex ] = useState(null);
-    const tmdbConfig = props.tmdbConfiguration;
-    const configPresent = Object.keys(tmdbConfig).length > 0;
-    const setShowBackdrop = props.setShowBackdrop;
+    const [ initialImageIndex, setInitialImageIndex ] = useState(null);
+    const {
+        data,
+        tmdbConfiguration,
+        showImageModal,
+        setShowImageModal,
+        setShowBackdrop
+    } = props;
+
+    const configPresent = Object.keys(tmdbConfiguration).length > 0;
 
     useEffect(() => {
         // make sure the tmdb configuration is set if the page gets reloaded
@@ -26,10 +33,6 @@ const TV = props => {
             getTmdbConfig(props.setTmdbConfiguration);
         }
     });
-
-    useEffect(() => {
-        setShowBackdrop(imagePreviewIndex !== null);
-    }, [imagePreviewIndex, setShowBackdrop]);
 
     // not rendering anything until we get the tmdbConfig info
     if (!configPresent) return null;
@@ -49,11 +52,11 @@ const TV = props => {
         number_of_episodes,
         number_of_seasons,
         status
-    } = props.data;
-    const imageUrl = getImageUrl(tmdbConfig.images, poster_path, 4);
-    const title = getTitle(props.data);
-    const year = getPeriod(props.data);
-    const language = getLanguage(props.data, tmdbConfig.languages);
+    } = data;
+    const imageUrl = getImageUrl(tmdbConfiguration.images, poster_path, 4);
+    const title = getTitle(data);
+    const year = getPeriod(data);
+    const language = getLanguage(data, tmdbConfiguration.languages);
     const firstAired = (new Date(first_air_date)).toLocaleDateString();
     const lastAired = (new Date(last_air_date)).toLocaleDateString();
     const genresArray = genres && genres.map(genre => genre.name);
@@ -80,14 +83,6 @@ const TV = props => {
         });
     };
 
-    const showImage = imageIndex => {
-        setImagePreviewIndex(imageIndex);
-    };
-
-    const closePreview = () => {
-        setImagePreviewIndex(null)
-    };
-
     const imageList = () => {
         if (!movieImages) return null;
         if (movieImages.length === 0) return (
@@ -99,14 +94,18 @@ const TV = props => {
                 <img
                     className={`${classes.ImageContainer} hoverable`}
                     key={`${image.file_path}-${idx}`}
-                    src={getImageUrl(tmdbConfig.images, image.file_path, 4)}
-                    onClick={() => showImage(idx)}
+                    src={getImageUrl(tmdbConfiguration.images, image.file_path, 4)}
+                    onClick={() => initShowModal(idx)}
                     alt={`From the movie ${title}`}/>
             )
         });
     };
 
-    const url = imagePreviewIndex !== null && getImageUrl(tmdbConfig.images, movieImages[imagePreviewIndex].file_path, 6);
+    const initShowModal = imageIndex => {
+        setInitialImageIndex(imageIndex);
+        setShowBackdrop(true);
+        setShowImageModal(true);
+    };
 
     return (
         <main className={classes.Main}>
@@ -199,30 +198,8 @@ const TV = props => {
             </section>
 
             {
-                imagePreviewIndex !== null &&
-
-                <div className={classes.ImagePreviewContainer}>
-                    <div className={classes.CloseImagePreviewButton} onClick={closePreview}>{icons.close}</div>
-                    <div className={classes.ImagePreview}>
-                        <img src={url ? url : ''} alt="Preview"/>
-                        {
-                            imagePreviewIndex !== 0 &&
-                            <button
-                                onClick={() => showImage(imagePreviewIndex - 1)}
-                                className={`btn ${classes.ImagePreviewNavButton} ${classes.PrevImage}`}>
-                                &laquo;
-                            </button>
-                        }
-                        {
-                            imagePreviewIndex !== movieImages.length - 1 &&
-                            <button
-                                onClick={() => showImage(imagePreviewIndex + 1)}
-                                className={`btn ${classes.ImagePreviewNavButton} ${classes.NextImage}`}>
-                                &raquo;
-                            </button>
-                        }
-                    </div>
-                </div>
+                showImageModal &&
+                <ImageViewModal images={movieImages} initialImageIndex={initialImageIndex} />
             }
         </main>
     );
@@ -230,14 +207,16 @@ const TV = props => {
 
 const mapStateToProps = state => {
     return {
-        tmdbConfiguration: state.tmdbConfiguration
+        tmdbConfiguration: state.tmdbConfiguration,
+        showImageModal: state.showImageModal
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
-        setShowBackdrop: show => dispatch(actions.setShowBackdrop(show))
+        setShowBackdrop: show => dispatch(actions.setShowBackdrop(show)),
+        setShowImageModal: show => dispatch(actions.setShowImageModal(show))
     }
 };
 

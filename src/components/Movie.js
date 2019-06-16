@@ -51,9 +51,9 @@ const Movie = props => {
         videos
     } = data;
     const imageUrl = getImageUrl(tmdbConfiguration.images, poster_path, 4);
-    const title = getTitle(props.data);
-    const year = getPeriod(props.data);
-    const language = getLanguage(props.data, tmdbConfiguration.languages);
+    const title = getTitle(data);
+    const year = getPeriod(data);
+    const language = getLanguage(data, tmdbConfiguration.languages);
     const duration = getHoursAndMinutes(runtime);
     const dateReleased = (new Date(release_date)).toLocaleDateString();
     const genresArray = genres && genres.map(genre => genre.name);
