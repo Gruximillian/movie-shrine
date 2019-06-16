@@ -16,7 +16,7 @@ const MediaDetails = props => {
             .catch(error => console.log(error));
     }, [id, mediaType]);
 
-    return mediaType === 'tv' ? <TV data={mediaDetails}/> : <Movie data={mediaDetails}/>;
+    return mediaType === 'tv' ? <TV {...props} data={mediaDetails}/> : <Movie {...props} data={mediaDetails}/>;
 };
 
 export default MediaDetails;

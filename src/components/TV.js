@@ -6,12 +6,13 @@ import classes from './MovieAndTV.module.css';
 import ImageViewModal from './ImageViewModal';
 
 import actions from '../store/actions';
-import { getImageUrl, getLanguage, getTitle, getPeriod, getVideoUrl } from '../utils/functions';
+import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
 import { getTmdbConfig } from '../utils/fetch';
 
-const TV = props => {
+const Media = props => {
     const [ initialImageIndex, setInitialImageIndex ] = useState(null);
     const {
+        mediaType,
         data,
         tmdbConfiguration,
         showImageModal,
@@ -37,40 +38,47 @@ const TV = props => {
     // not rendering anything until we get the tmdbConfig info
     if (!configPresent) return null;
 
-    const mediaType = 'TV';
     const {
+        // general properties
         poster_path,
-        original_name,
         overview,
-        first_air_date,
-        last_air_date,
         tagline,
         vote_average,
         genres,
         images,
         videos,
+        // movie only properties
+        original_title,
+        release_date,
+        runtime,
+        // tv show only properties
+        original_name,
+        first_air_date,
+        last_air_date,
         number_of_episodes,
         number_of_seasons,
         status
     } = data;
-    const imageUrl = getImageUrl(tmdbConfiguration.images, poster_path, 4);
+    const posterUrl = getImageUrl(tmdbConfiguration.images, poster_path, 4);
     const title = getTitle(data);
     const year = getPeriod(data);
     const language = getLanguage(data, tmdbConfiguration.languages);
-    const firstAired = (new Date(first_air_date)).toLocaleDateString();
-    const lastAired = (new Date(last_air_date)).toLocaleDateString();
+    const duration = runtime && getHoursAndMinutes(runtime);
+    const dateReleased = release_date && (new Date(release_date)).toLocaleDateString();
+    const firstAired = first_air_date && (new Date(first_air_date)).toLocaleDateString();
+    const lastAired = last_air_date && (new Date(last_air_date)).toLocaleDateString();
     const genresArray = genres && genres.map(genre => genre.name);
-    const movieGenres = genresArray && genresArray.join(', ');
-    const movieImages = images && images.backdrops;
-    const movieVideos = videos && videos.results;
+    const mediaGenres = genresArray && genresArray.join(', ');
+    const mediaImages = images && images.backdrops;
+    const mediaVideos = videos && videos.results;
 
     const videoList = () => {
-        if (!movieVideos) return null;
-        if (movieVideos.length === 0) return (
+        if (!mediaVideos) return null;
+        if (mediaVideos.length === 0) return (
             <p className={classes.NoMediaMessage}>There are no available videos for {title}!</p>
         );
 
-        return movieVideos && movieVideos.map(video => {
+        return mediaVideos.map(video => {
             return (
                 <iframe
                     className={classes.VideoContainer}
@@ -84,19 +92,19 @@ const TV = props => {
     };
 
     const imageList = () => {
-        if (!movieImages) return null;
-        if (movieImages.length === 0) return (
+        if (!mediaImages) return null;
+        if (mediaImages.length === 0) return (
             <p className={classes.NoMediaMessage}>There are no available images for {title}!</p>
         );
 
-        return movieImages && movieImages.map((image, idx) => {
+        return mediaImages.map((image, idx) => {
             return (
                 <img
                     className={`${classes.ImageContainer} hoverable`}
                     key={`${image.file_path}-${idx}`}
                     src={getImageUrl(tmdbConfiguration.images, image.file_path, 4)}
                     onClick={() => initShowModal(idx)}
-                    alt={`From the movie ${title}`}/>
+                    alt={`From the ${mediaType === 'movie' ? 'movie' : 'tv show'} ${title}`}/>
             )
         });
     };
@@ -113,12 +121,14 @@ const TV = props => {
                 <h2 className={`${classes.Title} hide-on-med-and-up`}>{title}</h2>
 
                 <div className={classes.PosterAndDetails}>
-                    <img className={classes.Poster} src={imageUrl} alt={`Poster for ${mediaType.toLowerCase()} show ${title}`} />
+                    <img className={classes.Poster} src={posterUrl} alt={`Poster for ${mediaType.toLowerCase()} show ${title}`} />
 
                     <div className={`${classes.PosterSectionDetails} hide-on-small-only`}>
                         <h2 className={classes.Title}>{title}</h2>
                         <div className={classes.ReleaseYear}>{year}</div>
-                        <div className={classes.MediaType}>{mediaType} Show</div>
+                        <div className={classes.MediaType}>
+                            { mediaType === 'movie' ? 'Movie' : 'TV Show' }
+                        </div>
                         {
                             tagline &&
                             <div className={classes.Tagline}>
@@ -137,7 +147,7 @@ const TV = props => {
                     </div>
                     <div className={classes.DetailsEntry}>
                         <strong className={classes.DetailsLabel}>Original name:</strong>
-                        <i className={classes.DetailsValue}> {original_name}</i>
+                        <i className={classes.DetailsValue}> {original_title || original_name}</i>
                     </div>
                     <div className={classes.DetailsEntry}>
                         <strong className={classes.DetailsLabel}>Type:</strong>
@@ -147,25 +157,51 @@ const TV = props => {
                         <strong className={classes.DetailsLabel}>Language:</strong>
                         <i className={classes.DetailsValue}> {language}</i>
                     </div>
-                    <div className={classes.DetailsEntry}>
-                        <strong className={classes.DetailsLabel}>First air date:</strong>
-                        <i className={classes.DetailsValue}> {firstAired}</i>
-                    </div>
-                    <div className={classes.DetailsEntry}>
-                        <strong className={classes.DetailsLabel}>Last air date:</strong>
-                        <i className={classes.DetailsValue}> {lastAired}</i>
-                    </div>
-                    <div className={classes.DetailsEntry}>
-                        <strong className={classes.DetailsLabel}>Number of episodes:</strong>
-                        <i className={classes.DetailsValue}> {number_of_episodes}</i>
-                    </div>
-                    <div className={classes.DetailsEntry}>
-                        <strong className={classes.DetailsLabel}>Number of seasons:</strong>
-                        <i className={classes.DetailsValue}> {number_of_seasons}</i>
-                    </div>
+                    {
+                        dateReleased &&
+                        <div className={classes.DetailsEntry}>
+                            <strong className={classes.DetailsLabel}>Release date:</strong>
+                            <i className={classes.DetailsValue}> {dateReleased}</i>
+                        </div>
+                    }
+                    {
+                        duration &&
+                        <div className={classes.DetailsEntry}>
+                            <strong className={classes.DetailsLabel}>Runtime:</strong>
+                            <i className={classes.DetailsValue}> {duration}</i>
+                        </div>
+                    }
+                    {
+                        firstAired &&
+                        <div className={classes.DetailsEntry}>
+                            <strong className={classes.DetailsLabel}>First air date:</strong>
+                            <i className={classes.DetailsValue}> {firstAired}</i>
+                        </div>
+                    }
+                    {
+                        lastAired &&
+                        <div className={classes.DetailsEntry}>
+                            <strong className={classes.DetailsLabel}>Last air date:</strong>
+                            <i className={classes.DetailsValue}> {lastAired}</i>
+                        </div>
+                    }
+                    {
+                        number_of_episodes &&
+                        <div className={classes.DetailsEntry}>
+                            <strong className={classes.DetailsLabel}>Number of episodes:</strong>
+                            <i className={classes.DetailsValue}> {number_of_episodes}</i>
+                        </div>
+                    }
+                    {
+                        number_of_seasons &&
+                        <div className={classes.DetailsEntry}>
+                            <strong className={classes.DetailsLabel}>Number of seasons:</strong>
+                            <i className={classes.DetailsValue}> {number_of_seasons}</i>
+                        </div>
+                    }
                     <div className={classes.DetailsEntry}>
                         <strong className={classes.DetailsLabel}>Genres:</strong>
-                        <i className={classes.DetailsValue}> {movieGenres}</i>
+                        <i className={classes.DetailsValue}> {mediaGenres}</i>
                     </div>
                     <div className={classes.DetailsEntry}>
                         <strong className={classes.DetailsLabel}>Rating:</strong>
@@ -199,7 +235,7 @@ const TV = props => {
 
             {
                 showImageModal &&
-                <ImageViewModal images={movieImages} initialImageIndex={initialImageIndex} />
+                <ImageViewModal images={mediaImages} initialImageIndex={initialImageIndex} />
             }
         </main>
     );
@@ -220,4 +256,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TV);
+export default connect(mapStateToProps, mapDispatchToProps)(Media);
