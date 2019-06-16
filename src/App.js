@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Header from './components/Header';
 import Home from './components/Home';
 import LoginModal from './components/LoginModal';
-import MediaDetails from './containers/MediaDetails';
+import MediaDetails from './components/MediaDetails';
 
 import classes from './App.module.css';
 

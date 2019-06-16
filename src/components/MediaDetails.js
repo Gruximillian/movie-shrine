@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import classes from './MovieAndTV.module.css';
+import classes from './MediaDetails.module.css';
 
 import ImageViewModal from './ImageViewModal';
 
 import actions from '../store/actions';
 import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
-import { getTmdbConfig } from '../utils/fetch';
+import { getTmdbConfig, getMediaDetails } from '../utils/fetch';
 
-const Media = props => {
+const MediaDetails = props => {
     const [ initialImageIndex, setInitialImageIndex ] = useState(null);
+    const [ mediaDetails, setMediaDetails ] = useState({});
+    const id = props.match.params.id;
+
     const {
         mediaType,
-        data,
         tmdbConfiguration,
         showImageModal,
         setShowImageModal,
@@ -21,6 +23,12 @@ const Media = props => {
     } = props;
 
     const configPresent = Object.keys(tmdbConfiguration).length > 0;
+
+    useEffect(() => {
+        getMediaDetails(id, mediaType)
+            .then(data => setMediaDetails(data))
+            .catch(error => console.log(error));
+    }, [id, mediaType]);
 
     useEffect(() => {
         // make sure the tmdb configuration is set if the page gets reloaded
@@ -58,11 +66,11 @@ const Media = props => {
         number_of_episodes,
         number_of_seasons,
         status
-    } = data;
+    } = mediaDetails;
     const posterUrl = getImageUrl(tmdbConfiguration.images, poster_path, 4);
-    const title = getTitle(data);
-    const year = getPeriod(data);
-    const language = getLanguage(data, tmdbConfiguration.languages);
+    const title = getTitle(mediaDetails);
+    const year = getPeriod(mediaDetails);
+    const language = getLanguage(mediaDetails, tmdbConfiguration.languages);
     const duration = runtime && getHoursAndMinutes(runtime);
     const dateReleased = release_date && (new Date(release_date)).toLocaleDateString();
     const firstAired = first_air_date && (new Date(first_air_date)).toLocaleDateString();
@@ -255,4 +263,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Media);
+export default connect(mapStateToProps, mapDispatchToProps)(MediaDetails);
