@@ -71,6 +71,7 @@ const Media = props => {
     const mediaGenres = genresArray && genresArray.join(', ');
     const mediaImages = images && images.backdrops;
     const mediaVideos = videos && videos.results;
+    const mediaTypeFull = mediaType === 'movie' ? 'Movie' : 'TV Show';
 
     const videoList = () => {
         if (!mediaVideos) return null;
@@ -104,7 +105,7 @@ const Media = props => {
                     key={`${image.file_path}-${idx}`}
                     src={getImageUrl(tmdbConfiguration.images, image.file_path, 4)}
                     onClick={() => initShowModal(idx)}
-                    alt={`From the ${mediaType === 'movie' ? 'movie' : 'tv show'} ${title}`}/>
+                    alt={`From the ${mediaTypeFull} ${title}`}/>
             )
          });
     };
@@ -121,14 +122,12 @@ const Media = props => {
                 <h2 className={`${classes.Title} hide-on-med-and-up`}>{title}</h2>
 
                 <div className={classes.PosterAndDetails}>
-                    <img className={classes.Poster} src={posterUrl} alt={`Poster for ${mediaType.toLowerCase()} ${title}`} />
+                    <img className={classes.Poster} src={posterUrl} alt={`Poster for ${mediaTypeFull} ${title}`} />
 
                     <div className={`${classes.PosterSectionDetails} hide-on-small-only`}>
                         <h2 className={classes.Title}>{title}</h2>
                         <div className={classes.ReleaseYear}>{year}</div>
-                        <div className={classes.MediaType}>
-                            { mediaType === 'movie' ? 'Movie' : 'TV Show' }
-                        </div>
+                        <div className={classes.MediaType}>{mediaTypeFull}</div>
                         {
                             tagline &&
                             <div className={classes.Tagline}>
@@ -146,7 +145,7 @@ const Media = props => {
                         <i className={classes.DetailsValue}> {title}</i>
                     </div>
                     <div className={classes.DetailsEntry}>
-                        <strong className={classes.DetailsLabel}>Original title:</strong>
+                        <strong className={classes.DetailsLabel}>Original {mediaType === 'movie' ? 'title' : 'name'}:</strong>
                         <i className={classes.DetailsValue}> {original_title || original_name}</i>
                     </div>
                     <div className={classes.DetailsEntry}>
@@ -235,7 +234,7 @@ const Media = props => {
 
             {
                 showImageModal &&
-                    <ImageViewModal images={mediaImages} initialImageIndex={initialImageIndex} />
+                <ImageViewModal images={mediaImages} initialImageIndex={initialImageIndex} />
             }
         </main>
     );
