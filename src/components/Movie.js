@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './MovieAndTV.module.css';
-import icons from '../assets/icons';
+
+import ImageViewModal from './ImageViewModal';
 
 import actions from '../store/actions';
 import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
 import { getTmdbConfig } from '../utils/fetch';
 
 const Movie = props => {
-    const [ imagePreviewIndex, setImagePreviewIndex ] = useState(null);
+    const [ initialImageIndex, setInitialImageIndex ] = useState(null);
     const tmdbConfig = props.tmdbConfiguration;
     const configPresent = Object.keys(tmdbConfig).length > 0;
     const setShowBackdrop = props.setShowBackdrop;
@@ -28,8 +29,8 @@ const Movie = props => {
     });
 
     useEffect(() => {
-        setShowBackdrop(imagePreviewIndex !== null);
-    }, [imagePreviewIndex, setShowBackdrop]);
+        setShowBackdrop(initialImageIndex !== null);
+    }, [initialImageIndex, setShowBackdrop]);
 
     // not rendering anything until we get the tmdbConfig info
     if (!configPresent) return null;
@@ -77,12 +78,8 @@ const Movie = props => {
         });
     };
 
-    const showImage = imageIndex => {
-        setImagePreviewIndex(imageIndex);
-    };
-
     const closePreview = () => {
-        setImagePreviewIndex(null);
+        setInitialImageIndex(null);
     };
 
     const imageList = () => {
@@ -97,13 +94,11 @@ const Movie = props => {
                     className={`${classes.ImageContainer} hoverable`}
                     key={`${image.file_path}-${idx}`}
                     src={getImageUrl(tmdbConfig.images, image.file_path, 4)}
-                    onClick={() => showImage(idx)}
+                    onClick={() => setInitialImageIndex(idx)}
                     alt={`From the movie ${title}`}/>
             )
          });
     };
-
-    const url = imagePreviewIndex !== null && getImageUrl(tmdbConfig.images, movieImages[imagePreviewIndex].file_path, 6);
 
     return (
         <main className={classes.Main}>
@@ -184,30 +179,8 @@ const Movie = props => {
             </section>
 
             {
-                imagePreviewIndex !== null &&
-
-                <div className={classes.ImagePreviewContainer}>
-                    <div className={classes.CloseImagePreviewButton} onClick={closePreview}>{icons.close}</div>
-                    <div className={classes.ImagePreview}>
-                        <img src={url ? url : ''} alt="Preview"/>
-                        {
-                            imagePreviewIndex !== 0 &&
-                            <button
-                                onClick={() => showImage(imagePreviewIndex - 1)}
-                                className={`btn ${classes.ImagePreviewNavButton} ${classes.PrevImage}`}>
-                                &laquo;
-                            </button>
-                        }
-                        {
-                            imagePreviewIndex !== movieImages.length - 1 &&
-                            <button
-                                onClick={() => showImage(imagePreviewIndex + 1)}
-                                className={`btn ${classes.ImagePreviewNavButton} ${classes.NextImage}`}>
-                                &raquo;
-                            </button>
-                        }
-                    </div>
-                </div>
+                initialImageIndex !== null &&
+                    <ImageViewModal images={movieImages} initialImageIndex={initialImageIndex} closeCallback={closePreview} />
             }
         </main>
     );
