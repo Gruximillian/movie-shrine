@@ -57,3 +57,29 @@ export const backToStartingUrl = () => {
     if (!search) return;
     window.location = baseUrl;
 };
+
+export const getSearchObjectFromLocation = () => {
+    // check if this was a redirect from TMDB site after the request_token confirmation
+    const search = window.location.search;
+    // if not, do nothing
+    if (search === '') return null;
+
+    const params = search.substring(1).split('&');
+    const searchObject = {};
+
+    params.forEach(param => {
+        const [ key, value ] = param.split('=');
+        searchObject[key] = value;
+    });
+
+    return searchObject;
+};
+
+export const getSessionIdFromStorage = () => {
+    // load session data on mount if it is present
+    const session = localStorage.getItem('movieShrineSession');
+    if (!session) return;
+
+    const { session_id } = JSON.parse(session);
+    return session_id;
+};
