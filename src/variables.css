@@ -6,7 +6,8 @@
     --border-color: rgba(0, 0, 0, 0.25);
     --light-text-color: #fff;
     --highlight-color: #26a69a; /* teal lighten-1 */
-    --light-blue-grey: #455a64; /* blue-grey darken-2 */
+    --light-blue-grey: #78909c; /* blue-grey lighten-1 */
+    --blue-grey: #455a64; /* blue-grey darken-2 */
     --dark-blue-grey: #263238; /* blue-grey darken-4 */
     --box-shadow-color: #777;
     --info-text-color: #f4511e; /* deep-orange darken-1 */

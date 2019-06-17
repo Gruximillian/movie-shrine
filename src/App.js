@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import LoginModal from './components/LoginModal';
 import MediaDetails from './components/MediaDetails';
+import UserBar from './components/UserBar';
 
 import classes from './App.module.css';
 
@@ -81,6 +82,7 @@ const App = props => {
             <div className={appClass}>
                 {showLoginModal && !userDetails.username && <LoginModal/>}
                 <Header/>
+                {userDetails.username && <UserBar/>}
                 <Route exact path="/" component={Home} />
                 <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
                 <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />
