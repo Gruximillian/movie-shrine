@@ -10,8 +10,7 @@ import MediaDetails from './components/MediaDetails';
 import classes from './App.module.css';
 
 import actions from './store/actions';
-import config from './config/tmdb';
-import { getTmdbConfig, getDetails } from './utils/fetch';
+import { getTmdbConfig, getDetails, requestSessionId } from './utils/fetch';
 import { toggleBodyScroll, backToStartingUrl } from './utils/functions';
 
 const App = props => {
@@ -25,31 +24,12 @@ const App = props => {
         setInitModalClose
     } = props;
 
-    const getSessionId = useCallback(token => {
-        // after the user allows the request_token, get the new session_id using that token
-        const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=${config.api_key}`;
-        const body = JSON.stringify({
-            "request_token": token
-        });
+    const getSessionId = useCallback(requestSessionId);
 
-        fetch(url, {
-            method: 'POST',
-            body: body,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(response => {
-                const { success, session_id } = response;
-                if (success) {
-                    // save the session_id to localStorage so it can be used again
-                    localStorage.setItem('movieShrineSession', JSON.stringify({ session_id }));
-                    getDetails(session_id, setUserDetails);
-                }
-            })
-            .catch(error => console.log(error));
-    }, [setUserDetails]);
+    const handleKeyDown = useCallback(event => {
+        if (event.key !== 'Escape') return;
+        setInitModalClose(true);
+    }, [setInitModalClose]);
 
     useEffect(() => {
         // check if this was a redirect from TMDB site after the request_token confirmation
@@ -67,17 +47,16 @@ const App = props => {
 
         if (searchObject.request_token && searchObject.approved === 'true') {
             // if this was a redirect and the token is authorized, then get session_id
-            getSessionId(searchObject.request_token);
+            getSessionId(searchObject.request_token, setUserDetails);
         } else if (searchObject.denied === 'true') {
             // if token is not authorized, clear the location bar query parameters
             backToStartingUrl();
         }
-    }, [getSessionId]);
+    }, [getSessionId, setUserDetails]);
 
-    const handleKeyDown = useCallback(event => {
-        if (event.key !== 'Escape') return;
-        setInitModalClose(true);
-    }, [setInitModalClose]);
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+    }, [handleKeyDown]);
 
     useEffect(() => {
         // load session data on mount if it is present
@@ -87,10 +66,6 @@ const App = props => {
         const { session_id } = JSON.parse(session);
         if (session_id) getDetails(session_id, setUserDetails);
     }, [setUserDetails]);
-
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeyDown);
-    }, [handleKeyDown]);
 
     useEffect(() => {
         getTmdbConfig(setTmdbConfiguration);
