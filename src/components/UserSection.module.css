@@ -41,7 +41,7 @@
     background-color: var(--dark-blue-grey);
     color: var(--light-text-color);
     padding: 20px ;
-    z-index: 3000;
+    z-index: 2000;
     font-size: 12px;
     border-radius: 5px;
 }
@@ -51,6 +51,7 @@
     width: 100px;
     margin: auto;
 }
+
 .CloseButton {
     position: absolute;
     top: 10px;

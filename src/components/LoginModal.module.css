@@ -2,10 +2,19 @@
     width: 85%;
     margin-top: 30px;
     margin-left: 7.5%;
-    background-color: #fff;
     position: absolute;
     z-index: 2000;
     padding: 20px 40px;
+    background-color: var(--dark-blue-grey);
+    color: var(--light-text-color);
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.LoginButton {
+    display: block;
+    width: 100px;
+    margin: 15px auto;
 }
 
 .CloseModalButton {

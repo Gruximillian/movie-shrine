@@ -43,7 +43,7 @@ const LoginModal = props => {
             <div>
                 <p>To login you will be temporary redirected to "The Movie Database" website!</p>
                 <p>After you login you will be redirected back to this page and you will be able to add movies and TV shows to your "Favourites" and "Watch later" lists.</p>
-                <div onClick={initLogin} className="btn">Login</div>
+                <div onClick={initLogin} className={`${classes.LoginButton} btn btn-small`}>Login</div>
                 <p>You need a TMDB account in order to be able to login.</p>
             </div>
         </div>
