@@ -10,15 +10,24 @@ import MediaDetails from './components/MediaDetails';
 import classes from './App.module.css';
 
 import actions from './store/actions';
-import { getTmdbConfig } from './utils/fetch';
+import config from './config/tmdb';
+import { getTmdbConfig, getDetails } from './utils/fetch';
 import { toggleBodyScroll } from './utils/functions';
 
 const App = props => {
-    const setTmdbConfiguration = props.setTmdbConfiguration;
-    const tmdbConfig = props.tmdbConfiguration;
+    const {
+        tmdbConfiguration,
+        showBackdrop,
+        showLoginModal,
+        userDetails,
+        setTmdbConfiguration,
+        setUserDetails,
+        setInitModalClose
+    } = props;
 
-    const startSession = useCallback(token => {
-        const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=38535774dcac925adbeee9476d08b67d`;
+    const getSessionId = useCallback(token => {
+        // after the user allows the request_token, get the new session_id using that token
+        const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=${config.api_key}`;
         const body = JSON.stringify({
             "request_token": token
         });
@@ -32,23 +41,21 @@ const App = props => {
         })
             .then(response => response.json())
             .then(response => {
-                getDetails(response.session_id);
-                console.log(response);
+                const { success, session_id } = response;
+                if (success) {
+                    // save the session_id to localStorage so it can be used again
+                    localStorage.setItem('movieShrineSession', JSON.stringify({ session_id }));
+                    getDetails(session_id, setUserDetails);
+                }
             })
             .catch(error => console.log(error));
-    }, []);
-
-    const getDetails = sessionId => {
-        const url = `https://api.themoviedb.org/3/account?api_key=38535774dcac925adbeee9476d08b67d&session_id=${sessionId}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
-    };
+    }, [setUserDetails]);
 
     useEffect(() => {
+        // check if this was a redirect from TMDB site after the request_token confirmation
         const startingUrl = window.location.origin + window.location.pathname;
         const search = window.location.search;
+        // if not, do nothing
         if (search === '') return;
 
         const params = search.substring(1).split('&');
@@ -60,16 +67,27 @@ const App = props => {
         });
 
         if (searchObject.request_token && searchObject.approved === "true") {
-            startSession(searchObject.request_token);
+            // if this was a redirect and the token is authorized, then get session_id
+            getSessionId(searchObject.request_token);
         } else if (searchObject.denied === "true") {
+            // if token is not authorized, clear the location bar query parameters
             window.location = startingUrl;
         }
-    }, [startSession]);
+    }, [getSessionId]);
 
     const handleKeyDown = useCallback(event => {
         if (event.key !== 'Escape') return;
-        props.setInitModalClose(true);
-    }, [props]);
+        setInitModalClose(true);
+    }, [setInitModalClose]);
+
+    useEffect(() => {
+        // load session data on mount if it is present
+        const session = localStorage.getItem('movieShrineSession');
+        if (!session) return;
+
+        const { session_id } = JSON.parse(session);
+        if (session_id) getDetails(session_id, setUserDetails);
+    }, [setUserDetails]);
 
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown);
@@ -80,19 +98,19 @@ const App = props => {
     }, [setTmdbConfiguration]);
 
     useEffect(() => {
-        localStorage.setItem('movieShrineTmdbConfig', JSON.stringify(tmdbConfig));
-    }, [tmdbConfig]);
+        localStorage.setItem('movieShrineTmdbConfig', JSON.stringify(tmdbConfiguration));
+    }, [tmdbConfiguration]);
 
     useEffect(() => {
-        toggleBodyScroll(props.showBackdrop);
-    }, [props.showBackdrop]);
+        toggleBodyScroll(showBackdrop);
+    }, [showBackdrop]);
 
-    const appClass = props.showBackdrop ? `${classes.Backdrop} ${classes.MovieShrineApp}` : classes.MovieShrineApp;
+    const appClass = showBackdrop ? `${classes.Backdrop} ${classes.MovieShrineApp}` : classes.MovieShrineApp;
 
     return (
         <BrowserRouter>
             <div className={appClass}>
-                {props.showLoginModal && <LoginModal/>}
+                {showLoginModal && !userDetails.username && <LoginModal/>}
                 <Header/>
                 <Route exact path="/" component={Home} />
                 <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
@@ -106,14 +124,16 @@ const mapStateToProps = state => {
     return {
         tmdbConfiguration: state.tmdbConfiguration,
         showBackdrop: state.showBackdrop,
-        showLoginModal: state.showLoginModal
+        showLoginModal: state.showLoginModal,
+        userDetails: state.userDetails
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
-        setInitModalClose: initModalClose => dispatch(actions.setInitModalClose(initModalClose))
+        setInitModalClose: initModalClose => dispatch(actions.setInitModalClose(initModalClose)),
+        setUserDetails: details => dispatch(actions.setUserDetails(details)),
     }
 };
 

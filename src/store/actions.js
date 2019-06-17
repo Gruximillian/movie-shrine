@@ -41,5 +41,13 @@ export default {
     setShowImageModal: show => ({
         type: actionTypes.SET_SHOW_IMAGE_MODAL,
         show
+    }),
+    setLoggedIn: loggedIn => ({
+        type: actionTypes.SET_LOGGED_IN,
+        loggedIn
+    }),
+    setUserDetails: details => ({
+        type: actionTypes.SET_USER_DETAILS,
+        details
     })
 };

@@ -16,12 +16,27 @@ export const getMediaDetails = (id, mediaType) => {
 };
 
 export const getAuthToken = () => {
+    // first step in authentication process; get temporary request_token
     fetch(`${config.api_url_v3}/authentication/token/new?api_key=${config.api_key}`)
         .then(response => response.json())
         .then(response => {
             const location = window.location;
             const { request_token } = response;
+            // after getting the temporary request_token, redirect the user to allow or deny the token
+            // after the user action on the TMDB site is finished, the user is redirected back to the same Movie Shrine page
             window.location = `${config.auth_request_token_url}/${request_token}?redirect_to=${location}`;
+        })
+        .catch(error => console.log(error));
+};
+
+export const getDetails = (sessionId, action) => {
+    const url = `https://api.themoviedb.org/3/account?api_key=${config.api_key}&session_id=${sessionId}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            if (response.username) {
+                action(response); // save user details into state
+            }
         })
         .catch(error => console.log(error));
 };

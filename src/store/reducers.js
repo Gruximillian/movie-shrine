@@ -79,6 +79,20 @@ const reducer = (state = initialState, action) => {
         }
     }
 
+    if (action.type === actionTypes.SET_LOGGED_IN) {
+        return {
+            ...state,
+            loggedIn: action.loggedIn
+        }
+    }
+
+    if (action.type === actionTypes.SET_USER_DETAILS) {
+        return {
+            ...state,
+            userDetails: action.details
+        }
+    }
+
     return state;
 };
 
