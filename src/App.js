@@ -12,7 +12,7 @@ import classes from './App.module.css';
 import actions from './store/actions';
 import config from './config/tmdb';
 import { getTmdbConfig, getDetails } from './utils/fetch';
-import { toggleBodyScroll } from './utils/functions';
+import { toggleBodyScroll, backToStartingUrl } from './utils/functions';
 
 const App = props => {
     const {
@@ -53,7 +53,6 @@ const App = props => {
 
     useEffect(() => {
         // check if this was a redirect from TMDB site after the request_token confirmation
-        const startingUrl = window.location.origin + window.location.pathname;
         const search = window.location.search;
         // if not, do nothing
         if (search === '') return;
@@ -66,12 +65,12 @@ const App = props => {
             searchObject[key] = value;
         });
 
-        if (searchObject.request_token && searchObject.approved === "true") {
+        if (searchObject.request_token && searchObject.approved === 'true') {
             // if this was a redirect and the token is authorized, then get session_id
             getSessionId(searchObject.request_token);
-        } else if (searchObject.denied === "true") {
+        } else if (searchObject.denied === 'true') {
             // if token is not authorized, clear the location bar query parameters
-            window.location = startingUrl;
+            backToStartingUrl();
         }
     }, [getSessionId]);
 

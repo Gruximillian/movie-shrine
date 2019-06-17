@@ -1,4 +1,5 @@
 import config from '../config/tmdb';
+import { backToStartingUrl } from './functions';
 
 export const getTmdbConfig = action => {
     fetch(`${config.api_url_v3}/configuration?api_key=${config.api_key}&append_to_response=languages`)
@@ -37,6 +38,7 @@ export const getDetails = (sessionId, action) => {
             if (response.username) {
                 action(response); // save user details into state
             }
+            backToStartingUrl();
         })
         .catch(error => console.log(error));
 };

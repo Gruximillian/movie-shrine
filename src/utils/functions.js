@@ -49,3 +49,11 @@ export const toggleBodyScroll = lock => {
         document.body.classList.remove('scroll-lock');
     }
 };
+
+export const backToStartingUrl = () => {
+    const search = window.location.search;
+    const baseUrl = window.location.origin + window.location.pathname;
+
+    if (!search) return;
+    window.location = baseUrl;
+};
