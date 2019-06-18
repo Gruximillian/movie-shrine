@@ -43,7 +43,7 @@ const MediaDetails = props => {
         } else {
             initiateGetTmdbConfig();
         }
-    });
+    }, [configPresent, setTmdbConfiguration, initiateGetTmdbConfig]);
 
     // not rendering anything until we get the tmdbConfiguration info
     if (!configPresent) return null;
