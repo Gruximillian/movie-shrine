@@ -1,15 +1,19 @@
 .UserSection {
-    height: 100%;
-    margin-right: 15px;
-    float: right;
+    height: 34px;
+    width: 34px;
+    right: 20px;
+    top: 8px;
+    position: absolute;
 }
 
 .LoginIcon {
     height: 100%;
+    width: 100%;
     fill: var(--light-text-color);
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .LoginIcon:hover {
@@ -68,6 +72,15 @@
 
 @media (min-width: 400px) {
     .UserSection {
-        margin-right: 20px;
+        height: 44px;
+        width: 44px;
+    }
+}
+
+@media (min-width: 768px) {
+    .UserSection {
+        height: 56px;
+        width: 56px;
+        top: 12px;
     }
 }

@@ -1,8 +1,16 @@
-.LoginModal {
-    width: 85%;
-    margin-top: 30px;
-    margin-left: 7.5%;
+.LoginModalWrapper {
     position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.LoginModal {
+    width: 400px;
+    max-width: 85%;
+    margin: 30px auto;
+    position: relative;
     z-index: 2000;
     padding: 20px 40px;
     background-color: var(--dark-blue-grey);

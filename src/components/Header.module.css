@@ -3,6 +3,7 @@
     padding: 8px 0;
     background-color: var(--dark-blue-grey);
     box-shadow: 0 -1px 5px 1px var(--box-shadow-color);
+    position: relative;
 }
 
 .HeaderLink {

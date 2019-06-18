@@ -38,13 +38,15 @@ const LoginModal = props => {
     }, [authenticate, initModalClose]);
 
     return (
-        <div ref={modal} onTransitionEnd={handleTransitionEnd} className={`${classes.LoginModal} scale-transition scale-out`}>
-            <div className={classes.CloseModalButton} onClick={closeModal}>{icons.close}</div>
-            <div>
-                <p>To login you will be temporary redirected to "The Movie Database" website!</p>
-                <p>After you login you will be redirected back to this page and you will be able to add movies and TV shows to your "Favourites" and "Watch later" lists.</p>
-                <div onClick={initLogin} className={`${classes.LoginButton} btn btn-small`}>Login</div>
-                <p>You need a TMDB account in order to be able to login.</p>
+        <div className={classes.LoginModalWrapper}>
+            <div ref={modal} onTransitionEnd={handleTransitionEnd} className={`${classes.LoginModal} scale-transition scale-out`}>
+                <div className={classes.CloseModalButton} onClick={closeModal}>{icons.close}</div>
+                <div>
+                    <p>To login you will be temporary redirected to "The Movie Database" website!</p>
+                    <p>After you login you will be redirected back to this page and you will be able to add movies and TV shows to your "Favourites" and "Watch later" lists.</p>
+                    <div onClick={initLogin} className={`${classes.LoginButton} btn btn-small`}>Login</div>
+                    <p>You need a TMDB account in order to be able to login.</p>
+                </div>
             </div>
         </div>
     );
