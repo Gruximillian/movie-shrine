@@ -13,7 +13,6 @@ import classes from './App.module.css';
 import actions from './store/actions';
 
 import {
-    getTmdbConfig,
     requestSessionId
 } from './utils/fetch';
 
@@ -30,9 +29,9 @@ const App = props => {
         showBackdrop,
         showLoginModal,
         loggedIn,
-        setTmdbConfiguration,
         setInitModalClose,
         setLoggedIn,
+        initiateGetTmdbConfig,
         initiateGetUserDetails
     } = props;
 
@@ -59,8 +58,9 @@ const App = props => {
     }, [handleKeyDown]);
 
     useEffect(() => {
+        if (!loggedIn) return;
         const sessionId = getSessionIdFromStorage();
-        if (loggedIn) initiateGetUserDetails(sessionId);
+        initiateGetUserDetails(sessionId);
     }, [loggedIn, initiateGetUserDetails]);
 
     useEffect(() => {
@@ -69,8 +69,8 @@ const App = props => {
     }, [setLoggedIn]);
 
     useEffect(() => {
-        getTmdbConfig(setTmdbConfiguration);
-    }, [setTmdbConfiguration]);
+        initiateGetTmdbConfig();
+    }, [initiateGetTmdbConfig]);
 
     useEffect(() => {
         localStorage.setItem('movieShrineTmdbConfig', JSON.stringify(tmdbConfiguration));
@@ -107,10 +107,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
         setInitModalClose: initModalClose => dispatch(actions.setInitModalClose(initModalClose)),
         setLoggedIn: loggedIn => dispatch(actions.setLoggedIn(loggedIn)),
-        initiateGetUserDetails: sessionId => dispatch(actions.initiateGetUserDetails(sessionId))
+        initiateGetUserDetails: sessionId => dispatch(actions.initiateGetUserDetails(sessionId)),
+        initiateGetTmdbConfig: () => dispatch(actions.initiateGetTmdbConfig())
     }
 };
 

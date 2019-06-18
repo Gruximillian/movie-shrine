@@ -12,11 +12,6 @@ export default {
         type: actionTypes.SET_QUERY_TERM,
         term
     }),
-    initiateSearch: (queryString, page) => ({
-        type: actionTypes.INITIATE_SEARCH,
-        queryString,
-        page
-    }),
     setSearchResults: (results, page) => ({
         type: actionTypes.SET_SEARCH_RESULTS,
         results,
@@ -50,8 +45,16 @@ export default {
         type: actionTypes.SET_USER_DETAILS,
         details
     }),
+    initiateSearch: (queryString, page) => ({
+        type: actionTypes.INITIATE_SEARCH,
+        queryString,
+        page
+    }),
     initiateGetUserDetails: sessionId => ({
         type: actionTypes.INITIATE_GET_USER_DETAILS,
         sessionId
-    })
+    }),
+    initiateGetTmdbConfig: () => ({
+        type: actionTypes.INITIATE_GET_TMDB_CONFIG
+    }),
 };

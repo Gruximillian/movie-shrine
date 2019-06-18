@@ -7,7 +7,7 @@ import ImageViewModal from './ImageViewModal';
 
 import actions from '../store/actions';
 import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
-import { getTmdbConfig, getMediaDetails } from '../utils/fetch';
+import { getMediaDetails } from '../utils/fetch';
 
 const MediaDetails = props => {
     const [ initialImageIndex, setInitialImageIndex ] = useState(null);
@@ -19,7 +19,9 @@ const MediaDetails = props => {
         tmdbConfiguration,
         showImageModal,
         setShowImageModal,
-        setShowBackdrop
+        setShowBackdrop,
+        initiateGetTmdbConfig,
+        setTmdbConfiguration
     } = props;
 
     const configPresent = Object.keys(tmdbConfiguration).length > 0;
@@ -37,9 +39,9 @@ const MediaDetails = props => {
         if (configPresent) return;
 
         if (config && Object.keys(config).length > 0) {
-            props.setTmdbConfiguration(config);
+            setTmdbConfiguration(config);
         } else {
-            getTmdbConfig(props.setTmdbConfiguration);
+            initiateGetTmdbConfig();
         }
     });
 
@@ -257,6 +259,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        initiateGetTmdbConfig: () => dispatch(actions.initiateGetTmdbConfig()),
         setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
         setShowBackdrop: show => dispatch(actions.setShowBackdrop(show)),
         setShowImageModal: show => dispatch(actions.setShowImageModal(show))

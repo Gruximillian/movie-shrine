@@ -1,18 +1,11 @@
 import config from '../config/tmdb';
 
-export const getTmdbConfig = action => {
-    fetch(`${config.api_url_v3}/configuration?api_key=${config.api_key}&append_to_response=languages`)
-        .then(response => response.json())
-        .then(response => {
-            action(response);
-        })
-        .catch(error => console.log(error));
-};
-
 export const getMediaDetails = (id, mediaType) => {
     return fetch(`${config.api_url_v3}/${mediaType}/${id}?api_key=${config.api_key}&append_to_response=videos,images`)
         .then(response => response.json())
         .then(response => response);
+    // since we are returning the promise from this function,
+    // the catch method is omitted here and called where this function is called
 };
 
 export const getAuthToken = () => {
