@@ -14,7 +14,8 @@ const UserSection = props => {
         },
         setShowBackdrop,
         setShowLoginModal,
-        setUserDetails
+        setUserDetails,
+        setLoggedIn
     } = props;
 
     const gravatarHash = avatar && avatar.gravatar.hash;
@@ -27,6 +28,7 @@ const UserSection = props => {
     const logout = () => {
         setUserDetails({});
         localStorage.removeItem('movieShrineSession');
+        setLoggedIn(false);
     };
 
     return (
@@ -64,6 +66,7 @@ const mapDispatchToProps = dispatch => {
         setShowBackdrop: show => dispatch(actions.setShowBackdrop(show)),
         setShowLoginModal: show => dispatch(actions.setShowLoginModal(show)),
         setUserDetails: details => dispatch(actions.setUserDetails(details)),
+        setLoggedIn: loggedIn => dispatch(actions.setLoggedIn(loggedIn))
     }
 };
 

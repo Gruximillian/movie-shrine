@@ -44,7 +44,6 @@ export const requestSessionId = (token, action) => {
                 localStorage.setItem('movieShrineSession', JSON.stringify({ session_id }));
                 // set loggedIn state property to true
                 action(true);
-                // getDetails(session_id, action);
             } else {
                 action(false);
             }
