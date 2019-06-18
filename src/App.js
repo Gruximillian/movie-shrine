@@ -14,7 +14,6 @@ import actions from './store/actions';
 
 import {
     getTmdbConfig,
-    getDetails,
     requestSessionId
 } from './utils/fetch';
 
@@ -30,10 +29,11 @@ const App = props => {
         tmdbConfiguration,
         showBackdrop,
         showLoginModal,
-        userDetails,
+        loggedIn,
         setTmdbConfiguration,
-        setUserDetails,
-        setInitModalClose
+        setInitModalClose,
+        setLoggedIn,
+        initiateGetUserDetails
     } = props;
 
     const handleKeyDown = useCallback(event => {
@@ -47,12 +47,12 @@ const App = props => {
 
         if (searchObject.request_token && searchObject.approved === 'true') {
             // if this was a redirect and the token is authorized, then get session_id
-            requestSessionId(searchObject.request_token, setUserDetails);
+            requestSessionId(searchObject.request_token, setLoggedIn);
         } else if (searchObject.denied === 'true') {
             // if token is not authorized, clear the location bar query parameters
             backToStartingUrl();
         }
-    }, [setUserDetails]);
+    }, [setLoggedIn]);
 
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown);
@@ -60,8 +60,13 @@ const App = props => {
 
     useEffect(() => {
         const sessionId = getSessionIdFromStorage();
-        if (sessionId) getDetails(sessionId, setUserDetails);
-    }, [setUserDetails]);
+        if (loggedIn) initiateGetUserDetails(sessionId);
+    }, [loggedIn, initiateGetUserDetails]);
+
+    useEffect(() => {
+        const sessionId = getSessionIdFromStorage();
+        if (sessionId) setLoggedIn(true);
+    }, [setLoggedIn]);
 
     useEffect(() => {
         getTmdbConfig(setTmdbConfiguration);
@@ -80,9 +85,9 @@ const App = props => {
     return (
         <BrowserRouter>
             <div className={appClass}>
-                {showLoginModal && !userDetails.username && <LoginModal/>}
+                {showLoginModal && !loggedIn && <LoginModal/>}
                 <Header/>
-                {userDetails.username && <UserBar/>}
+                {loggedIn && <UserBar/>}
                 <Route exact path="/" component={Home} />
                 <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
                 <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />
@@ -96,7 +101,7 @@ const mapStateToProps = state => {
         tmdbConfiguration: state.tmdbConfiguration,
         showBackdrop: state.showBackdrop,
         showLoginModal: state.showLoginModal,
-        userDetails: state.userDetails
+        loggedIn: state.loggedIn
     }
 };
 
@@ -104,7 +109,8 @@ const mapDispatchToProps = dispatch => {
     return {
         setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
         setInitModalClose: initModalClose => dispatch(actions.setInitModalClose(initModalClose)),
-        setUserDetails: details => dispatch(actions.setUserDetails(details)),
+        setLoggedIn: loggedIn => dispatch(actions.setLoggedIn(loggedIn)),
+        initiateGetUserDetails: sessionId => dispatch(actions.initiateGetUserDetails(sessionId))
     }
 };
 

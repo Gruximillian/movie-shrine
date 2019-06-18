@@ -1,5 +1,4 @@
 import config from '../config/tmdb';
-import { backToStartingUrl } from './functions';
 
 export const getTmdbConfig = action => {
     fetch(`${config.api_url_v3}/configuration?api_key=${config.api_key}&append_to_response=languages`)
@@ -30,18 +29,6 @@ export const getAuthToken = () => {
         .catch(error => console.log(error));
 };
 
-export const getDetails = (sessionId, action) => {
-    const url = `https://api.themoviedb.org/3/account?api_key=${config.api_key}&session_id=${sessionId}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(response => {
-            if (response.username) {
-                action(response); // save user details into state
-            }
-            backToStartingUrl();
-        })
-        .catch(error => console.log(error));
-};
 export const requestSessionId = (token, action) => {
     // after the user allows the request_token, get the new session_id using that token
     const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=${config.api_key}`;
@@ -62,7 +49,11 @@ export const requestSessionId = (token, action) => {
             if (success) {
                 // save the session_id to localStorage so it can be used again
                 localStorage.setItem('movieShrineSession', JSON.stringify({ session_id }));
-                getDetails(session_id, action);
+                // set loggedIn state property to true
+                action(true);
+                // getDetails(session_id, action);
+            } else {
+                action(false);
             }
         })
         .catch(error => console.log(error));

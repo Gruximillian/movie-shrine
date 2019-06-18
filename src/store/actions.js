@@ -49,5 +49,9 @@ export default {
     setUserDetails: details => ({
         type: actionTypes.SET_USER_DETAILS,
         details
+    }),
+    initiateGetUserDetails: sessionId => ({
+        type: actionTypes.INITIATE_GET_USER_DETAILS,
+        sessionId
     })
 };
