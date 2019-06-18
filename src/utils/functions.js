@@ -1,3 +1,5 @@
+import config from "../config/tmdb";
+
 export const getImageUrl = (imgConfigJSON, imagePath, imgSizeIndex) => {
     const baseUrl = `${imgConfigJSON.secure_base_url}${imgConfigJSON.poster_sizes[imgSizeIndex]}/`;
     const imageWidth = imgConfigJSON.poster_sizes[imgSizeIndex].substring(1);
@@ -82,4 +84,8 @@ export const getSessionIdFromStorage = () => {
 
     const { session_id } = JSON.parse(session);
     return session_id;
+};
+
+export const mediaListUrl = (listType, mediaType, userId, sessionId) => {
+    return `${config.api_url_v3}/account/${userId}/${listType}/${mediaType}?api_key=${config.api_key}&session_id=${sessionId}&sort_by=created_at.asc`;
 };

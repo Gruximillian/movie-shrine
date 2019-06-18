@@ -9,6 +9,6 @@ export default {
     showBackdrop: false,
     showLoginModal: false,
     showImageModal: false,
-    loggedIn: false, // maybe not needed; userDetails will be populated when the user is logged in
+    loggedIn: false,
     userDetails: {}
 };

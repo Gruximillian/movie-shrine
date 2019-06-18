@@ -7,6 +7,7 @@ import Home from './components/Home';
 import LoginModal from './components/LoginModal';
 import MediaDetails from './components/MediaDetails';
 import UserBar from './components/UserBar';
+import ShowUserListMedia from './components/ShowUserListMedia';
 
 import classes from './App.module.css';
 
@@ -91,6 +92,8 @@ const App = props => {
                 <Route exact path="/" component={Home} />
                 <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
                 <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />
+                <Route path="/movies/:listType" render={props => <ShowUserListMedia {...props} mediaType="movies" />} />
+                <Route path="/tvshows/:listType" render={props => <ShowUserListMedia {...props} mediaType="tvshows" />} />
             </div>
         </BrowserRouter>
     );
