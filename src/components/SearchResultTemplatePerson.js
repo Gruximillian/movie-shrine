@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SearchResultKnownFor from './searchResultTemplateKnownFor';
-import classes from './searchResultTemplateTvOrMovie.module.css';
+import SearchResultKnownFor from './SearchResultTemplateKnownFor';
+import classes from './SearchResultTemplateTvOrMovie.module.css';
 import { getImageUrl, getTitle } from '../utils/functions';
 
 const SearchResultTemplatePerson = props => {

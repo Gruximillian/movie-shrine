@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import classes from './searchResultTemplateKnownFor.module.css';
+import classes from './SearchResultTemplateKnownFor.module.css';
 import { getImageUrl, getTitle } from '../utils/functions';
 
 const SearchResultKnownFor = props => {

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import classes from './Home.module.css';
 
 import SearchForm from './SearchForm';
-import SearchResultPerson from './searchResultTemplatePerson';
-import SearchResultTvOrMovie from './searchResultTemplateTvOrMovie';
+import SearchResultPerson from './SearchResultTemplatePerson';
+import SearchResultTvOrMovie from './SearchResultTemplateTvOrMovie';
 
 import actions from '../store/actions';
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import TmdbActions from './TmdbActions';
 
-import classes from './searchResultTemplateTvOrMovie.module.css';
+import classes from './SearchResultTemplateTvOrMovie.module.css';
 import { getImageUrl, getTitle, getPeriod, getLanguage } from '../utils/functions';
 
 const SearchResultTemplateTvOrMovie = props => {
@@ -20,10 +20,6 @@ const SearchResultTemplateTvOrMovie = props => {
 
     const detailsUrl = `/${result.media_type}/${result.id}`;
 
-    const logDetails = () => {
-        console.log(result);
-    };
-
     const preventIfListAction = event => {
         if (event.target.dataset.preventclick) {
             event.preventDefault();
@@ -37,7 +33,7 @@ const SearchResultTemplateTvOrMovie = props => {
                     <img src={imageUrl} alt="Poster" />
                     {
                         loggedIn &&
-                        <TmdbActions/>
+                        <TmdbActions mediaType={result.media_type} mediaId={result.id}/>
                     }
                 </div>
             </Link>

@@ -3,7 +3,7 @@ import { put } from 'redux-saga/effects';
 import config from '../../config/tmdb';
 import actions from '../actions';
 
-import { backToStartingUrl, getSessionIdFromStorage, mediaListUrl } from '../../utils/functions';
+import { backToStartingUrl, mediaListUrl } from '../../utils/functions';
 
 export function* getUserDetailsSaga(action) {
     try {
@@ -17,6 +17,10 @@ export function* getUserDetailsSaga(action) {
             sessionId: action.sessionId
         };
 
+        userAccountDetailsJSON.favourites = { movies: [], tvshows: [] };
+        userAccountDetailsJSON.watchlist = { movies: [], tvshows: [] };
+
+        // get the first favourites page; needed to determine how many pages of results there are; no other way to do it
         const movieFavouritesUrl = mediaListUrl('favorite', 'movies', credentials);
         const favouriteMovies = yield fetch(movieFavouritesUrl);
         const favouriteMoviesJSON = yield favouriteMovies.json();
@@ -25,11 +29,14 @@ export function* getUserDetailsSaga(action) {
         const favouriteTVShows = yield fetch(tvFavouritesUrl);
         const favouriteTVShowsJSON = yield favouriteTVShows.json();
 
-        userAccountDetailsJSON.favourites = {
-            movies: favouriteMoviesJSON,
-            tvshows: favouriteTVShowsJSON
-        };
+        const totalFavouriteMoviesPages = favouriteMoviesJSON.total_pages;
+        const totalFavouriteTVShowsPages = favouriteTVShowsJSON.total_pages;
 
+        // we must now get all favourites pages in order to properly display which item is favourite (specifically, in search results)
+        userAccountDetailsJSON.favourites.movies = yield getAllItems(favouriteMoviesJSON.results, 'favorite', 'movies', credentials, totalFavouriteMoviesPages);
+        userAccountDetailsJSON.favourites.tvshows = yield getAllItems(favouriteTVShowsJSON.results, 'favorite', 'tv', credentials, totalFavouriteTVShowsPages);
+
+        // get the first watchlist page; needed to determine how many pages of results there are; no other way to do it
         const movieWatchListUrl = mediaListUrl('watchlist', 'movies', credentials);
         const watchlistMovies = yield fetch(movieWatchListUrl);
         const watchlistMoviesJSON = yield watchlistMovies.json();
@@ -38,10 +45,12 @@ export function* getUserDetailsSaga(action) {
         const watchlistTVShows = yield fetch(tvWatchListUrl);
         const watchlistTVShowsJSON = yield watchlistTVShows.json();
 
-        userAccountDetailsJSON.watchlist = {
-            movies: watchlistMoviesJSON,
-            tvshows: watchlistTVShowsJSON
-        };
+        const totalWatchlistMoviesPages = watchlistMoviesJSON.total_pages;
+        const totalWatchlistTVShowsPages = watchlistTVShowsJSON.total_pages;
+
+        // we must get all watchlist pages in order to properly display which item is in watchlist (specifically, in search results)
+        userAccountDetailsJSON.watchlist.movies = yield getAllItems(watchlistMoviesJSON.results, 'watchlist', 'movies', credentials, totalWatchlistMoviesPages);
+        userAccountDetailsJSON.watchlist.tvshows = yield getAllItems(watchlistTVShowsJSON.results, 'watchlist', 'tv', credentials, totalWatchlistTVShowsPages);
 
         yield put(actions.setUserDetails(userAccountDetailsJSON));
 
@@ -51,39 +60,15 @@ export function* getUserDetailsSaga(action) {
     }
 }
 
-export function* getMoreListMediaSaga(action) {
-    const { listType, mediaType, userDetails, page } = action;
-    // this is ridiculous, but it will have to do for now
-    const list = listType === 'favourites' ? 'favorite' : 'watchlist';
-    const media = mediaType === 'tvshows' ? 'tv' : mediaType;
+function* getAllItems(initialItemsList, listType, mediaType, credentials, pages) {
+    let newList = [...initialItemsList];
 
-    const credentials = {
-        id: userDetails.id,
-        sessionId: getSessionIdFromStorage()
-    };
-
-    try {
-        const url = mediaListUrl(list, media, credentials, page);
-        const newData = yield fetch(url);
-        const newDataJSON = yield newData.json();
-
-        const oldListTypeJSON = userDetails[listType];
-        const oldMediaResults = oldListTypeJSON[mediaType].results;
-        const updatedResults = [ ...oldMediaResults, ...newDataJSON.results ];
-
-        const userDetailsUpdated = {
-            ...userDetails,
-            [listType]: {
-                ...oldListTypeJSON,
-                [mediaType]: {
-                    ...newDataJSON,
-                    results: updatedResults
-                }
-            }
-        };
-
-        yield put(actions.setUserDetails(userDetailsUpdated));
-    } catch (error) {
-        console.log(error);
+    for (let i = 2; i <= pages; i++) {
+        const url = mediaListUrl(listType, mediaType, credentials, i);
+        const response = yield fetch(url);
+        const responseJSON = yield response.json();
+        newList = [...newList, ...responseJSON.results];
     }
+
+    return newList;
 }
