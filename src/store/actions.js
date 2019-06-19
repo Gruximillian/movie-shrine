@@ -57,4 +57,11 @@ export default {
     initiateGetTmdbConfig: () => ({
         type: actionTypes.INITIATE_GET_TMDB_CONFIG
     }),
+    initiateGetMoreListMedia: (listType, mediaType, userDetails, page) => ({
+        type: actionTypes.INITIATE_GET_MORE_LIST_MEDIA,
+        listType,
+        mediaType,
+        userDetails,
+        page
+    }),
 };

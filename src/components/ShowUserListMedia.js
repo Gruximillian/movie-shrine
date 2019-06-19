@@ -5,11 +5,14 @@ import classes from './Home.module.css';
 
 import SearchResultTvOrMovie from './searchResultTemplateTvOrMovie';
 
+import actions from '../store/actions';
+
 const ShowUserListMedia = props => {
     const listType = props.match.params.listType;
     const {
         mediaType,
-        userDetails
+        userDetails,
+        initiateGetMoreListMedia
     } = props;
 
     if (!userDetails[listType]) return null;
@@ -22,7 +25,7 @@ const ShowUserListMedia = props => {
     const mediaList = userDetails[listType][mediaType];
 
     const loadMore = () => {
-        // props.initiateSearch(props.queryTerm, props.searchResults.page + 1);
+        initiateGetMoreListMedia(listType, mediaType, userDetails, mediaList.page + 1);
     };
 
     const showSearchResults = () => (
@@ -45,7 +48,7 @@ const ShowUserListMedia = props => {
     );
 
     const loadMoreButton = () => {
-        if (props.searchResults.page < props.searchResults.total_pages) return (
+        if (mediaList.page < mediaList.total_pages) return (
             <div className={`${classes.LoadMore} center-align`}>
                 <button className="btn" onClick={loadMore}>Load more</button>
             </div>
@@ -61,7 +64,7 @@ const ShowUserListMedia = props => {
 
             { mediaList.results.length === 0 && noResultsMessage() }
 
-            {/*{ loadMoreButton() }*/}
+            { loadMoreButton() }
         </main>
     );
 };
@@ -74,7 +77,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // initiateSearch: (query, page) => dispatch(actions.initiateSearch(query, page))
+        initiateGetMoreListMedia: (listType, mediaType, credentials, page) => dispatch(actions.initiateGetMoreListMedia(listType, mediaType, credentials, page))
     }
 };
 

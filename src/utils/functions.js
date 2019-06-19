@@ -86,6 +86,8 @@ export const getSessionIdFromStorage = () => {
     return session_id;
 };
 
-export const mediaListUrl = (listType, mediaType, userId, sessionId) => {
-    return `${config.api_url_v3}/account/${userId}/${listType}/${mediaType}?api_key=${config.api_key}&session_id=${sessionId}&sort_by=created_at.asc`;
+export const mediaListUrl = (listType, mediaType, credentials, pageNumber) => {
+    const { id, sessionId } = credentials;
+    const page = pageNumber || 1; // optional parameter
+    return `${config.api_url_v3}/account/${id}/${listType}/${mediaType}?api_key=${config.api_key}&session_id=${sessionId}&sort_by=created_at.asc&page=${page}`;
 };
