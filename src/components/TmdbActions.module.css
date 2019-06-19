@@ -1,0 +1,17 @@
+.TmdbActionsContainer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 9%;
+    width: 100%;
+    background-color: var(--dark-overlay);
+    cursor: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.TmdbAction {
+    cursor: pointer;
+    margin-right: 20px;
+    /*width: 40px;*/
+}

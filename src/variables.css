@@ -2,6 +2,7 @@
 
 :root {
     --body-text-color: rgba(0, 0, 0, 0.87);
+    --dark-overlay: rgba(0, 0, 0, 0.6);
     --image-preview-backdrop-color: rgba(0, 0, 0, 0.95);
     --border-color: rgba(0, 0, 0, 0.25);
     --light-text-color: #fff;

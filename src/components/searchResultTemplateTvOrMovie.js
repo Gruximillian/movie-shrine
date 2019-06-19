@@ -2,23 +2,43 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import TmdbActions from './TmdbActions';
+
 import classes from './searchResultTemplateTvOrMovie.module.css';
 import { getImageUrl, getTitle, getPeriod, getLanguage } from '../utils/functions';
 
 const SearchResultTemplateTvOrMovie = props => {
-    const { result } = props;
-    const imageUrl = getImageUrl(props.tmdbConfiguration.images, result.poster_path, 3);
+    const {
+        tmdbConfiguration,
+        result,
+        loggedIn
+    } = props;
+    const imageUrl = getImageUrl(tmdbConfiguration.images, result.poster_path, 3);
     const title = getTitle(result);
     const year = getPeriod(result);
-    const language = getLanguage(result, props.tmdbConfiguration.languages);
+    const language = getLanguage(result, tmdbConfiguration.languages);
 
     const detailsUrl = `/${result.media_type}/${result.id}`;
 
+    const logDetails = () => {
+        console.log(result);
+    };
+
+    const preventIfListAction = event => {
+        if (event.target.dataset.preventclick) {
+            event.preventDefault();
+        }
+    };
+
     return (
         <div className={`${classes.SearchResult} card`}>
-            <Link to={detailsUrl}>
-                <div className="card-image">
+            <Link onClick={preventIfListAction} to={detailsUrl}>
+                <div className={`${classes.ImageContainer} card-image`}>
                     <img src={imageUrl} alt="Poster" />
+                    {
+                        loggedIn &&
+                        <TmdbActions/>
+                    }
                 </div>
             </Link>
             <div className={`${classes.CardContent} card-content`}>
@@ -43,7 +63,8 @@ const SearchResultTemplateTvOrMovie = props => {
 
 const mapStateToProps = state => {
     return {
-        tmdbConfiguration: state.tmdbConfiguration
+        tmdbConfiguration: state.tmdbConfiguration,
+        loggedIn: state.loggedIn
     }
 };
 

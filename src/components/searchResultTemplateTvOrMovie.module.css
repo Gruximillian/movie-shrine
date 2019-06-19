@@ -5,6 +5,11 @@
     flex-direction: column;
 }
 
+.ImageContainer {
+    position: relative;
+    overflow-y: hidden;
+}
+
 .ResultTitle {
     margin-top: 0;
 }
