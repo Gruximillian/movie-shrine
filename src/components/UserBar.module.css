@@ -40,13 +40,16 @@
     height: 100%;
     left: 0;
     top: 0;
+    transform: translate3d(0, 0, 0);
     z-index: 0;
     background-color: inherit;
-    transition: top 0.1s 0s ease-in-out;
+    transition: transform 0.1s 0s ease-in-out;
+    pointer-events: none;
 }
 
 .SecondaryLinks.Visible {
-    top: 100%;
+    transform: translate3d(0, 100%, 0);
+    pointer-events: auto;
 }
 
 .SecondaryLinks .UserAction {
