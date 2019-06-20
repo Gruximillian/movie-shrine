@@ -4,30 +4,33 @@ import classes from './TmdbActions.module.css';
 
 import icons from '../assets/icons';
 
+import actions from '../store/actions';
+
 const TmdbActions = props => {
     const {
-        tmdbConfiguration,
-        mediaType,
-        mediaId,
+        mediaItem,
         userDetails: {
             favourites,
-            watchlist
-        }
+            watchlist,
+            id
+        },
+        initiateToggleItemInMediaList
     } = props;
+
+    const mediaType = mediaItem.media_type;
+    const mediaId = mediaItem.id;
 
     const media = mediaType === 'movie' ? 'movies' : 'tvshows';
 
     const favouritesItems = favourites[media];
     const watchlistItems = watchlist[media];
-    // console.log('fav', media, favouritesItems);
-    // console.log('watch', media, watchlistItems);
 
-    const isFavourite = favouritesItems.find(favouriteItem => favouriteItem.id === mediaId);
-    const isInWatchList = watchlistItems.find(watchlistItem => watchlistItem.id === mediaId);
+    const isFavourite = !!favouritesItems.find(favouriteItem => favouriteItem.id === mediaId);
+    const isInWatchList = !!watchlistItems.find(watchlistItem => watchlistItem.id === mediaId);
 
-    const toggleItemInTmdbList = () => {
-        // if (inList === 'favorites') setIsFavourite(true);
-        // if (inList === 'watchlist') setIsInWatchList(true);
+    const toggleItemInList = listType => {
+        const isInList = listType === 'favorite' ? !isFavourite : !isInWatchList;
+        initiateToggleItemInMediaList(listType, mediaItem, id, isInList);
     };
 
     const favouriteClass = `${classes.TmdbAction} ${classes.TmdbActionAddToFavourite} ${isFavourite ? classes.isFavourite : ''}`;
@@ -38,13 +41,13 @@ const TmdbActions = props => {
             <div
                 className={favouriteClass}
                 data-preventclick
-                onClick={() => toggleItemInTmdbList('favorites')}>
+                onClick={() => toggleItemInList('favorite')}>
                 {icons.star}
             </div>
             <div
                 className={watchlistClass}
                 data-preventclick
-                onClick={() => toggleItemInTmdbList('watchlist')}>
+                onClick={() => toggleItemInList('watchlist')}>
                 {icons.watch}
             </div>
         </div>
@@ -53,9 +56,14 @@ const TmdbActions = props => {
 
 const mapStateToProps = state => {
     return {
-        tmdbConfiguration: state.tmdbConfiguration, // not sure if I need this
         userDetails: state.userDetails
     }
 };
 
-export default connect(mapStateToProps)(TmdbActions);
+const mapDispatchToProps = dispatch => {
+    return {
+        initiateToggleItemInMediaList: (listType, mediaItem, userId, isInList) => dispatch(actions.initiateToggleItemInMediaList(listType, mediaItem, userId, isInList)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TmdbActions);

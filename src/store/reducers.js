@@ -93,6 +93,46 @@ const reducer = (state = initialState, action) => {
         }
     }
 
+    if (action.type === actionTypes.UPDATE_USER_MEDIA_LIST) {
+        const { listType, mediaItem, isInlist } = action;
+        const { media_type, id } = mediaItem;
+        const userDetails = state.userDetails;
+        // I hate what I did here with property names.... must change it!
+        console.log('listType', listType);
+        console.log('media_type', media_type);
+        const list = listType === 'favorite' ? 'favourites' : 'watchlist';
+        const media = media_type === 'tv' ? 'tvshows' : 'movies';
+
+        const oldMediaList = userDetails[list][media];
+        let newMediaList = [];
+
+        if (isInlist) {
+            // this means that the item is on the list in TMDB
+            newMediaList = [...oldMediaList, mediaItem];
+        } else {
+            // this means that the item is NOT on the list in TMDB
+            oldMediaList.forEach(item => {
+                if (item.id !== id) {
+                    newMediaList.push(item);
+                }
+            });
+        }
+
+        const newUserDetails = {
+            ...userDetails,
+            [list]: {
+                ...userDetails[list],
+                [media]: newMediaList
+            }
+        };
+        console.log('newUserDetails', newUserDetails);
+
+        return {
+            ...state,
+            userDetails: newUserDetails
+        }
+    }
+
     return state;
 };
 

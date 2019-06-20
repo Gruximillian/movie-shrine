@@ -27,6 +27,7 @@ const MediaDetails = props => {
     const configPresent = Object.keys(tmdbConfiguration).length > 0;
 
     useEffect(() => {
+        // this could go into saga, but then the response should be saved in the global state
         getMediaDetails(id, mediaType)
             .then(data => setMediaDetails(data))
             .catch(error => console.log(error));

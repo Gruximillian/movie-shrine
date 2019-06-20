@@ -33,7 +33,7 @@ const SearchResultTemplateTvOrMovie = props => {
                     <img src={imageUrl} alt="Poster" />
                     {
                         loggedIn &&
-                        <TmdbActions mediaType={result.media_type} mediaId={result.id}/>
+                        <TmdbActions mediaItem={result}/>
                     }
                 </div>
             </Link>

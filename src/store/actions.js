@@ -57,4 +57,17 @@ export default {
     initiateGetTmdbConfig: () => ({
         type: actionTypes.INITIATE_GET_TMDB_CONFIG
     }),
+    initiateToggleItemInMediaList: (listType, mediaItem, userId, isInList) => ({
+        type: actionTypes.INITIATE_TOGGLE_ITEM_IN_MEDIA_LIST,
+        listType,
+        mediaItem,
+        userId,
+        isInList
+    }),
+    updateUserMediaList: (listType, mediaItem, isInList) => ({
+        type: actionTypes.UPDATE_USER_MEDIA_LIST,
+        listType,
+        mediaItem,
+        isInList
+    })
 };

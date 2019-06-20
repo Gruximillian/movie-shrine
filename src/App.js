@@ -85,6 +85,7 @@ const App = props => {
 
     return (
         <BrowserRouter>
+            {console.log(props.userDetails)}
             <div className={appClass}>
                 {showLoginModal && !loggedIn && <LoginModal/>}
                 <Header/>
@@ -104,7 +105,8 @@ const mapStateToProps = state => {
         tmdbConfiguration: state.tmdbConfiguration,
         showBackdrop: state.showBackdrop,
         showLoginModal: state.showLoginModal,
-        loggedIn: state.loggedIn
+        loggedIn: state.loggedIn,
+        userDetails: state.userDetails
     }
 };
 
