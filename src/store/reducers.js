@@ -97,13 +97,10 @@ const reducer = (state = initialState, action) => {
         const { listType, mediaItem, isInlist } = action;
         const { media_type, id } = mediaItem;
         const userDetails = state.userDetails;
-        // I hate what I did here with property names.... must change it!
-        console.log('listType', listType);
-        console.log('media_type', media_type);
-        const list = listType === 'favorite' ? 'favourites' : 'watchlist';
-        const media = media_type === 'tv' ? 'tvshows' : 'movies';
+        console.log('reducer listType', listType);
+        console.log('reducer media_type', media_type);
 
-        const oldMediaList = userDetails[list][media];
+        const oldMediaList = userDetails[listType][media_type];
         let newMediaList = [];
 
         if (isInlist) {
@@ -120,9 +117,9 @@ const reducer = (state = initialState, action) => {
 
         const newUserDetails = {
             ...userDetails,
-            [list]: {
-                ...userDetails[list],
-                [media]: newMediaList
+            [listType]: {
+                ...userDetails[listType],
+                [listType]: newMediaList
             }
         };
         console.log('newUserDetails', newUserDetails);

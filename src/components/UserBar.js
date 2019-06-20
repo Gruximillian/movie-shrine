@@ -16,8 +16,8 @@ const UserBar = props => {
         <section className={classes.UserBar}>
             <div className={classes.PrimaryLinks}>
                 <span
-                    onClick={() => setListType('favourites')}
-                    className={`${classes.UserAction} ${listTypeSelected === 'favourites' ? classes.Active : ''}`}>
+                    onClick={() => setListType('favorite')}
+                    className={`${classes.UserAction} ${listTypeSelected === 'favorite' ? classes.Active : ''}`}>
                     Favourites
                 </span>
                 <span

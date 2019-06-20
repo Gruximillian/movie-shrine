@@ -94,7 +94,7 @@ const App = props => {
                 <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
                 <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />
                 <Route path="/movies/:listType" render={props => <ShowUserListMedia {...props} mediaType="movies" />} />
-                <Route path="/tvshows/:listType" render={props => <ShowUserListMedia {...props} mediaType="tvshows" />} />
+                <Route path="/tvshows/:listType" render={props => <ShowUserListMedia {...props} mediaType="tv" />} />
             </div>
         </BrowserRouter>
     );

@@ -10,7 +10,7 @@ const TmdbActions = props => {
     const {
         mediaItem,
         userDetails: {
-            favourites,
+            favorite,
             watchlist,
             id
         },
@@ -20,9 +20,10 @@ const TmdbActions = props => {
     const mediaType = mediaItem.media_type;
     const mediaId = mediaItem.id;
 
-    const media = mediaType === 'movie' ? 'movies' : 'tvshows';
+    console.log('individual media type', mediaType);
+    const media = mediaType === 'movie' ? 'movies' : 'tv';
 
-    const favouritesItems = favourites[media];
+    const favouritesItems = favorite[media];
     const watchlistItems = watchlist[media];
 
     const isFavourite = !!favouritesItems.find(favouriteItem => favouriteItem.id === mediaId);

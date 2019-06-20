@@ -17,8 +17,8 @@ export function* getUserDetailsSaga(action) {
             sessionId: action.sessionId
         };
 
-        userAccountDetailsJSON.favourites = { movies: [], tvshows: [] };
-        userAccountDetailsJSON.watchlist = { movies: [], tvshows: [] };
+        userAccountDetailsJSON.favorite = { movies: [], tv: [] };
+        userAccountDetailsJSON.watchlist = { movies: [], tv: [] };
 
         // get the first favourites page; needed to determine how many pages of results there are; no other way to do it
         const movieFavouritesUrl = mediaListUrl('favorite', 'movies', credentials);
@@ -33,8 +33,8 @@ export function* getUserDetailsSaga(action) {
         const totalFavouriteTVShowsPages = favouriteTVShowsJSON.total_pages;
 
         // we must now get all favourites pages in order to properly display which item is favourite (specifically, in search results)
-        userAccountDetailsJSON.favourites.movies = yield getAllItems(favouriteMoviesJSON.results, 'favorite', 'movies', credentials, totalFavouriteMoviesPages);
-        userAccountDetailsJSON.favourites.tvshows = yield getAllItems(favouriteTVShowsJSON.results, 'favorite', 'tv', credentials, totalFavouriteTVShowsPages);
+        userAccountDetailsJSON.favorite.movies = yield getAllItems(favouriteMoviesJSON.results, 'favorite', 'movies', credentials, totalFavouriteMoviesPages);
+        userAccountDetailsJSON.favorite.tv = yield getAllItems(favouriteTVShowsJSON.results, 'favorite', 'tv', credentials, totalFavouriteTVShowsPages);
 
         // get the first watchlist page; needed to determine how many pages of results there are; no other way to do it
         const movieWatchListUrl = mediaListUrl('watchlist', 'movies', credentials);
@@ -50,7 +50,7 @@ export function* getUserDetailsSaga(action) {
 
         // we must get all watchlist pages in order to properly display which item is in watchlist (specifically, in search results)
         userAccountDetailsJSON.watchlist.movies = yield getAllItems(watchlistMoviesJSON.results, 'watchlist', 'movies', credentials, totalWatchlistMoviesPages);
-        userAccountDetailsJSON.watchlist.tvshows = yield getAllItems(watchlistTVShowsJSON.results, 'watchlist', 'tv', credentials, totalWatchlistTVShowsPages);
+        userAccountDetailsJSON.watchlist.tv = yield getAllItems(watchlistTVShowsJSON.results, 'watchlist', 'tv', credentials, totalWatchlistTVShowsPages);
 
         yield put(actions.setUserDetails(userAccountDetailsJSON));
 
