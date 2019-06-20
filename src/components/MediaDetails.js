@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import classes from './MediaDetails.module.css';
 
 import ImageViewModal from './ImageViewModal';
+import TmdbActions from './TmdbActions';
 
 import actions from '../store/actions';
 import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
@@ -15,6 +16,7 @@ const MediaDetails = props => {
     const id = props.match.params.id;
 
     const {
+        loggedIn,
         mediaType,
         tmdbConfiguration,
         showImageModal,
@@ -48,6 +50,9 @@ const MediaDetails = props => {
 
     // not rendering anything until we get the tmdbConfiguration info
     if (!configPresent) return null;
+
+    // make sure that the type is present; needed for the user actions (add/remove to favorites/watchlist)
+    mediaDetails.media_type = mediaType;
 
     const {
         // general properties
@@ -133,7 +138,13 @@ const MediaDetails = props => {
                 <h2 className={`${classes.Title} hide-on-med-and-up`}>{title}</h2>
 
                 <div className={classes.PosterAndDetails}>
-                    <img className={classes.Poster} src={posterUrl} alt={`Poster for ${mediaTypeFull} ${title}`} />
+                    <div className={classes.PosterContainer}>
+                        <img className={classes.Poster} src={posterUrl} alt={`Poster for ${mediaTypeFull} ${title}`} />
+                        {
+                            loggedIn &&
+                            <TmdbActions mediaItem={mediaDetails}/>
+                        }
+                    </div>
 
                     <div className={`${classes.PosterSectionDetails} hide-on-small-only`}>
                         <h2 className={classes.Title}>{title}</h2>
@@ -254,7 +265,8 @@ const MediaDetails = props => {
 const mapStateToProps = state => {
     return {
         tmdbConfiguration: state.tmdbConfiguration,
-        showImageModal: state.showImageModal
+        showImageModal: state.showImageModal,
+        loggedIn: state.loggedIn
     }
 };
 
