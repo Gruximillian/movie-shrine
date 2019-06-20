@@ -17,14 +17,11 @@ const TmdbActions = props => {
         initiateToggleItemInMediaList
     } = props;
 
-    const mediaType = mediaItem.media_type;
+    const mediaType = mediaItem.media_type === 'movie' ? 'movies' : 'tv';
     const mediaId = mediaItem.id;
 
-    console.log('individual media type', mediaType);
-    const media = mediaType === 'movie' ? 'movies' : 'tv';
-
-    const favouritesItems = favorite[media];
-    const watchlistItems = watchlist[media];
+    const favouritesItems = favorite[mediaType];
+    const watchlistItems = watchlist[mediaType];
 
     const isFavourite = !!favouritesItems.find(favouriteItem => favouriteItem.id === mediaId);
     const isInWatchList = !!watchlistItems.find(watchlistItem => watchlistItem.id === mediaId);

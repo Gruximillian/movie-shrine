@@ -94,16 +94,16 @@ const reducer = (state = initialState, action) => {
     }
 
     if (action.type === actionTypes.UPDATE_USER_MEDIA_LIST) {
-        const { listType, mediaItem, isInlist } = action;
+        const { listType, mediaItem, isInList } = action;
         const { media_type, id } = mediaItem;
         const userDetails = state.userDetails;
-        console.log('reducer listType', listType);
-        console.log('reducer media_type', media_type);
+        // media_type on the item is singular, but on the userDetails is plural
+        const mediaType = media_type === 'movie' ? 'movies' : 'tv';
 
-        const oldMediaList = userDetails[listType][media_type];
+        const oldMediaList = userDetails[listType][mediaType];
         let newMediaList = [];
 
-        if (isInlist) {
+        if (isInList) {
             // this means that the item is on the list in TMDB
             newMediaList = [...oldMediaList, mediaItem];
         } else {
@@ -119,10 +119,9 @@ const reducer = (state = initialState, action) => {
             ...userDetails,
             [listType]: {
                 ...userDetails[listType],
-                [listType]: newMediaList
+                [mediaType]: newMediaList
             }
         };
-        console.log('newUserDetails', newUserDetails);
 
         return {
             ...state,

@@ -85,7 +85,6 @@ const App = props => {
 
     return (
         <BrowserRouter>
-            {console.log(props.userDetails)}
             <div className={appClass}>
                 {showLoginModal && !loggedIn && <LoginModal/>}
                 <Header/>
