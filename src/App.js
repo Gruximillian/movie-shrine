@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import LoginModal from './components/LoginModal';
 import MediaDetails from './components/MediaDetails';
@@ -139,6 +140,8 @@ const App = props => {
                 <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />
                 <Route path="/movies/:listType" render={props => <ShowUserListMedia {...props} mediaType="movies" />} />
                 <Route path="/tvshows/:listType" render={props => <ShowUserListMedia {...props} mediaType="tv" />} />
+
+                <Footer/>
             </div>
         </BrowserRouter>
     );
