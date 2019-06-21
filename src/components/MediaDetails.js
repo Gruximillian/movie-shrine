@@ -21,6 +21,9 @@ import { getMediaDetails } from '../utils/fetch';
 const MediaDetails = props => {
     const [ initialImageIndex, setInitialImageIndex ] = useState(null);
     const [ mediaDetails, setMediaDetails ] = useState({});
+    const [ numberOfVideos, setNumberOfVideos ] = useState(10);
+    const [ numberOfImages, setNumberOfImages ] = useState(20);
+
     const id = props.match.params.id;
 
     const {
@@ -104,13 +107,27 @@ const MediaDetails = props => {
     const mediaVideos = videos && videos.results;
     const mediaTypeFull = mediaType === 'movie' ? 'Movie' : 'TV Show';
 
+    const videosToShow = [];
+    if (mediaVideos) {
+        for (let i = 0; i < numberOfVideos; i++) {
+            videosToShow.push(mediaVideos[i]);
+        }
+    }
+
+    const imagesToShow = [];
+    if (mediaImages) {
+        for (let i = 0; i < numberOfImages; i++) {
+            imagesToShow.push(mediaImages[i]);
+        }
+    }
+
     const videoList = () => {
         if (!mediaVideos) return null;
         if (mediaVideos.length === 0) return (
             <p className={classes.NoMediaMessage}>There are no available videos for {title}!</p>
         );
 
-        return mediaVideos.map(video => {
+        return videosToShow.map(video => {
             return (
                 <iframe
                     className={classes.VideoContainer}
@@ -129,7 +146,7 @@ const MediaDetails = props => {
             <p className={classes.NoMediaMessage}>There are no available images for {title}!</p>
         );
 
-        return mediaImages.map((image, idx) => {
+        return imagesToShow.map((image, idx) => {
             return (
                 <img
                     className={`${classes.ImageContainer} hoverable`}
@@ -139,6 +156,26 @@ const MediaDetails = props => {
                     alt={`From the ${mediaTypeFull} ${title}`}/>
             )
         });
+    };
+
+    const loadMore = mediaType => {
+        if (mediaType === 'videos') {
+            setNumberOfVideos(numberOfVideos + 10);
+        }
+        if (mediaType === 'images') {
+            setNumberOfImages(numberOfImages + 20);
+        }
+    };
+
+    const loadMoreButton = mediaType => {
+        const imagesButton = (mediaType === 'images' && mediaImages) && mediaImages.length > numberOfImages;
+        const videosButton = (mediaType === 'videos' && mediaVideos) && mediaVideos.length > numberOfVideos;
+
+        if (imagesButton || videosButton) return (
+            <div className={`${classes.LoadMore} center-align`}>
+                <button className="btn" onClick={() => loadMore(mediaType)}>Load more {mediaType}</button>
+            </div>
+        )
     };
 
     const initShowModal = imageIndex => {
@@ -262,12 +299,16 @@ const MediaDetails = props => {
                 </div>
             </section>
 
+            { loadMoreButton('videos') }
+
             <section className={classes.MediaSection}>
                 <p className={classes.DetailsLabel}>Images:</p>
                 <div className={classes.Images}>
                     { imageList() }
                 </div>
             </section>
+
+            { loadMoreButton('images') }
 
             {
                 showImageModal &&
