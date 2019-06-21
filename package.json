@@ -2,9 +2,10 @@
   "name": "movie-shrine",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Gruximillian.github.io/movie-shrine",
+  "homepage": "/movie-shrine/",
   "dependencies": {
     "gh-pages": "^2.0.1",
+    "history": "^4.9.0",
     "materialize-css": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
