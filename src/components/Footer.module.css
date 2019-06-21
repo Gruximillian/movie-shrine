@@ -43,6 +43,10 @@
     max-width: 150px;
 }
 
+.CreditsIcon svg {
+    width: 100%;
+}
+
 @media (min-width: 768px) {
     .FooterContent {
         flex-direction: row;
