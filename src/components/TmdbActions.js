@@ -20,11 +20,11 @@ const TmdbActions = props => {
     const mediaType = mediaItem.media_type === 'movie' ? 'movies' : 'tv';
     const mediaId = mediaItem.id;
 
-    const favouritesItems = favorite[mediaType];
-    const watchlistItems = watchlist[mediaType];
+    const favouritesItems = favorite && favorite[mediaType];
+    const watchlistItems = watchlist && watchlist[mediaType];
 
-    const isFavourite = !!favouritesItems.find(favouriteItem => favouriteItem.id === mediaId);
-    const isInWatchList = !!watchlistItems.find(watchlistItem => watchlistItem.id === mediaId);
+    const isFavourite = favouritesItems && !!favouritesItems.find(favouriteItem => favouriteItem.id === mediaId);
+    const isInWatchList = watchlistItems && !!watchlistItems.find(watchlistItem => watchlistItem.id === mediaId);
 
     const toggleItemInList = listType => {
         const isInList = listType === 'favorite' ? !isFavourite : !isInWatchList;

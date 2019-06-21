@@ -7,7 +7,15 @@ import ImageViewModal from './ImageViewModal';
 import TmdbActions from './TmdbActions';
 
 import actions from '../store/actions';
-import { getImageUrl, getLanguage, getTitle, getPeriod, getHoursAndMinutes, getVideoUrl } from '../utils/functions';
+import {
+    getImageUrl,
+    getLanguage,
+    getTitle,
+    getPeriod,
+    getHoursAndMinutes,
+    getVideoUrl,
+    getSessionIdFromStorage
+} from '../utils/functions';
 import { getMediaDetails } from '../utils/fetch';
 
 const MediaDetails = props => {
@@ -23,10 +31,17 @@ const MediaDetails = props => {
         setShowImageModal,
         setShowBackdrop,
         initiateGetTmdbConfig,
-        setTmdbConfiguration
+        setTmdbConfiguration,
+        initiateGetUserDetails
     } = props;
 
     const configPresent = Object.keys(tmdbConfiguration).length > 0;
+
+    useEffect(() => {
+        if (!loggedIn) return;
+        const sessionId = getSessionIdFromStorage();
+        initiateGetUserDetails(sessionId);
+    }, [loggedIn, initiateGetUserDetails]);
 
     useEffect(() => {
         // this could go into saga, but then the response should be saved in the global state
@@ -275,7 +290,8 @@ const mapDispatchToProps = dispatch => {
         initiateGetTmdbConfig: () => dispatch(actions.initiateGetTmdbConfig()),
         setTmdbConfiguration: config => dispatch(actions.setTmdbConfiguration(config)),
         setShowBackdrop: show => dispatch(actions.setShowBackdrop(show)),
-        setShowImageModal: show => dispatch(actions.setShowImageModal(show))
+        setShowImageModal: show => dispatch(actions.setShowImageModal(show)),
+        initiateGetUserDetails: sessionId => dispatch(actions.initiateGetUserDetails(sessionId)),
     }
 };
 

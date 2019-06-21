@@ -25,7 +25,7 @@ const ShowUserListMedia = props => {
     useEffect(() => {
         const tempItemsArray = [];
         for (let i = 0; i < numberOfItems; i++) {
-            if (mediaList[i]) {
+            if (mediaList && mediaList[i]) {
                 tempItemsArray[i] = mediaList[i];
             }
         }
@@ -56,7 +56,7 @@ const ShowUserListMedia = props => {
     );
 
     const loadMoreButton = () => {
-        if (mediaList.length > itemsToShow.length) return (
+        if (mediaList && mediaList.length > itemsToShow.length) return (
             <div className={`${classes.LoadMore} center-align`}>
                 <button className="btn" onClick={loadMore}>Load more</button>
             </div>
@@ -68,9 +68,9 @@ const ShowUserListMedia = props => {
             <p className={classes.WelcomeMessage}>
                 Your { mediaMessage }:
             </p>
-            { mediaList.length > 0 && showSearchResults() }
+            { mediaList && mediaList.length > 0 && showSearchResults() }
 
-            { mediaList.length === 0 && noResultsMessage() }
+            { mediaList && mediaList.length === 0 && noResultsMessage() }
 
             { loadMoreButton() }
         </main>
