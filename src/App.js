@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback }  from 'react';
+import React, { useEffect, useCallback, useState }  from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -13,6 +13,8 @@ import classes from './App.module.css';
 
 import actions from './store/actions';
 
+import icons from './assets/icons';
+
 import {
     requestSessionId
 } from './utils/fetch';
@@ -25,6 +27,8 @@ import {
 } from './utils/functions';
 
 const App = props => {
+    const [ showBackToTop, setShowBackToTop ] = useState(false);
+
     const {
         tmdbConfiguration,
         showBackdrop,
@@ -40,6 +44,14 @@ const App = props => {
         if (event.key !== 'Escape') return;
         setInitModalClose(true);
     }, [setInitModalClose]);
+
+    const goToTop = () => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    };
 
     useEffect(() => {
         const searchObject = getSearchObjectFromLocation();
@@ -83,12 +95,45 @@ const App = props => {
 
     const appClass = showBackdrop ? `${classes.Backdrop} ${classes.MovieShrineApp}` : classes.MovieShrineApp;
 
+    const checkScrollPosition = useCallback(() => {
+        const viewportHeight = window.innerHeight;
+        if (!showBackToTop && document.documentElement.scrollTop > viewportHeight * 2) {
+            setShowBackToTop(true);
+        }
+        if (showBackToTop && document.documentElement.scrollTop <= viewportHeight * 2) {
+            setShowBackToTop(false);
+        }
+    }, [showBackToTop]);
+
+    useEffect(() => {
+        document.addEventListener('scroll', checkScrollPosition);
+
+        return () => {
+            document.removeEventListener('scroll', checkScrollPosition);
+        };
+    }, [checkScrollPosition]);
+
     return (
         <BrowserRouter>
             <div className={appClass}>
-                {showLoginModal && !loggedIn && <LoginModal/>}
+                {
+                    showLoginModal && !loggedIn &&
+                    <LoginModal/>
+                }
+
                 <Header/>
-                {loggedIn && <UserBar/>}
+
+                {
+                    loggedIn &&
+                    <UserBar/>
+                }
+
+                <div
+                    onClick={goToTop}
+                    className={`${classes.ScrollToTopButton} ${showBackToTop && classes.Visible} btn-floating`}>
+                    { icons.arrowUp }
+                </div>
+
                 <Route exact path="/" component={Home} />
                 <Route path="/movie/:id" render={props => <MediaDetails {...props} mediaType="movie" />} />
                 <Route path="/tv/:id" render={props => <MediaDetails {...props} mediaType="tv" />} />

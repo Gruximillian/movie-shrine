@@ -12,3 +12,17 @@
     background-color: var(--image-preview-backdrop-color);
     z-index: 1000;
 }
+
+.ScrollToTopButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s 0s ease-in-out;
+}
+
+.ScrollToTopButton.Visible {
+    opacity: 1;
+    pointer-events: auto;
+}

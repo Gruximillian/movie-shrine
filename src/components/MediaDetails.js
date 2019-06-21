@@ -110,14 +110,14 @@ const MediaDetails = props => {
     const videosToShow = [];
     if (mediaVideos) {
         for (let i = 0; i < numberOfVideos; i++) {
-            videosToShow.push(mediaVideos[i]);
+            mediaVideos[i] && videosToShow.push(mediaVideos[i]);
         }
     }
 
     const imagesToShow = [];
     if (mediaImages) {
         for (let i = 0; i < numberOfImages; i++) {
-            imagesToShow.push(mediaImages[i]);
+            mediaImages[i] && imagesToShow.push(mediaImages[i]);
         }
     }
 
@@ -295,7 +295,7 @@ const MediaDetails = props => {
             <section className={classes.MediaSection}>
                 <p className={classes.DetailsLabel}>Videos:</p>
                 <div className={classes.Videos}>
-                    { videoList() }
+                    { videosToShow && videoList() }
                 </div>
             </section>
 
@@ -304,7 +304,7 @@ const MediaDetails = props => {
             <section className={classes.MediaSection}>
                 <p className={classes.DetailsLabel}>Images:</p>
                 <div className={classes.Images}>
-                    { imageList() }
+                    { imagesToShow && imageList() }
                 </div>
             </section>
 
