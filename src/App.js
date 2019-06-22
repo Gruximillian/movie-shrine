@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useState }  from 'react';
-import { Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { history } from './utils/history';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -115,7 +114,7 @@ const App = props => {
     }, [checkScrollPosition]);
 
     return (
-        <Router history={history}>
+        <BrowserRouter>
             <div className={appClass}>
                 {
                     showLoginModal && !loggedIn &&
@@ -143,7 +142,7 @@ const App = props => {
 
                 <Footer/>
             </div>
-        </Router>
+        </BrowserRouter>
     );
 };
 
