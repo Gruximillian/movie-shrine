@@ -12,6 +12,7 @@ Search for movies and TV shows
 
 - ReactJS
 - CSS modules
+- Materialze CSS
 - Redux
 - Redux Saga
 - Deployed on Heroku: https://movie-shrine.herokuapp.com/
