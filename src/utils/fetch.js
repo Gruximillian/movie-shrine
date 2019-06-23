@@ -1,7 +1,7 @@
 import config from '../config/tmdb';
 
 export const getMediaDetails = (id, mediaType) => {
-    return fetch(`${config.api_url_v3}/${mediaType}/${id}?api_key=${config.api_key}&append_to_response=videos,images`)
+    return fetch(`${config.api_url_v3}/${mediaType}/${id}?api_key=${config.rt}&append_to_response=videos,images`)
         .then(response => response.json())
         .then(response => response);
     // since we are returning the promise from this function,
@@ -10,7 +10,7 @@ export const getMediaDetails = (id, mediaType) => {
 
 export const getAuthToken = () => {
     // first step in authentication process; get temporary request_token
-    fetch(`${config.api_url_v3}/authentication/token/new?api_key=${config.api_key}`)
+    fetch(`${config.api_url_v3}/authentication/token/new?api_key=${config.rt}`)
         .then(response => response.json())
         .then(response => {
             const location = window.location;
@@ -24,7 +24,7 @@ export const getAuthToken = () => {
 
 export const requestSessionId = (token, action) => {
     // after the user allows the request_token, get the new session_id using that token
-    const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=${config.api_key}`;
+    const url = `https://api.themoviedb.org/3/authentication/session/new?api_key=${config.rt}`;
     const body = JSON.stringify({
         "request_token": token
     });

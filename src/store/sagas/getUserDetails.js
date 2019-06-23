@@ -7,7 +7,7 @@ import { backToStartingUrl, mediaListUrl } from '../../utils/functions';
 
 export function* getUserDetailsSaga(action) {
     try {
-        const userAccountDetails = yield fetch(`${config.api_url_v3}/account?api_key=${config.api_key}&session_id=${action.sessionId}`);
+        const userAccountDetails = yield fetch(`${config.api_url_v3}/account?api_key=${config.rt}&session_id=${action.sessionId}`);
         const userAccountDetailsJSON = yield userAccountDetails.json();
         const { id } = userAccountDetailsJSON;
 

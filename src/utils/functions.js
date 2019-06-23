@@ -89,10 +89,10 @@ export const getSessionIdFromStorage = () => {
 export const mediaListUrl = (listType, mediaType, credentials, pageNumber) => {
     const { id, sessionId } = credentials;
     const page = pageNumber || 1; // optional parameter
-    return `${config.api_url_v3}/account/${id}/${listType}/${mediaType}?api_key=${config.api_key}&session_id=${sessionId}&sort_by=created_at.asc&page=${page}`;
+    return `${config.api_url_v3}/account/${id}/${listType}/${mediaType}?api_key=${config.rt}&session_id=${sessionId}&sort_by=created_at.asc&page=${page}`;
 };
 
 export const toggleInMediaListUrl = (listType, credentials) => {
     const { id, sessionId } = credentials;
-    return `${config.api_url_v3}/account/${id}/${listType}?api_key=${config.api_key}&session_id=${sessionId}`;
+    return `${config.api_url_v3}/account/${id}/${listType}?api_key=${config.rt}&session_id=${sessionId}`;
 };
