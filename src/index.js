@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 
 import 'typeface-roboto';
 
-import reducer from './store/reducers';
+import reducer from './store/reducer';
 import { watch } from './store/sagas';
 import './variables.css';
 import './index.css';
