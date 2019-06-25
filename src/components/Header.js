@@ -6,6 +6,7 @@ import classes from './Header.module.css';
 
 import UserSection from './UserSection';
 
+import movieShrineConfig from '../config/movieShrine';
 import icons from '../assets/icons';
 import actions from '../store/actions';
 
@@ -15,13 +16,13 @@ const Header = props => {
     } = props;
 
     return (
-        <header className={classes.Header}>
-            <Link to="/" className={classes.HeaderLink} onClick={resetState}>
+        <header data-test="component-header" className={classes.Header}>
+            <Link data-test="link-home" to="/" className={classes.HeaderLink} onClick={resetState}>
                 {icons.logo}
-                <h1 className={classes.Title}>The Movie Shrine</h1>
+                <h1 data-test="app-title" className={classes.Title}>{movieShrineConfig.appTitle}</h1>
             </Link>
 
-            <UserSection/>
+            <UserSection data-test="component-user-section" />
         </header>
     );
 };

@@ -8,8 +8,8 @@ import actions from '../store/actions';
 const UserSection = props => {
     const [ showLogoutPopup, setShowLogoutPopup ] = useState(false);
     const {
+        loggedIn,
         userDetails: {
-            username,
             avatar
         },
         setShowBackdrop,
@@ -32,9 +32,9 @@ const UserSection = props => {
     };
 
     return (
-        <div className={classes.UserSection}>
+        <div data-test="component-user-section" className={classes.UserSection}>
             {
-                username ?
+                loggedIn ?
                     <div className={classes.UserAvatarContainer}>
                         <img
                             onClick={() => setShowLogoutPopup(!showLogoutPopup)}
@@ -57,7 +57,8 @@ const UserSection = props => {
 
 const mapStateToProps = state => {
     return {
-        userDetails: state.userDetails
+        userDetails: state.userDetails,
+        loggedIn: state.loggedIn
     }
 };
 
