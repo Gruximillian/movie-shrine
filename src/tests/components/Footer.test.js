@@ -17,14 +17,14 @@ describe('Footer component', () => {
         expect(component.length).toBe(1);
     });
 
-    test('renders created by paragraph', () => {
+    test('renders "created by" paragraph', () => {
         const component = findByTestAttr(wrapper, 'created-by');
         expect(component.length).toBe(1);
     });
 
-    test('renders created by paragraph with the correct text', () => {
+    test('renders "created by" paragraph with the correct text', () => {
         const component = findByTestAttr(wrapper, 'created-by');
-        expect(component.text()).toBe('Created by Vojislav Grujić');
+        expect(component.text()).toBe(movieShrineConfig.createdByText);
     });
 
     test('renders github link', () => {
