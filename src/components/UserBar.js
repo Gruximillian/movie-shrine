@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import classes from './UserBar.module.css';
+import movieShrineConfig from '../config/movieShrine';
 
-const UserBar = props => {
+const UserBar = () => {
     const [ listTypeSelected, setListTypeSelected ] = useState(null);
 
     const setListType = type => {
@@ -13,31 +14,35 @@ const UserBar = props => {
     };
 
     return (
-        <section className={classes.UserBar}>
+        <section data-test="component-userbar" className={classes.UserBar}>
             <div className={classes.PrimaryLinks}>
                 <span
+                    data-test="link-favourites"
                     onClick={() => setListType('favorite')}
                     className={`${classes.UserAction} ${listTypeSelected === 'favorite' ? classes.Active : ''}`}>
-                    Favourites
+                    {movieShrineConfig.userBarLinksText.favourites}
                 </span>
                 <span
+                    data-test="link-watchlist"
                     onClick={() => setListType('watchlist')}
                     className={`${classes.UserAction} ${listTypeSelected === 'watchlist' ? classes.Active : ''}`}>
-                    Watchlist
+                    {movieShrineConfig.userBarLinksText.watchlist}
                 </span>
             </div>
-            <div className={`${classes.SecondaryLinks} ${listTypeSelected ? classes.Visible : ''}`}>
+            <div data-test="secondary-links" className={`${classes.SecondaryLinks} ${listTypeSelected ? classes.Visible : ''}`}>
                 <Link
+                    data-test="link-movies"
                     onClick={() => setListTypeSelected(null)}
                     to={`/movies/${listTypeSelected}`}
                     className={classes.UserAction}>
-                    Movies
+                    {movieShrineConfig.userBarLinksText.movies}
                 </Link>
                 <Link
+                    data-test="link-tvshows"
                     onClick={() => setListTypeSelected(null)}
                     to={`/tvshows/${listTypeSelected}`}
                     className={classes.UserAction}>
-                    TV Shows
+                    {movieShrineConfig.userBarLinksText.tvshows}
                 </Link>
             </div>
         </section>

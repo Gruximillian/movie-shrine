@@ -28,18 +28,19 @@ const reducer = (state = initialState, action) => {
     if (action.type === actionTypes.SET_SEARCH_RESULTS) {
         const currentResults = (action.page === 1) ? initialState.searchResults : {...state.searchResults};
         const allResults = [...currentResults.results, ...action.results.results];
-        // there are duplicate ids in TMDB, so we need to filter the results of duplicates
-        const uniqueIds = allResults.map(result => result.id).filter((ID, idx, array) => {
-            return array.indexOf(ID) === array.lastIndexOf(ID);
+
+        const uniqueResults = [];
+        allResults.forEach(item => {
+            const notPresent = uniqueResults.every(result => result.id !== item.id);
+            if (notPresent) uniqueResults.push(item);
         });
-        const updatedResults = allResults.filter(result => uniqueIds.indexOf(result.id) !== -1);
 
         return {
             ...state,
             searchResults: {
                 ...currentResults,
                 ...action.results,
-                results: updatedResults
+                results: uniqueResults
             }
         }
     }

@@ -20,4 +20,7 @@ Search for movies and TV shows
 ## TO DO
 
  - Tests
+ - Add prop types
  - Loading animation for images
+ - Color logo
+ - Sort search results
