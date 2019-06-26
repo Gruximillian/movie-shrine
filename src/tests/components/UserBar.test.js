@@ -83,28 +83,28 @@ describe('UserBar component', () => {
     describe('when clicked on a primary link', () => {
         describe('click on the "favourites" link', () => {
             test('toggles the "Active" class on the link', () => {
-                const component = findByTestAttr(wrapper, 'link-favourites');
+                let component = findByTestAttr(wrapper, 'link-favourites');
                 component.simulate('click');
                 // wrapper.update(); // useless in this case, probably because we're using React hook for state
-                const componentActive = findByTestAttr(wrapper, 'link-favourites');
-                expect(componentActive.hasClass(/Active/)).toBe(true);
+                component = findByTestAttr(wrapper, 'link-favourites');
+                expect(component.hasClass(/Active/)).toBe(true);
 
-                componentActive.simulate('click');
+                component.simulate('click');
                 // wrapper.update(); // useless in this case, probably because we're using React hook for state
-                const componentInactive = findByTestAttr(wrapper, 'link-favourites');
-                expect(componentInactive.hasClass(/Active/)).toBe(false);
+                component = findByTestAttr(wrapper, 'link-favourites');
+                expect(component.hasClass(/Active/)).toBe(false);
             });
 
             test('toggles the "Visible" class on the secondary links wrapper', () => {
-                const component = findByTestAttr(wrapper, 'link-favourites');
+                let component = findByTestAttr(wrapper, 'link-favourites');
                 component.simulate('click');
-                const secondaryLinks = findByTestAttr(wrapper, 'secondary-links');
+                let secondaryLinks = findByTestAttr(wrapper, 'secondary-links');
                 expect(secondaryLinks.hasClass(/Visible/)).toBe(true);
 
-                const componentUpdated = findByTestAttr(wrapper, 'link-favourites');
-                componentUpdated.simulate('click');
-                const secondaryLinksUpdated = findByTestAttr(wrapper, 'secondary-links');
-                expect(secondaryLinksUpdated.hasClass(/Visible/)).toBe(false);
+                component = findByTestAttr(wrapper, 'link-favourites');
+                component.simulate('click');
+                secondaryLinks = findByTestAttr(wrapper, 'secondary-links');
+                expect(secondaryLinks.hasClass(/Visible/)).toBe(false);
             });
 
             test('"movies" link has the correct "to" prop', () => {
@@ -123,19 +123,19 @@ describe('UserBar component', () => {
 
             describe('then click on "watchlist" link', () => {
                 test('removes "Active" class from "favorites" and adds it to "watchlist" link', () => {
-                    const favoritesLink = findByTestAttr(wrapper, 'link-favourites');
-                    const watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
+                    let favoritesLink = findByTestAttr(wrapper, 'link-favourites');
+                    let watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
                     favoritesLink.simulate('click');
 
-                    const favoritesLinkActive = findByTestAttr(wrapper, 'link-favourites');
-                    expect(favoritesLinkActive.hasClass(/Active/)).toBe(true);
+                    favoritesLink = findByTestAttr(wrapper, 'link-favourites');
+                    expect(favoritesLink.hasClass(/Active/)).toBe(true);
                     expect(watchlistLink.hasClass(/Active/)).toBe(false);
 
                     watchlistLink.simulate('click');
-                    const favoritesLinkUpdated = findByTestAttr(wrapper, 'link-favourites');
-                    const watchlistLinkUpdated = findByTestAttr(wrapper, 'link-watchlist');
-                    expect(favoritesLinkUpdated.hasClass(/Active/)).toBe(false);
-                    expect(watchlistLinkUpdated.hasClass(/Active/)).toBe(true);
+                    favoritesLink = findByTestAttr(wrapper, 'link-favourites');
+                    watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
+                    expect(favoritesLink.hasClass(/Active/)).toBe(false);
+                    expect(watchlistLink.hasClass(/Active/)).toBe(true);
                 });
 
                 test('"movies" link has the correct "to" prop', () => {
@@ -143,12 +143,12 @@ describe('UserBar component', () => {
                     const watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
                     favoritesLink.simulate('click');
 
-                    const component = findByTestAttr(wrapper, 'link-movies');
+                    let component = findByTestAttr(wrapper, 'link-movies');
                     expect(component.prop('to')).toBe('/movies/favorite');
 
                     watchlistLink.simulate('click');
-                    const componentUpdated = findByTestAttr(wrapper, 'link-movies');
-                    expect(componentUpdated.prop('to')).toBe('/movies/watchlist');
+                    component = findByTestAttr(wrapper, 'link-movies');
+                    expect(component.prop('to')).toBe('/movies/watchlist');
                 });
 
                 test('"tvshows" link has the correct "to" prop', () => {
@@ -156,38 +156,38 @@ describe('UserBar component', () => {
                     const watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
                     favoritesLink.simulate('click');
 
-                    const component = findByTestAttr(wrapper, 'link-tvshows');
+                    let component = findByTestAttr(wrapper, 'link-tvshows');
                     expect(component.prop('to')).toBe('/tvshows/favorite');
 
                     watchlistLink.simulate('click');
-                    const componentUpdated = findByTestAttr(wrapper, 'link-tvshows');
-                    expect(componentUpdated.prop('to')).toBe('/tvshows/watchlist');
+                    component = findByTestAttr(wrapper, 'link-tvshows');
+                    expect(component.prop('to')).toBe('/tvshows/watchlist');
                 });
             });
         });
 
         describe('click on the "watchlist" link', () => {
             test('toggles the "Active" class on the link', () => {
-                const component = findByTestAttr(wrapper, 'link-watchlist');
+                let component = findByTestAttr(wrapper, 'link-watchlist');
                 component.simulate('click');
-                const componentActive = findByTestAttr(wrapper, 'link-watchlist');
-                expect(componentActive.hasClass(/Active/)).toBe(true);
+                component = findByTestAttr(wrapper, 'link-watchlist');
+                expect(component.hasClass(/Active/)).toBe(true);
 
-                componentActive.simulate('click');
-                const componentInactive = findByTestAttr(wrapper, 'link-watchlist');
-                expect(componentInactive.hasClass(/Active/)).toBe(false);
+                component.simulate('click');
+                component = findByTestAttr(wrapper, 'link-watchlist');
+                expect(component.hasClass(/Active/)).toBe(false);
             });
 
             test('toggles the "Visible" class on the secondary links wrapper', () => {
-                const component = findByTestAttr(wrapper, 'link-watchlist');
+                let component = findByTestAttr(wrapper, 'link-watchlist');
                 component.simulate('click');
-                const secondaryLinks = findByTestAttr(wrapper, 'secondary-links');
+                let secondaryLinks = findByTestAttr(wrapper, 'secondary-links');
                 expect(secondaryLinks.hasClass(/Visible/)).toBe(true);
 
-                const componentUpdated = findByTestAttr(wrapper, 'link-watchlist');
-                componentUpdated.simulate('click');
-                const secondaryLinksUpdated = findByTestAttr(wrapper, 'secondary-links');
-                expect(secondaryLinksUpdated.hasClass(/Visible/)).toBe(false);
+                component = findByTestAttr(wrapper, 'link-watchlist');
+                component.simulate('click');
+                secondaryLinks = findByTestAttr(wrapper, 'secondary-links');
+                expect(secondaryLinks.hasClass(/Visible/)).toBe(false);
             });
 
             test('"movies" link has the correct "to" prop', () => {
@@ -206,19 +206,19 @@ describe('UserBar component', () => {
 
             describe('then click on "favourites" link', () => {
                 test('removes "Active" class from "watchlist" and adds it to "favorites" link', () => {
-                    const favoritesLink = findByTestAttr(wrapper, 'link-favourites');
-                    const watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
+                    let favoritesLink = findByTestAttr(wrapper, 'link-favourites');
+                    let watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
                     watchlistLink.simulate('click');
 
-                    const watchlistLinkActive = findByTestAttr(wrapper, 'link-watchlist');
-                    expect(watchlistLinkActive.hasClass(/Active/)).toBe(true);
+                    watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
+                    expect(watchlistLink.hasClass(/Active/)).toBe(true);
                     expect(favoritesLink.hasClass(/Active/)).toBe(false);
 
                     favoritesLink.simulate('click');
-                    const favoritesLinkUpdated = findByTestAttr(wrapper, 'link-favourites');
-                    const watchlistLinkUpdated = findByTestAttr(wrapper, 'link-watchlist');
-                    expect(favoritesLinkUpdated.hasClass(/Active/)).toBe(true);
-                    expect(watchlistLinkUpdated.hasClass(/Active/)).toBe(false);
+                    favoritesLink = findByTestAttr(wrapper, 'link-favourites');
+                    watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
+                    expect(favoritesLink.hasClass(/Active/)).toBe(true);
+                    expect(watchlistLink.hasClass(/Active/)).toBe(false);
                 });
 
                 test('"movies" link has the correct "to" prop', () => {
@@ -226,12 +226,12 @@ describe('UserBar component', () => {
                     const watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
                     watchlistLink.simulate('click');
 
-                    const component = findByTestAttr(wrapper, 'link-movies');
+                    let component = findByTestAttr(wrapper, 'link-movies');
                     expect(component.prop('to')).toBe('/movies/watchlist');
 
                     favoritesLink.simulate('click');
-                    const componentUpdated = findByTestAttr(wrapper, 'link-movies');
-                    expect(componentUpdated.prop('to')).toBe('/movies/favorite');
+                    component = findByTestAttr(wrapper, 'link-movies');
+                    expect(component.prop('to')).toBe('/movies/favorite');
                 });
 
                 test('"tvshows" link has the correct "to" prop', () => {
@@ -239,12 +239,12 @@ describe('UserBar component', () => {
                     const watchlistLink = findByTestAttr(wrapper, 'link-watchlist');
                     watchlistLink.simulate('click');
 
-                    const component = findByTestAttr(wrapper, 'link-tvshows');
+                    let component = findByTestAttr(wrapper, 'link-tvshows');
                     expect(component.prop('to')).toBe('/tvshows/watchlist');
 
                     favoritesLink.simulate('click');
-                    const componentUpdated = findByTestAttr(wrapper, 'link-tvshows');
-                    expect(componentUpdated.prop('to')).toBe('/tvshows/favorite');
+                    component = findByTestAttr(wrapper, 'link-tvshows');
+                    expect(component.prop('to')).toBe('/tvshows/favorite');
                 });
             });
         });
@@ -252,21 +252,21 @@ describe('UserBar component', () => {
 
     describe('when clicked on a secondary link', () => {
         test('removes the "Active" class from the primary link and removes "Visible" class fromt he secondary links wrapper', () => {
-            const primaryLink = findByTestAttr(wrapper, 'link-watchlist');
+            let primaryLink = findByTestAttr(wrapper, 'link-watchlist');
             primaryLink.simulate('click');
 
-            const primaryLinkUpdated = findByTestAttr(wrapper, 'link-watchlist');
+            primaryLink = findByTestAttr(wrapper, 'link-watchlist');
             const secondaryLinksWrapper = findByTestAttr(wrapper, 'secondary-links');
-            expect(primaryLinkUpdated.hasClass(/Active/)).toBe(true);
+            expect(primaryLink.hasClass(/Active/)).toBe(true);
             expect(secondaryLinksWrapper.hasClass(/Visible/)).toBe(true);
 
-            const secondaryLink = findByTestAttr(wrapper, 'link-movies');
+            let secondaryLink = findByTestAttr(wrapper, 'link-movies');
             secondaryLink.simulate('click');
 
-            const primaryLinkFinal = findByTestAttr(wrapper, 'link-watchlist');
-            const secondaryLinksFinal = findByTestAttr(wrapper, 'secondary-links');
-            expect(primaryLinkFinal.hasClass(/Active/)).toBe(false);
-            expect(secondaryLinksFinal.hasClass(/Visible/)).toBe(false);
+            primaryLink = findByTestAttr(wrapper, 'link-watchlist');
+            secondaryLink = findByTestAttr(wrapper, 'secondary-links');
+            expect(primaryLink.hasClass(/Active/)).toBe(false);
+            expect(secondaryLink.hasClass(/Visible/)).toBe(false);
         });
     });
 });
