@@ -10,5 +10,8 @@ export default {
         movies: 'Movies',
         tvshows: 'TV Shows'
     },
-    searchLabelText: 'Search for movies, TV shows or people'
+    searchLabelText: 'Search for movies, TV shows or people',
+    gravatarBaseUrl: 'https://www.gravatar.com/avatar/',
+    logoutMessage: 'If you logout, you will not be able to save favourites and add items to your watch list!',
+    logoutButtonText: 'Logout'
 };

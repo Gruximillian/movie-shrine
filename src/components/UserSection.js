@@ -4,20 +4,20 @@ import { connect } from 'react-redux';
 import classes from './UserSection.module.css';
 import icons from '../assets/icons';
 import actions from '../store/actions';
+import movieShrineConfig from '../config/movieShrine';
 
 const UserSection = props => {
     const [ showLogoutPopup, setShowLogoutPopup ] = useState(false);
     const {
         loggedIn,
-        userDetails: {
-            avatar
-        },
+        userDetails,
         setShowBackdrop,
         setShowLoginModal,
         setUserDetails,
         setLoggedIn
     } = props;
 
+    const avatar = userDetails && userDetails.avatar;
     const gravatarHash = avatar && avatar.gravatar.hash;
 
     const initiateLogin = () => {
@@ -31,25 +31,46 @@ const UserSection = props => {
         setLoggedIn(false);
     };
 
+    const logoutPoputClass = `${classes.LogoutPopup} scale-transition scale-out ${showLogoutPopup ? 'scale-in' : ''}`;
+
     return (
         <div data-test="component-user-section" className={classes.UserSection}>
             {
                 loggedIn ?
-                    <div className={classes.UserAvatarContainer}>
+                    <div data-test="user-avatar-container" className={classes.UserAvatarContainer}>
                         <img
+                            data-test="user-gravatar"
                             onClick={() => setShowLogoutPopup(!showLogoutPopup)}
                             className={classes.UserAvatar}
-                            src={`https://www.gravatar.com/avatar/${gravatarHash}`}
+                            src={`${movieShrineConfig.gravatarBaseUrl}${gravatarHash}`}
                             alt="User gravatar" />
 
-                        <div className={`${classes.LogoutPopup} scale-transition scale-out ${showLogoutPopup ? 'scale-in' : ''}`}>
-                            <div className={classes.CloseButton} onClick={() => setShowLogoutPopup(false)}>{icons.close}</div>
-                            <p>If you logout, you will not be able to save favourites and add items to your watch list!</p>
-                            <div onClick={logout} className={`${classes.LogoutButton} btn btn-small`}>Logout</div>
+                        <div data-test="logout-popup" className={logoutPoputClass}>
+                            <div
+                                data-test="close-icon-container"
+                                className={classes.CloseButton}
+                                onClick={() => setShowLogoutPopup(false)}
+                            >
+                                {icons.close}
+                            </div>
+                            <p data-test="logout-message">{movieShrineConfig.logoutMessage}</p>
+                            <div
+                                data-test="logout-button"
+                                onClick={logout}
+                                className={`${classes.LogoutButton} btn btn-small`}
+                            >
+                                {movieShrineConfig.logoutButtonText}
+                            </div>
                         </div>
                     </div>
                 :
-                    <div onClick={initiateLogin} className={classes.LoginIcon}>{icons.key}</div>
+                    <div
+                        data-test="login-icon-container"
+                        onClick={initiateLogin}
+                        className={classes.LoginIcon}
+                    >
+                        {icons.key}
+                    </div>
             }
         </div>
     );
