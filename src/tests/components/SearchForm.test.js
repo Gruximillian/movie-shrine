@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 
 import { findByTestAttr, storeFactory } from '../util/helpers';
@@ -60,7 +60,7 @@ describe('SearchForm component', () => {
         beforeEach(() => {
             const initialState = {};
             store = mockStore(initialState);
-            wrapper = mount(<SearchForm store={store} />);
+            wrapper = shallow(<SearchForm store={store} />).dive();
         });
 
         describe('if search field is empty', () => {
