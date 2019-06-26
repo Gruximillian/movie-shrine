@@ -9,5 +9,6 @@ export default {
         watchlist: 'Watchlist',
         movies: 'Movies',
         tvshows: 'TV Shows'
-    }
+    },
+    searchLabelText: 'Search for movies, TV shows or people'
 };

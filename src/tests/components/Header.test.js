@@ -12,7 +12,7 @@ const mockStore = configureMockStore();
 describe('Header component', () => {
     const setup = (initialState={}) => {
         const store = storeFactory(initialState);
-        return shallow(<Header store={store} resetState={jest.fn()} />).dive();
+        return shallow(<Header store={store} />).dive();
     };
 
     describe('render', () => {
@@ -57,6 +57,7 @@ describe('Header component', () => {
             expect(component.length).toBe(1);
         });
     });
+
     describe('when clicked on the "Home" link', () => {
         // solution from here (option 2):
         // https://jsramblings.com/2018/01/15/3-ways-to-test-mapStateToProps-and-mapDispatchToProps.html
@@ -71,9 +72,9 @@ describe('Header component', () => {
         test('"RESET_STATE" action should be dispatched', () => {
             const component = findByTestAttr(wrapper, 'link-home');
             component.simulate('click');
-            const actions = store.getActions();
+            const dispatchedActions = store.getActions();
 
-            expect(actions).toEqual([ { type: actionTypes.RESET_STATE } ]);
+            expect(dispatchedActions).toEqual([ { type: actionTypes.RESET_STATE } ]);
         });
     });
 });
