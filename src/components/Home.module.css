@@ -24,7 +24,7 @@
     margin: 30px 0;
 }
 
-.WelcomeMessage {
+.MediaMessage {
     font-size: 4vw;
 }
 
@@ -34,7 +34,7 @@
     }
 
 
-    .WelcomeMessage {
+    .MediaMessage {
         font-size: 3vw;
     }
 
@@ -45,7 +45,7 @@
         padding: 20px 60px;
     }
 
-    .WelcomeMessage {
+    .MediaMessage {
         font-size: 24px;
     }
 

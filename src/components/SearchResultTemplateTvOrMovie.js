@@ -13,6 +13,7 @@ const SearchResultTemplateTvOrMovie = props => {
         result,
         loggedIn
     } = props;
+
     const imageUrl = getImageUrl(tmdbConfiguration.images, result.poster_path, 3);
     const title = getTitle(result);
     const year = getPeriod(result);
@@ -27,7 +28,7 @@ const SearchResultTemplateTvOrMovie = props => {
     };
 
     return (
-        <div className={`${classes.SearchResult} card`}>
+        <div data-test="component-search-result" className={`${classes.SearchResult} card`}>
             <Link onClick={preventIfListAction} to={detailsUrl}>
                 <div className={`${classes.ImageContainer} card-image`}>
                     <img src={imageUrl} alt="Poster" />

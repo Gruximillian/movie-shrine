@@ -13,5 +13,17 @@ export default {
     searchLabelText: 'Search for movies, TV shows or people',
     gravatarBaseUrl: 'https://www.gravatar.com/avatar/',
     logoutMessage: 'If you logout, you will not be able to save favourites and add items to your watch list!',
-    logoutButtonText: 'Logout'
+    logoutButtonText: 'Logout',
+    loadMoreButtonText: 'Load more',
+    mediaMessage: {
+        favorite: {
+            movies: 'favorite movies',
+            tv: 'favourite TV shows'
+        },
+        watchlist: {
+            movies: 'movie watchlist',
+            tv: 'TV show watchlist'
+        },
+        noItems: 'You have no items in your'
+    }
 };

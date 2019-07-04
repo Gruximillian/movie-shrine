@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import classes from './Home.module.css';
 
 import SearchResultTvOrMovie from './SearchResultTemplateTvOrMovie';
+import movieShrineConfig from '../config/movieShrine';
 
 const ShowUserListMedia = props => {
     const [ numberOfItems, setNumberOfItems ] = useState(20);
@@ -15,10 +16,7 @@ const ShowUserListMedia = props => {
         userDetails
     } = props;
 
-    const mediaMessage = listType === 'watchlist' ?
-        mediaType === 'movies' ? ' movie watchlist' : ' TV show watchlist'
-        :
-        mediaType === 'movies' ? ' favourite movies' : ' favourite TV shows';
+    const mediaMessage = movieShrineConfig.mediaMessage[listType][mediaType];
 
     const mediaList = userDetails[listType] && userDetails[listType][mediaType];
 
@@ -37,7 +35,7 @@ const ShowUserListMedia = props => {
     };
 
     const showSearchResults = () => (
-        <section className={classes.SearchResults}>
+        <section data-test="search-results-section" className={classes.SearchResults}>
             {
                 itemsToShow.map(result => {
                     // tmdb does not send media_type property for favourites and watchlist items
@@ -50,22 +48,22 @@ const ShowUserListMedia = props => {
     );
 
     const noResultsMessage = () => (
-        <div className={classes.NoResultsMessage}>
-            You have no items in your { mediaMessage }
+        <div data-test="no-items-message" className={classes.NoResultsMessage}>
+            {movieShrineConfig.mediaMessage.noItems} { mediaMessage }
         </div>
     );
 
     const loadMoreButton = () => {
-        if (mediaList && mediaList.length > itemsToShow.length) return (
-            <div className={`${classes.LoadMore} center-align`}>
-                <button className="btn" onClick={loadMore}>Load more</button>
+        if (mediaList && mediaList.length > numberOfItems) return (
+            <div data-test="load-more-button" className={`${classes.LoadMore} center-align`}>
+                <button className="btn" onClick={loadMore}>{movieShrineConfig.loadMoreButtonText}</button>
             </div>
         )
     };
 
     return (
-        <main className={classes.Main}>
-            <p className={classes.WelcomeMessage}>
+        <main data-test="component-main" className={classes.Main}>
+            <p data-test="media-message" className={classes.MediaMessage}>
                 Your { mediaMessage }:
             </p>
             { mediaList && mediaList.length > 0 && showSearchResults() }
