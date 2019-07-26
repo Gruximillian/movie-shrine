@@ -24,5 +24,3 @@ Search for movies and TV shows
  - Loading animation for images
  - Color logo
  - Sort search results
-
-Test edit
