@@ -25,6 +25,5 @@ export default {
             tv: 'TV show watchlist'
         },
         noItems: 'You have no items in your'
-    },
-    testProp: 'Just for test'
+    }
 };
