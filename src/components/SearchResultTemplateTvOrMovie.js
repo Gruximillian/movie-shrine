@@ -30,8 +30,10 @@ const SearchResultTemplateTvOrMovie = (props) => {
           {loggedIn && <TmdbActions mediaItem={result} />}
         </div>
       </Link>
+
       <div className={`${classes.CardContent} card-content`}>
         <h3 className={`${classes.ResultTitle} card-title`}>{title}</h3>
+
         <ul>
           <li>
             <strong className={classes.DetailsLabel}>Original name:</strong>{' '}
@@ -50,8 +52,10 @@ const SearchResultTemplateTvOrMovie = (props) => {
             <strong className={classes.DetailsLabel}>Rating:</strong> {result.vote_average}
           </li>
         </ul>
+
         <p className={classes.Overview}>{result.overview}</p>
       </div>
+
       <Link to={detailsUrl} className={classes.ShowMoreToggle}>
         View Details
       </Link>

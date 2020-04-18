@@ -15,8 +15,10 @@ const SearchResultTemplatePerson = (props) => {
       <div className="card-image">
         <img src={imageUrl} alt="Profile" />
       </div>
+
       <div className={`${classes.CardContent} card-content`}>
         <h3 className={`${classes.ResultTitle} card-title`}>{title}</h3>
+
         <p>Known for:</p>
         <div className={classes.KnownForList}>
           <ul>

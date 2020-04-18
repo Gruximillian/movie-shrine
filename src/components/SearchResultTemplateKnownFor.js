@@ -17,6 +17,7 @@ const SearchResultKnownFor = (props) => {
         <div className="card-image">
           <img src={imageUrl} alt="Poster" />
         </div>
+
         <div className="card-stacked">
           <div className={`${classes.Content} card-content`}>
             <span>
