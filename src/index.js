@@ -6,7 +6,9 @@ import createSagaMiddleware from 'redux-saga';
 import 'materialize-css/dist/css/materialize.min.css';
 import * as serviceWorker from './serviceWorker';
 
-import reducer from './store/reducers';
+import 'typeface-roboto';
+
+import reducer from './store/reducer';
 import { watch } from './store/sagas';
 import './variables.css';
 import './index.css';

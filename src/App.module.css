@@ -1,27 +1,30 @@
-.SearchResults {
-  margin-top: 50px;
+.MovieShrineApp {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-.NoResultsMessage {
-  margin: 40px 0;
-  text-align: center;
-  font-size: 35px;
+.Backdrop::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--image-preview-backdrop-color);
+  z-index: 1000;
 }
 
-.NoResultsMessage .SearchTerm {
-  font-style: italic;
-  color: var(--body-text-color);
+.ScrollToTopButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s 0s ease-in-out;
 }
 
-.LoadMore {
-  margin-top: 30px;
-}
-
-@media (min-width: 1200px) {
-  .Main {
-    max-width: 1400px;
-    margin: auto;
-  }
+.ScrollToTopButton.Visible {
+  opacity: 1;
+  pointer-events: auto;
 }

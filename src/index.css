@@ -1,21 +1,53 @@
+@font-face {
+  font-family: 'Chow Fun';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/chow-fun.ttf');
+}
+
+html {
+  height: 100%;
+}
+
 body {
+  min-height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (min-width: 400px) {
-  body {
-    padding: 70px 40px;
-  }
+.scroll-lock {
+  overflow: hidden;
 }
 
-@media (min-width: 768px) {
-  body {
-    padding: 90px 60px;
-  }
+#root {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
+
+/*
+    Google font candidates for the app title:
+
+    font-family: 'Calligraffitti', cursive;
+
+    font-family: 'Dynalight', cursive;
+
+    font-family: 'Euphoria Script', cursive;
+
+    font-family: 'Felipa', cursive;
+
+    font-family: 'Flamenco', cursive;
+
+    font-family: 'Italianno', cursive;
+
+    font-family: 'Tangerine', cursive;
+
+
+    <link href="https://fonts.googleapis.com/css?family=Calligraffitti|Dynalight|Euphoria+Script|Felipa|Flamenco|Italianno|Tangerine&display=swap" rel="stylesheet">
+
+    better to use 'typeface-{font-name}' npm packages for adding fonts
+*/

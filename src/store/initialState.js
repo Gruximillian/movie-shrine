@@ -4,5 +4,11 @@ export default {
   searchResults: {
     results: []
   },
-  searchHasResults: true
+  searchHasResults: true,
+  initModalClose: false,
+  showBackdrop: false,
+  showLoginModal: false,
+  showImageModal: false,
+  loggedIn: false,
+  userDetails: {}
 };

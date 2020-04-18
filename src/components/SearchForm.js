@@ -4,9 +4,11 @@ import M from 'materialize-css';
 
 import classes from './SearchForm.module.css';
 import actions from '../store/actions';
+import movieShrineConfig from '../config/movieShrine';
 
 const SearchForm = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { setSearchHasResults, setQueryTerm, initiateSearch } = props;
 
   useEffect(() => {
     M.AutoInit();
@@ -18,28 +20,28 @@ const SearchForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.setSearchHasResults(true);
     const query = encodeURIComponent(searchTerm.trim());
-    props.setQueryTerm(query);
-    props.initiateSearch(query, 1);
+
+    if (query === '') return; // Add message for the user to type something
+
+    setSearchHasResults(true);
+    setQueryTerm(query);
+    initiateSearch(query, 1);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form data-test="component-search-form" onSubmit={handleSubmit}>
       <div className={`${classes.Search} input-field`}>
-        <input id="search-term" type="text" value={searchTerm} onChange={handleChange} />
-        <label htmlFor="search-term">Search for the movies</label>
+        <input data-test="input-field" id="search-term" type="text" value={searchTerm} onChange={handleChange} />
+        <label data-test="input-label" htmlFor="search-term">
+          {movieShrineConfig.searchLabelText}
+        </label>
       </div>
-      <button className={`btn`}>Search</button>
+      <button data-test="submit-button" className={`btn`}>
+        Search
+      </button>
     </form>
   );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    tmdbConfiguration: state.tmdbConfiguration,
-    queryTerm: state.queryTerm
-  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -50,4 +52,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);
+export default connect(null, mapDispatchToProps)(SearchForm);

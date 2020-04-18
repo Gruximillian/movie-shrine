@@ -1,0 +1,208 @@
+.Main {
+  position: relative;
+}
+
+.PosterSection {
+  padding: 1px 0;
+  color: var(--light-text-color);
+  background-color: var(--blue-grey);
+}
+
+.Title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 2rem;
+  padding: 0 30px;
+}
+
+.PosterContainer {
+  position: relative;
+}
+
+.Poster {
+  width: 100%;
+}
+
+.PosterAndDetails {
+  /* prevent poster bottom not reaching the container bottom */
+  font-size: 0;
+}
+
+.DetailsSection,
+.MediaSection {
+  padding-top: 20px;
+  width: 85%;
+  margin: auto;
+}
+
+.DetailsEntry {
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.DetailsEntry:first-child {
+  padding-top: 0;
+}
+
+.DetailsSection > div {
+  margin-bottom: 20px;
+}
+
+.DetailsSection > div:last-child {
+  margin-bottom: 0;
+}
+
+.DetailsLabel {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.DetailsValue {
+  font-style: italic;
+}
+
+.VideoContainer {
+  width: 100%;
+  height: 50vw;
+  background-color: var(--video-background-color);
+  margin-bottom: 10px;
+}
+
+.ImageContainer {
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 1px 1px 4px -1px var(--box-shadow-color);
+  align-self: flex-start;
+}
+
+.NoMediaMessage {
+  font-size: 20px;
+  color: var(--info-text-color);
+  font-style: italic;
+  margin-top: 0;
+}
+
+.LoadMore {
+  margin: 30px 0;
+}
+
+@media (min-width: 450px) {
+  .Videos,
+  .Images {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .VideoContainer {
+    width: 48%;
+    height: 30vw;
+    margin-bottom: 20px;
+  }
+
+  .ImageContainer {
+    width: 48%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 600px) {
+  .PosterSection {
+    padding: 40px 10%;
+  }
+
+  .PosterAndDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .PosterContainer {
+    width: 40%;
+    box-shadow: 5px 8px 10px -3px rgba(0, 0, 0, 0.7);
+  }
+
+  .PosterSectionDetails {
+    width: 60%;
+    align-self: flex-start;
+  }
+
+  .Title {
+    margin-top: 0;
+    text-align: right;
+    font-size: 3rem;
+    padding: 0 0 0 60px;
+  }
+
+  .ReleaseYear,
+  .MediaType,
+  .Tagline {
+    text-align: right;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--highlight-color);
+  }
+
+  .Tagline {
+    margin-top: 100px;
+    padding-left: 60px;
+    color: var(--light-text-color);
+    font-weight: 300;
+  }
+
+  .DetailsSection,
+  .MediaSection {
+    width: 75%;
+    max-width: 1200px;
+  }
+
+  .VideoContainer {
+    width: 48%;
+    height: 25vw;
+  }
+}
+
+@media (min-width: 1000px) {
+  .PosterSection {
+    margin-bottom: 30px;
+  }
+
+  .DetailsSection {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .DetailsSection > div {
+    flex-basis: 45%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .PosterSection {
+    padding: 60px 15%;
+  }
+
+  .PosterAndDetails {
+    max-width: 1100px;
+  }
+
+  .Title {
+    font-size: 4rem;
+  }
+
+  .Videos,
+  .Images {
+    justify-content: space-around;
+  }
+
+  .VideoContainer {
+    width: 31.33%;
+    height: 15vw;
+    max-height: 250px;
+  }
+
+  .ImageContainer {
+    width: 31.33%;
+  }
+}

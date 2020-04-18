@@ -1,5 +1,6 @@
 .KnownForEntry {
   cursor: pointer;
+  color: var(--body-text-color);
 }
 
 .DetailsLabel {

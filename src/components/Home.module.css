@@ -1,0 +1,56 @@
+.Main {
+  padding: 0 20px;
+  margin-bottom: 30px;
+}
+
+.SearchResults {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.NoResultsMessage {
+  margin: 40px 0;
+  text-align: center;
+  font-size: 35px;
+}
+
+.NoResultsMessage .SearchTerm {
+  font-style: italic;
+  color: var(--highlight-color);
+}
+
+.LoadMore {
+  margin: 30px 0;
+}
+
+.WelcomeMessage {
+  font-size: 4vw;
+}
+
+@media (min-width: 400px) {
+  .Main {
+    padding: 0 40px;
+  }
+
+  .WelcomeMessage {
+    font-size: 3vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .Main {
+    padding: 20px 60px;
+  }
+
+  .WelcomeMessage {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Main {
+    width: 1200px;
+    margin: auto;
+  }
+}

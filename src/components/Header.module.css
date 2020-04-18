@@ -1,17 +1,18 @@
 .Header {
-  position: absolute;
-  padding: 5px 0;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background-color: #fff;
-  box-shadow: 0 -1px 5px 1px #777;
-  color: var(--body-text-color);
+  height: 50px;
+  padding: 8px 0;
+  background-color: var(--dark-blue-grey);
+  box-shadow: 0 -1px 5px 1px var(--box-shadow-color);
+  position: relative;
+}
+
+.HeaderLink {
+  display: inline-block;
+  height: 100%;
 }
 
 .Header [class='logo'] {
-  fill: var(--body-text-color);
+  fill: var(--highlight-color);
   height: 100%;
   width: 10%;
   min-width: 80px;
@@ -23,25 +24,32 @@
   display: inline-block;
   font-size: 20px;
   vertical-align: middle;
-  margin: 0 0 0 10px;
+  margin: 0;
+  color: var(--highlight-color);
+  font-family: 'Chow Fun', cursive;
 }
 
 @media (min-width: 400px) {
   .Header {
     height: 60px;
+    padding-left: 20px;
   }
+
   .Title {
     font-size: 24px;
+    margin-left: 20px;
   }
 }
 
 @media (min-width: 768px) {
   .Header {
     height: 80px;
-    padding-left: 30px;
+    padding: 12px 0;
+    padding-left: 50px;
   }
+
   .Title {
     font-size: 35px;
-    margin-left: 30px;
+    margin-left: 40px;
   }
 }

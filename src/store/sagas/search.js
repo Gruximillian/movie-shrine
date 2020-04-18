@@ -6,7 +6,7 @@ import actions from '../actions';
 export function* searchSaga(action) {
   try {
     const response = yield fetch(
-      `${config.api_url_v3}/search/multi?api_key=${config.api_key}&query=${action.queryString}&page=${action.page}`
+      `${config.api_url_v3}/search/multi?api_key=${config.rt}&query=${action.queryString}&page=${action.page}`
     );
     const responseJson = yield response.json();
     yield put(actions.setSearchHasResults(responseJson.total_results > 0));
