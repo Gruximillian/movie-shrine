@@ -1,53 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import M from "materialize-css";
+import M from 'materialize-css';
 
 import classes from './SearchForm.module.css';
-import actions from "../store/actions";
+import actions from '../store/actions';
 
-const SearchForm = props => {
-    const [ searchTerm, setSearchTerm ] = useState('');
+const SearchForm = (props) => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
-        M.AutoInit();
-    }, []);
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
 
-    const handleChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        props.setSearchHasResults(true);
-        const query = encodeURIComponent(searchTerm.trim());
-        props.setQueryTerm(query);
-        props.initiateSearch(query, 1);
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.setSearchHasResults(true);
+    const query = encodeURIComponent(searchTerm.trim());
+    props.setQueryTerm(query);
+    props.initiateSearch(query, 1);
+  };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <div className={`${classes.Search} input-field`}>
-                <input id="search-term" type="text" value={searchTerm} onChange={handleChange} />
-                <label htmlFor="search-term">Search for the movies</label>
-            </div>
-            <button className={`btn`}>Search</button>
-        </form>
-    );
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className={`${classes.Search} input-field`}>
+        <input id="search-term" type="text" value={searchTerm} onChange={handleChange} />
+        <label htmlFor="search-term">Search for the movies</label>
+      </div>
+      <button className={`btn`}>Search</button>
+    </form>
+  );
 };
 
-const mapStateToProps = state => {
-    return {
-        tmdbConfiguration: state.tmdbConfiguration,
-        queryTerm: state.queryTerm
-    }
+const mapStateToProps = (state) => {
+  return {
+    tmdbConfiguration: state.tmdbConfiguration,
+    queryTerm: state.queryTerm
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        setQueryTerm: term => dispatch(actions.setQueryTerm(term)),
-        initiateSearch: (queryString, page) => dispatch(actions.initiateSearch(queryString, page)),
-        setSearchHasResults: hasResults => dispatch(actions.setSearchHasResults(hasResults))
-    }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setQueryTerm: (term) => dispatch(actions.setQueryTerm(term)),
+    initiateSearch: (queryString, page) => dispatch(actions.initiateSearch(queryString, page)),
+    setSearchHasResults: (hasResults) => dispatch(actions.setSearchHasResults(hasResults))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

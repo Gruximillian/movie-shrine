@@ -1,8 +1,8 @@
 export default {
-    queryTerm: '',
-    tmdbConfiguration: {},
-    searchResults: {
-        results: []
-    },
-    searchHasResults: true
+  queryTerm: '',
+  tmdbConfiguration: {},
+  searchResults: {
+    results: []
+  },
+  searchHasResults: true
 };

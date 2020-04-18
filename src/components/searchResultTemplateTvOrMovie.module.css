@@ -1,47 +1,47 @@
 .SearchResult {
-    min-height: 300px;
-    flex-basis: 100%;
-    cursor: pointer;
+  min-height: 300px;
+  flex-basis: 100%;
+  cursor: pointer;
 }
 
 .ResultTitle {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .CardContent.CardContent {
-    padding-bottom: 40px;
+  padding-bottom: 40px;
 }
 
 .OverviewContainer {
-    height: 200px;
-    overflow: hidden;
-    transition: height 0.2s 0s ease-in-out;
+  height: 200px;
+  overflow: hidden;
+  transition: height 0.2s 0s ease-in-out;
 }
 
 .ShowMoreToggle {
-    color: var(--body-text-color);
-    cursor: pointer;
-    position: absolute;
-    padding-left: 24px;
-    bottom: 10px;
+  color: var(--body-text-color);
+  cursor: pointer;
+  position: absolute;
+  padding-left: 24px;
+  bottom: 10px;
 }
 
 .DetailsLabel {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 @media (min-width: 768px) {
-    .SearchResult {
-        flex-basis: 48%;
-        margin-left: 1%;
-        margin-right: 1%;
-    }
+  .SearchResult {
+    flex-basis: 48%;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
 }
 
 @media (min-width: 1200px) {
-    .SearchResult {
-        flex-basis: 31.33%;
-        margin-left: 1%;
-        margin-right: 1%;
-    }
+  .SearchResult {
+    flex-basis: 31.33%;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
 }
