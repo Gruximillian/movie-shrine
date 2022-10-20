@@ -16,6 +16,7 @@ Search for movies and TV shows
 - Redux
 - Redux Saga
 - Deployed on Heroku: https://movie-shrine.herokuapp.com/
+- Heroku is planning on dying, so... good bye Movie Shrine!
 
 ## TO DO
 
